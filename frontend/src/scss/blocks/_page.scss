@@ -1,0 +1,34 @@
+#root {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 12px;
+  font-weight: $font-weight-regular;
+  color: $color-primary;
+  background-color: $color-button-text;
+  height: 100vh;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.page__body {
+  margin: 0;
+  padding: 0;
+
+}
+
+.button {
+  font-family: "Josefin Sans", sans-serif;
+  background: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  line-height: normal;
+  text-decoration: none;
+
+}
+
+
+p {
+  margin: 0;
+  padding: 0;
+}
