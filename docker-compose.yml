@@ -1,0 +1,88 @@
+version: "3"
+
+services:
+  app:
+    container_name: "medsync-app"
+    image: node:18
+    working_dir: /home/node/app
+    volumes:
+      - ./frontend:/home/node/app
+    command: sh -c 'npm install; npm run dev --host'
+    ports:
+      - "3777:5173"
+
+  bot:
+    image: "${BOT_IMAGE_NAME}"
+    container_name: "${BOT_CONTAINER_NAME}"
+    stop_signal: SIGINT
+    build:
+      context: ./backend
+    working_dir: "/usr/src/app/${BOT_NAME}"
+    volumes:
+      - ./backend:/usr/src/app/${BOT_NAME}
+    command: python3 -m bot
+    restart: always
+    env_file:
+      - ".env"
+    networks:
+      - tg_bot
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  pg_database:
+    container_name: "${PG_CONTAINER_NAME}"
+    image: postgres:13-alpine
+    ports:
+      - "5439:5432" # Change if you like! 5439 is external to container
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command: "postgres -c max_connections=150
+             -c shared_buffers=512MB -c effective_cache_size=1536MB
+             -c maintenance_work_mem=128MB -c checkpoint_completion_target=0.9 -c wal_buffers=16MB
+             -c default_statistics_target=100 -c random_page_cost=1.1 -c effective_io_concurrency=200
+             -c work_mem=3495kB -c min_wal_size=1GB -c max_wal_size=4GB -c max_worker_processes=2
+             -c max_parallel_workers_per_gather=1 -c max_parallel_workers=2 -c max_parallel_maintenance_workers=1"
+    env_file:
+      - '.env'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - tg_bot
+
+  webhook:
+    image: "webhook"
+    container_name: "${WEBHOOK_CONTAINER_NAME}"
+    stop_signal: SIGINT
+    build:
+      context: ./backend
+      dockerfile: infrastructure/webhook/Dockerfile
+    working_dir: "/usr/src/app/${WEBHOOK_APP_NAME}"
+    volumes:
+      - ./backend:/usr/src/app/${WEBHOOK_APP_NAME}
+    command: [ "uvicorn", "infrastructure.webhook.app:app", "--host", "0.0.0.0", "--port", "8000" ]
+    restart: always
+    env_file:
+      - ".env"
+    networks:
+      - tg_bot
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+
+networks:
+  tg_bot:
+    driver: bridge
+
+volumes:
+  pgdata: { }
