@@ -50,7 +50,7 @@ async def main():
     dp.include_routers(*routers_list)
 
     await on_startup(bot, config.tg_bot.admin_ids)
-    await dp.start_polling(bot)
+    await dp.start_polling(bot, config=config)
 
 
 if __name__ == "__main__":

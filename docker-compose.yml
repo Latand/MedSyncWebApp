@@ -8,8 +8,9 @@ services:
     volumes:
       - ./frontend:/home/node/app
     command: sh -c 'npm install; npm run dev --host'
+    stop_signal: SIGINT
     ports:
-      - "3777:5173"
+      - "3778:5173"
 
   bot:
     image: "${BOT_IMAGE_NAME}"
@@ -37,7 +38,7 @@ services:
     container_name: "${PG_CONTAINER_NAME}"
     image: postgres:13-alpine
     ports:
-      - "5439:5432" # Change if you like! 5439 is external to container
+      - "5452:5432" # Change if you like! 5439 is external to container
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data

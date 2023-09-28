@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import List
 
 import betterlogging as bl
-from aiogram import Bot
 from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
@@ -21,7 +20,6 @@ log = logging.getLogger(__name__)
 config: Config = load_config()
 engine = create_engine(config.db)
 session_pool = create_session_pool(engine)
-bot = Bot(token=config.tg_bot.token)
 
 app.add_middleware(
     CORSMiddleware,
