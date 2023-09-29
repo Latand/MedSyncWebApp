@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 from sqlalchemy import Integer, String, ForeignKey, DECIMAL, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -14,5 +13,6 @@ class Diagnostic(Base, TableNameMixin):
 
 class DiagnosticLocation(Base):
     __tablename__ = "diagnostic_locations"
-    diagnostic_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    location_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    diagnostic_location_id: Mapped[int_pk]
+    diagnostic_id: Mapped[int] = mapped_column(ForeignKey("diagnostics.diagnostic_id"))
+    location_id: Mapped[int] = mapped_column(ForeignKey("locations.location_id"))

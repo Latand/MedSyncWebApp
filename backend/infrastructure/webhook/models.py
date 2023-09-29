@@ -1,4 +1,3 @@
-import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -11,7 +10,7 @@ class Diagnostic(BaseModel):
     price: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DiagnosticLocation(BaseModel):
@@ -20,7 +19,13 @@ class DiagnosticLocation(BaseModel):
     location_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class DoctorBookingPayload(BaseModel):
+    doctor_slot_id: int
+    user_full_name: str
+    user_email: str
+    user_phone_number: str
 
 
 class Doctor(BaseModel):
@@ -31,7 +36,7 @@ class Doctor(BaseModel):
     price: float
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DoctorRating(BaseModel):
@@ -39,7 +44,7 @@ class DoctorRating(BaseModel):
     rating: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DoctorBooking(BaseModel):
@@ -50,7 +55,7 @@ class DoctorBooking(BaseModel):
     status: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Location(BaseModel):
@@ -59,7 +64,7 @@ class Location(BaseModel):
     address: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Slot(BaseModel):
@@ -68,7 +73,7 @@ class Slot(BaseModel):
     start_time: int
     end_time: int
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DoctorSlot(BaseModel):
@@ -78,7 +83,7 @@ class DoctorSlot(BaseModel):
     is_booked: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DiagnosticSlot(BaseModel):
@@ -89,7 +94,7 @@ class DiagnosticSlot(BaseModel):
 
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class Booking(BaseModel):
@@ -101,7 +106,7 @@ class Booking(BaseModel):
     diagnostic_slot_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class User(BaseModel):
@@ -110,4 +115,4 @@ class User(BaseModel):
     full_name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
