@@ -13,8 +13,8 @@ from alembic import op
 from faker import Faker
 
 # revision identifiers, used by Alembic.
-revision: str = "0e5cf4b909ff"
-down_revision: Union[str, None] = "7b0bae0ba599"
+revision: str = '0e5cf4b909ff'
+down_revision: Union[str, None] = '7b0bae0ba599'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -161,7 +161,7 @@ def upgrade() -> None:
                     else fake.name_female(),
                     specialty_id=random.choice(speciality_ids),
                     price=float("{:.2f}".format(random.uniform(50.0, 200.0))),
-                    photo_url=f"src/assets/images/doctors-listing/profiles/{photo_id}.png",
+                    photo_url=f"/src/assets/images/doctors-listing/profiles/{photo_id}.png",
                 ),
             )
 

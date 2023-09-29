@@ -10,6 +10,7 @@ import Nav from "../components/DoctorsListing/Nav.jsx";
 
 const DoctorSelection = () => {
     let navigate = useNavigate()
+    let storage = useCloudStorage();
 
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const [specialties, setSpecialties] = useState([]);
@@ -18,7 +19,6 @@ const DoctorSelection = () => {
     const [displayedDoctors, setDisplayedDoctors] = useState([]);
     const [specialty, setSpecialty] = useState("");
     const [selectedDoctor, setSelectedDoctor] = useState(null);
-    let storage = useCloudStorage();
 
     const fetchSpecialties = async () => {
         try {
@@ -104,7 +104,7 @@ const DoctorSelection = () => {
         {selectedDoctor && <MainButton
             textColor="#FFF"
             color="#8A6CDF"
-            text={`Book ${selectedDoctor.full_name}`}
+            text={`Book with ${selectedDoctor.full_name}`}
             onClick={async () => {
                 selectionChanged();
                 await storage.setItem("selectedDoctor", JSON.stringify(selectedDoctor));

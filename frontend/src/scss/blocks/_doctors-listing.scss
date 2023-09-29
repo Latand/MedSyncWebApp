@@ -25,6 +25,7 @@
     padding-inline: 13px;
     margin-bottom: 15px;
     position: relative;
+    margin-top: 20px;
 
 
     &__input {
@@ -90,6 +91,9 @@
         color: $color-button-text;
         border: none;
       }
+      &:hover {
+        filter: brightness(1.05);
+      }
     }
   }
 
@@ -115,6 +119,9 @@
       background: $color-gradient;
       cursor: pointer;
 
+      &:hover {
+        filter: brightness(1.05);
+      }
       .card__review__img {
         filter: invert(1);
       }

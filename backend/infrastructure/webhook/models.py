@@ -36,10 +36,14 @@ class Doctor(BaseModel):
     specialty_name: str
     specialty_id: int
     price: float
-    reviews: int
-    avg_rating: float
+    reviews: Optional[int] = None
+    avg_rating: Optional[float] = None
     photo_url: str
     address: str
+    experience: Optional[str] = None
+    certificates: Optional[str] = None
+    working_time: Optional[str] = None
+    services: Optional[str] = None
 
     class Config:
         from_attributes = True

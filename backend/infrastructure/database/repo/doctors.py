@@ -90,3 +90,26 @@ class DoctorRepo(BaseRepo):
         await self.session.execute(update_stmt)
 
         await self.session.commit()
+
+    async def get_doctor(self, doctor_id: int) -> Doctor:
+        stmt = (
+            select(
+                Doctor.doctor_id,
+                Doctor.location_id,
+                Doctor.full_name,
+                Specialty.specialty_name,
+                Specialty.specialty_id,
+                Doctor.price,
+                Doctor.photo_url,
+                Location.address,
+                Doctor.experience,
+                Doctor.certificates,
+                Doctor.working_time,
+                Doctor.services,
+            )
+            .join(Location, Location.location_id == Doctor.location_id)
+            .join(Specialty, Specialty.specialty_id == Doctor.specialty_id)
+            .where(Doctor.doctor_id == doctor_id)
+        )
+        result = await self.session.execute(stmt)
+        return result.mappings().first()

@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from fastapi import Depends, APIRouter, HTTPException
@@ -15,6 +16,14 @@ doctor_router = APIRouter(prefix="/doctors")
 specialties_router = APIRouter(prefix="/specialties")
 
 
+@doctor_router.get("/{doctor_id}", response_model=Doctor)
+async def get_doctor(doctor_id: int, repo: RequestsRepo = Depends(get_repo)):
+    doctor = await repo.doctors.get_doctor(doctor_id)
+    if doctor is None:
+        raise HTTPException(status_code=404, detail="Doctor not found")
+    return doctor
+
+
 @doctor_router.get("/", response_model=List[Doctor])
 async def get_all_doctors(repo: RequestsRepo = Depends(get_repo)):
     doctors = await repo.doctors.get_all_doctors()
@@ -25,7 +34,6 @@ async def get_all_doctors(repo: RequestsRepo = Depends(get_repo)):
 async def get_specialties(repo: RequestsRepo = Depends(get_repo)):
     specialties = await repo.doctors.get_specialties()
     return specialties
-
 
 @doctor_router.post("/book_slot", response_model=Booking)
 async def book_doctor_slot_endpoint(

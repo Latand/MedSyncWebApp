@@ -1,6 +1,22 @@
 .patient-information {
   @include padding;
 
+  &__header {
+    position: relative;
+    margin-bottom: 40px;
+  
+    &::after{
+      content: "";
+      position: absolute;
+      margin-bottom: -20px;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: $color-address;
+      opacity: 0.3;
+    }
+  }
+
   .form {
     display: flex;
     flex-direction: column;
@@ -52,7 +68,11 @@
       font-weight: $font-weight-bold;
       border-radius: 30px;
       padding: 15px 0;
-      width: 100%
+      width: 100%;
+
+      &:hover {
+        filter: brightness(1.05);
+      }
     }
 
     .arrow {
@@ -61,21 +81,5 @@
       width: 12px;
       height: 12px;
     }
-  }
-}
-
-.header {
-  position: relative;
-  margin-bottom: 40px;
-
-  &::after{
-    content: "";
-    position: absolute;
-    margin-bottom: -20px;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: $color-address;
-    opacity: 0.5;
   }
 }

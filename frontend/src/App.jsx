@@ -4,8 +4,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {useHapticFeedback, WebAppProvider} from '@vkruglikov/react-telegram-web-app';
 import LandingPage from "./pages/landing-page.jsx";
 import GetTested from "./pages/get-tested.jsx";
-import WithBack from "./components/WithBack.jsx";
 import DoctorSelection from "./pages/doctor-selection.jsx";
+import About from "./pages/doctor-about.jsx";
 
 const App = () => {
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
@@ -41,6 +41,7 @@ const App = () => {
                     <Route path="/" element={<LandingPage/>}/>
                     <Route path="/see_a_doctor" element={<DoctorSelection/>}/>
                     <Route path="/get_tested" element={<GetTested/>}/>
+                    <Route path="/doctor/:doctor_id" element={<About/>}/>
                 </Routes>
             </BrowserRouter>
         </WebAppProvider>
