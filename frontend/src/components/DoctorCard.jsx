@@ -2,8 +2,9 @@ import React from 'react';
 import ellipseOnline from '../assets/images/doctors-listing/ellipse-online.svg';
 import favorite from '../assets/images/doctors-listing/favorite.svg';
 
-const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_review, price}) => (
-    <section className="card">
+const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_review, price,
+                     onClick, className}) => (
+    <section className={className} onClick={onClick}>
         <div className="card__image">
             <img
                 className="card__image__img"

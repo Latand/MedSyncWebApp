@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'; // Install Axios via npm if you haven't already
 import {useNavigate} from "react-router-dom";
-import {BackButton} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, MainButton, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import DoctorCard from "../components/DoctorCard.jsx";
 import Header from "../components/Header.jsx";
 import SearchBar from "../components/SearchBar.jsx";
@@ -10,11 +10,14 @@ import Nav from "../components/Nav.jsx";
 
 const DoctorSelection = () => {
     let navigate = useNavigate()
+
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const [specialties, setSpecialties] = useState([]);
     const [search, setSearch] = useState("");
     const [allDoctors, setAllDoctors] = useState([]);
     const [displayedDoctors, setDisplayedDoctors] = useState([]);
     const [specialty, setSpecialty] = useState("");
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
 
     const fetchSpecialties = async () => {
         try {
@@ -46,15 +49,17 @@ const DoctorSelection = () => {
         } else {
             setDisplayedDoctors(allDoctors);  // If no specialty is selected, show all doctors
         }
-    }, [specialty, allDoctors]);
+        selectionChanged();
+    }, [specialty, allDoctors, selectionChanged]);
 
     useEffect(() => {
         const filteredDoctors = allDoctors.filter(doctor =>
             doctor.full_name.toLowerCase().includes(search.toLowerCase()) ||
             doctor.specialty_name.toLowerCase().includes(search.toLowerCase())
         );
+        selectionChanged();
         setDisplayedDoctors(filteredDoctors);
-    }, [search, allDoctors]);
+    }, [search, allDoctors, selectionChanged]);
 
     return (<>
         <BackButton onClick={() => navigate(-1)}/>
@@ -66,6 +71,7 @@ const DoctorSelection = () => {
             }
             {displayedDoctors && <main className="main">
                 {displayedDoctors.map(doctor => (<DoctorCard
+                    className={selectedDoctor && selectedDoctor.doctor_id === doctor.doctor_id ? 'card card--active' : 'card'}
                     key={doctor.doctor_id}
                     name={doctor.full_name}
                     title={doctor.specialty_name}
@@ -74,9 +80,24 @@ const DoctorSelection = () => {
                     avg_review={doctor.avg_review ? doctor.avg_review : 0}
                     reviews={doctor.reviews ? doctor.reviews : 0}
                     doctorImage={doctor.photo_url}
+                    onClick={() => {
+                        if (selectedDoctor?.doctor_id === doctor.doctor_id) {
+                            setSelectedDoctor(null);
+                        } else {
+                            setSelectedDoctor(doctor);
+                        }
+                        impactOccurred("light");
+                    }}
                 />))}
             </main>}
         </div>
+        {selectedDoctor && <MainButton onClick={() => {
+            navigate(`/doctor/${selectedDoctor.doctor_id}`);
+        }}
+                                       textColor="#FFF"
+                                       color="#8A6CDF"
+                                       text={`Book ${selectedDoctor.full_name}`}
+        />}
     </>);
 };
 

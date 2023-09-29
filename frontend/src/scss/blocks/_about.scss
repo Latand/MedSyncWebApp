@@ -1,0 +1,130 @@
+.about {
+  @include padding;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__img {
+    border-radius: 100px;
+    width: 143px;
+    height: 151px;
+    margin-bottom: 9px;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: $font-weight-bold;
+    line-height: 119%;
+    margin-bottom: 2px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    font-size: 14px;
+    font-weight: $font-weight-regular;
+    line-height: 119%;
+  }
+
+  &__status {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 7px;
+    margin-bottom: 10px;
+
+    &__text {
+      color: $color-about-available ;
+      font-size: 10px;
+      font-weight: $font-weight-regular;
+      line-height: 119%;
+    }
+
+    &__img {
+      width: 5px;
+      height: 5px;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background: $color-gradient;
+    box-shadow: $color-box-shadow;
+    color: $color-button-text;
+    font-size: 17px;
+    font-weight: $font-weight-bold;
+    border-radius: 31px;
+    padding: 15px 0;
+    width: 100%;
+    margin-bottom: 17px;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__title {
+      font-size: 15px;
+      font-weight: $font-weight-bold;
+      line-height: 119%;
+    }
+
+    &__text {
+      color: $color-address;
+      font-size: 11px;
+      font-weight: $font-weight-regular;
+      line-height: 119%;
+    }
+  }
+}
+
+.experience {
+  position: relative;
+
+  &::after{
+    content: "";
+    position: absolute;
+    margin-bottom: -12px;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: $color-address;
+    opacity: 0.5;
+  }
+}
+
+.services {
+  position: relative;
+
+  &::after{
+    content: "";
+    position: absolute;
+    margin-bottom: -12px;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: $color-address;
+    opacity: 0.5;
+  }
+
+  &__list {
+    padding: 0;
+    margin: 0 0 0 20px;
+  }
+}
+

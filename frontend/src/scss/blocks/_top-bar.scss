@@ -1,0 +1,30 @@
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__text {
+    color: $color-primary;
+    font-size: 24px;
+    font-weight: $font-weight-bold;
+    line-height: normal;
+    margin-right: 120px;
+    text-align: center;
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    &__img {
+      width: 15px;
+      height: 12px;
+
+      &--about {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

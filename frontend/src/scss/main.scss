@@ -1,5 +1,10 @@
 @import "./utils/_vars";
 @import "./utils/_mixins";
 @import "./blocks/_body.scss";
-@import "./blocks/_landing-page.scss";
-@import "./blocks/_doctors-listing.scss";
+@import "./blocks/_button.scss"; 
+@import "./blocks/_landing-page";
+@import "./blocks/_top-bar";
+@import "./blocks/_doctors-listing";
+@import "./blocks/_about";
+@import "./blocks/_patient-information";
+@import "./blocks/_resume";

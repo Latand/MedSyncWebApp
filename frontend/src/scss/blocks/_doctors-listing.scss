@@ -90,12 +90,6 @@
         color: $color-button-text;
         border: none;
       }
-
-      &--active {
-        background: $color-gradient;
-        color: $color-button-text;
-        border: none;
-      }
     }
   }
 
@@ -115,7 +109,8 @@
     justify-content: space-between;
     padding: 4px 0;
 
-    &:hover {
+    &:hover,
+    &--active{
       color: $color-button-text;
       background: $color-gradient;
       cursor: pointer;
