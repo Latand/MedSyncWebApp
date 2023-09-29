@@ -11,6 +11,7 @@ const App = () => {
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const [telegram, setTelegram] = useState(null);
     const [mainButton, setMainButton] = useState(false);
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             const {initData} = window.Telegram.WebApp;

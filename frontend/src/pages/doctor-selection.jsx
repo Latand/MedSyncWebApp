@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'; // Install Axios via npm if you haven't already
 import {useNavigate} from "react-router-dom";
-import {BackButton, MainButton, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import DoctorCard from "../components/DoctorCard.jsx";
 import Header from "../components/Header.jsx";
 import SearchBar from "../components/SearchBar.jsx";
@@ -18,6 +18,7 @@ const DoctorSelection = () => {
     const [displayedDoctors, setDisplayedDoctors] = useState([]);
     const [specialty, setSpecialty] = useState("");
     const [selectedDoctor, setSelectedDoctor] = useState(null);
+    let storage = useCloudStorage();
 
     const fetchSpecialties = async () => {
         try {
@@ -40,7 +41,14 @@ const DoctorSelection = () => {
     useEffect(() => {
         fetchAllDoctors();
         fetchSpecialties()
-    }, []);
+        storage.getItem("selectedDoctor").then((value) => {
+                if (value) {
+                    setSelectedDoctor(JSON.parse(value));
+                }
+            }
+        );
+
+    }, [storage]);
 
     useEffect(() => {
         if (specialty) {
@@ -91,7 +99,9 @@ const DoctorSelection = () => {
                 />))}
             </main>}
         </div>
-        {selectedDoctor && <MainButton onClick={() => {
+        {selectedDoctor && <MainButton onClick={async () => {
+            selectionChanged();
+            await storage.setItem("selectedDoctor", JSON.stringify(selectedDoctor));
             navigate(`/doctor/${selectedDoctor.doctor_id}`);
         }}
                                        textColor="#FFF"
