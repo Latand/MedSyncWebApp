@@ -1,6 +1,6 @@
 import React from 'react';
-import ellipseOnline from '../assets/images/doctors-listing/ellipse-online.svg';
-import favorite from '../assets/images/doctors-listing/favorite.svg';
+import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
+import favorite from '../../assets/images/doctors-listing/favorite.svg';
 
 const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_review, price,
                      onClick, className}) => (

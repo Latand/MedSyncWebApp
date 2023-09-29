@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios'; // Install Axios via npm if you haven't already
 import {useNavigate} from "react-router-dom";
 import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
-import DoctorCard from "../components/DoctorCard.jsx";
-import Header from "../components/Header.jsx";
-import SearchBar from "../components/SearchBar.jsx";
-import Nav from "../components/Nav.jsx";
+import DoctorCard from "../components/DoctorsListing/DoctorCard.jsx";
+import Header from "../components/DoctorsListing/Header.jsx";
+import SearchBar from "../components/DoctorsListing/SearchBar.jsx";
+import Nav from "../components/DoctorsListing/Nav.jsx";
 
 
 const DoctorSelection = () => {
@@ -51,23 +51,25 @@ const DoctorSelection = () => {
     }, [storage]);
 
     useEffect(() => {
-        if (specialty) {
-            const filteredDoctors = allDoctors.filter(doctor => doctor.specialty_id === specialty);
-            setDisplayedDoctors(filteredDoctors);
-        } else {
-            setDisplayedDoctors(allDoctors);  // If no specialty is selected, show all doctors
-        }
-        selectionChanged();
-    }, [specialty, allDoctors, selectionChanged]);
+        let filteredDoctors = allDoctors;
 
-    useEffect(() => {
-        const filteredDoctors = allDoctors.filter(doctor =>
-            doctor.full_name.toLowerCase().includes(search.toLowerCase()) ||
-            doctor.specialty_name.toLowerCase().includes(search.toLowerCase())
-        );
-        selectionChanged();
+        if (specialty) {
+            filteredDoctors = filteredDoctors.filter(doctor => doctor.specialty_id === specialty);
+        }
+
+        if (search) {
+            const searchLower = search.toLowerCase();
+            filteredDoctors = filteredDoctors.filter(doctor =>
+                doctor.full_name.toLowerCase().includes(searchLower) ||
+                doctor.specialty_name.toLowerCase().includes(searchLower)
+            );
+        }
+
         setDisplayedDoctors(filteredDoctors);
-    }, [search, allDoctors, selectionChanged]);
+        selectionChanged();
+
+    }, [specialty, search, allDoctors, selectionChanged]);
+
 
     return (<>
         <BackButton onClick={() => navigate(-1)}/>
@@ -99,14 +101,15 @@ const DoctorSelection = () => {
                 />))}
             </main>}
         </div>
-        {selectedDoctor && <MainButton onClick={async () => {
-            selectionChanged();
-            await storage.setItem("selectedDoctor", JSON.stringify(selectedDoctor));
-            navigate(`/doctor/${selectedDoctor.doctor_id}`);
-        }}
-                                       textColor="#FFF"
-                                       color="#8A6CDF"
-                                       text={`Book ${selectedDoctor.full_name}`}
+        {selectedDoctor && <MainButton
+            textColor="#FFF"
+            color="#8A6CDF"
+            text={`Book ${selectedDoctor.full_name}`}
+            onClick={async () => {
+                selectionChanged();
+                await storage.setItem("selectedDoctor", JSON.stringify(selectedDoctor));
+                navigate(`/doctor/${selectedDoctor.doctor_id}`);
+            }}
         />}
     </>);
 };

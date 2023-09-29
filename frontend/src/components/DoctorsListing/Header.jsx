@@ -1,6 +1,5 @@
 import React from 'react';
-import arrowLeft from '../assets/images/doctors-listing/arrow-left.svg';
-import filter from '../assets/images/doctors-listing/filter.svg';
+import filter from '../../assets/images/doctors-listing/filter.svg';
 
 const Header = () => (
   <header className="header">
