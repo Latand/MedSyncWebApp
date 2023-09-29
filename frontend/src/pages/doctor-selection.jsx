@@ -48,14 +48,19 @@ const DoctorSelection = () => {
         }
     }, [specialty, allDoctors]);
 
+    useEffect(() => {
+        const filteredDoctors = allDoctors.filter(doctor =>
+            doctor.full_name.toLowerCase().includes(search.toLowerCase()) ||
+            doctor.specialty_name.toLowerCase().includes(search.toLowerCase())
+        );
+        setDisplayedDoctors(filteredDoctors);
+    }, [search, allDoctors]);
 
     return (<>
         <BackButton onClick={() => navigate(-1)}/>
         <div className="wrapper">
             <Header/>
-            <SearchBar/>
-
-
+            <SearchBar search={search} setSearch={setSearch}/>
             {specialties &&
                 <Nav specialties={specialties} onSpecialtyClick={setSpecialty} selectedSpecialty={specialty}/>
             }

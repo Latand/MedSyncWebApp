@@ -1,8 +1,7 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 
 
 const Nav = ({specialties, selectedSpecialty, onSpecialtyClick}) => {
-
     const handleClick = (specialty_id) => {
         if (specialty_id === selectedSpecialty) {
             // reset selected specialty
@@ -17,12 +16,10 @@ const Nav = ({specialties, selectedSpecialty, onSpecialtyClick}) => {
             <ul className="nav__list">
                 {specialties.map((specialty) => (
                     <li
-                        // className={`nav__item ${selectedSpecialty === specialty.specialty_id ? "nav__item--active" : ""}`}
                         className="nav__item"
                         key={specialty.specialty_id}
                     >
                         <button
-                            // className="nav__button button"
                             className={`nav__button button ${selectedSpecialty === specialty.specialty_id ? "nav__button--active" : ""}`}
                             onClick={() => handleClick(specialty.specialty_id)}
                         >
