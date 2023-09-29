@@ -1,14 +1,50 @@
 import datetime
 
-from sqlalchemy import select, insert, update, cast, Date, false
+from sqlalchemy import select, insert, update, cast, Date, false, func
 
-from infrastructure.database.models import Doctor, DoctorSlot, Booking, Slot
+from infrastructure.database.models import (
+    Doctor,
+    DoctorSlot,
+    Booking,
+    Slot,
+    DoctorRating,
+    Location,
+)
+from infrastructure.database.models.doctors import Specialty
 from infrastructure.database.repo.base import BaseRepo
 
 
 class DoctorRepo(BaseRepo):
-    async def get_all_doctors(self):
-        stmt = select(Doctor)
+    async def get_all_doctors(self) -> list[Doctor]:
+        stmt = (
+            select(
+                Doctor.doctor_id,
+                Doctor.location_id,
+                Doctor.full_name,
+                Specialty.specialty_name,
+                Specialty.specialty_id,
+                Doctor.price,
+                Doctor.photo_url,
+                Location.address,
+                func.coalesce(func.avg(DoctorRating.rating), 0).label("avg_rating"),
+                func.coalesce(func.count(DoctorRating.rating_id), 0).label("reviews"),
+            )
+            .join(Location, Location.location_id == Doctor.location_id)
+            .join(Specialty, Specialty.specialty_id == Doctor.specialty_id)
+            .outerjoin(DoctorRating, DoctorRating.doctor_id == Doctor.doctor_id)
+            .group_by(Doctor.doctor_id, Location.location_id, Specialty.specialty_id)
+        )
+
+        result = await self.session.execute(stmt)
+        return result.all()
+
+    async def get_specialties(self) -> list[Specialty]:
+        stmt = (
+            select(Specialty)
+            .join(Doctor)
+            .order_by(Specialty.specialty_name)
+            .group_by(Specialty.specialty_id)
+        )
         result = await self.session.scalars(stmt)
         return result.all()
 

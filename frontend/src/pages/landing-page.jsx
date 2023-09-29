@@ -1,7 +1,7 @@
 import React from 'react';
-import medSyncIcon from '../assets/images/medsync-icon.svg';
-import arrowRight from '../assets/images/arrow-right.svg';
-import medSyncLogo from "../assets/images/medsync-logo.svg";
+import medSyncIcon from '../assets/images/landing-page/medsync-icon.svg';
+import arrowRight from '../assets/images/landing-page/arrow-right.svg';
+import medSyncLogo from "../assets/images/landing-page/medsync-logo.svg";
 import {Link} from "react-router-dom";
 
 const LandingPage = () => {

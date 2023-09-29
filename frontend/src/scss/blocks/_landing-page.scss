@@ -21,9 +21,9 @@
     align-items: center;
     margin-bottom: 20px;
 
-    &__img {
+    &--img {
       width: 208px;
-      height: 46px;
+      height: 40px;
     }
   }
 
@@ -38,18 +38,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     text-decoration: none;
+    gap: 10px;
     background: $color-gradient;
     box-shadow: $color-box-shadow;
     color: $color-button-text;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: $font-weight-bold;
     border-radius: 45px;
-    padding: 16px 0;
-    margin-top: 63px;
-    margin-bottom: 27px;
-    width: 100%;
+    padding: 15px 0;
+    width: 200px;
+    margin: 63px auto 27px;
   }
 
   .arrow {
@@ -63,12 +62,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 80px;
     color: $color-tertiary;
     font-size: 18px;
     font-weight: $font-weight-bold;
+    margin-bottom: 80px;
   }
-
+  
   &__bottom {
     color: $color-primary;
     line-height: 118.5%;

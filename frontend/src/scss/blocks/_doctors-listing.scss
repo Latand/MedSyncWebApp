@@ -1,0 +1,214 @@
+.wrapper {
+  padding-inline: 13px;
+  padding-top: 32px;
+  padding-bottom: 10px;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+
+    &__text {
+      color: $color-primary;
+      font-size: 24px;
+      font-weight: $font-weight-bold;
+      line-height: normal;
+      margin-right: 120px;
+
+      text-align: center;
+    }
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    padding-inline: 13px;
+    margin-bottom: 15px;
+    position: relative;
+
+
+    &__input {
+
+      border-radius: 31px;
+      border: 1px solid $color-button-text;
+      background: $color-button-text;
+      width: 100%;
+      font-size: 12px;
+      font-weight: $font-weight-semibold;
+      padding: 10px 0 10px 20px;
+      width: 100%;
+      outline: none;
+      color: $color-search-input;
+    }
+
+    &__icon {
+      position: absolute;
+      top: 13px;
+      right: 35px;
+
+
+      &__img {
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  .nav {
+    margin-bottom: 20px;
+    overflow-x: auto;
+
+    &__list {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      list-style: none;
+      text-align: center;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+    }
+
+    &__item {
+
+      font-size: 10px;
+      line-height: normal;
+      font-weight: $font-weight-bold;
+      color: $color-primary;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    &__button {
+      border-radius: 26px;
+      border: 1px solid #E2E2E2;
+      padding: 7px 20px;
+
+      &:hover,
+      &--active {
+        background: $color-gradient;
+        color: $color-button-text;
+        border: none;
+      }
+
+      &--active {
+        background: $color-gradient;
+        color: $color-button-text;
+        border: none;
+      }
+    }
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    background: $color-button-text;
+    border-radius: 12px;
+    width: 97%;
+    justify-content: space-between;
+    padding: 4px 0;
+
+    &:hover {
+      color: $color-button-text;
+      background: $color-gradient;
+      cursor: pointer;
+
+      .card__review__img {
+        filter: invert(1);
+      }
+
+      .card__review__text {
+        color: $color-button-text;
+      }
+
+      .card__address,
+      .card__price {
+        color: $color-button-text;
+      }
+
+    }
+
+    &__image {
+      &__img {
+        object-fit: contain;
+        width: 125px;
+        height: 125px;
+        border-radius: 12px 0 0 12px;
+      }
+    }
+
+    &__info {
+      padding-top: 15px;
+      width: 180px;
+    }
+
+    &__title {
+      font-size: 17px;
+      font-weight: $font-weight-bold;
+      line-height: 119%;
+    }
+
+    &__subtitle {
+      font-size: 15px;
+      font-weight: $font-weight-regular;
+      line-height: 119%;
+      margin-bottom: 11px;
+    }
+
+    &__review {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 11px;
+
+      &__img {
+        width: 10px;
+        height: 10px;
+      }
+
+      &__text {
+        color: $color-review;
+        text-align: center;
+        font-size: 12px;
+        font-weight: $font-weight-semibold;
+        line-height: normal;
+      }
+    }
+
+    &__price {
+      color: $color-address;
+      line-height: 119%;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    &__address {
+      color: $color-address;
+      line-height: 119%;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+
+    &__icon {
+      padding-top: 22px;
+      padding-right: 16px;
+
+      &__img {
+        width: 5px;
+        height: 5px;
+        border: 1px solid white;
+        border-radius: 50%;
+      }
+    }
+  }
+}

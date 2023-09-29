@@ -1,0 +1,45 @@
+import React from 'react';
+import ellipseOnline from '../assets/images/doctors-listing/ellipse-online.svg';
+import favorite from '../assets/images/doctors-listing/favorite.svg';
+
+const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_review, price}) => (
+    <section className="card">
+        <div className="card__image">
+            <img
+                className="card__image__img"
+                src={doctorImage}
+                alt="Doctor"
+            />
+        </div>
+
+        <div className="card__info">
+            <h1 className="card__title">{name}</h1>
+
+            <p className="card__subtitle">{title}</p>
+
+            <div className="card__review">
+                <img
+                    className="card__review__img"
+                    src={favorite}
+                    alt="Star"
+                />
+
+                <p className="card__review__text">{avg_review.toFixed(1)} ({reviews} reviews)</p>
+            </div>
+
+            <p className="card__address">{address}</p>
+
+            <p className="card__price">Price: {price.toFixed(2)}$</p>
+        </div>
+
+        <div className="card__icon">
+            <img
+                className="card__icon__img"
+                src={ellipseOnline}
+                alt="green ellipse"
+            />
+        </div>
+    </section>
+);
+
+export default DoctorCard;

@@ -4,7 +4,7 @@ from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 
 from infrastructure.webhook.routers.diagnostics import diagnostics_router
-from infrastructure.webhook.routers.doctors import doctor_router
+from infrastructure.webhook.routers.doctors import doctor_router, specialties_router
 from infrastructure.webhook.routers.slots import slots_router
 
 app = FastAPI()
@@ -31,6 +31,7 @@ logging.basicConfig(
 
 for router in [
     doctor_router,
+    specialties_router,
     diagnostics_router,
     slots_router,
 ]:

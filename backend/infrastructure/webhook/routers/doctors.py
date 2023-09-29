@@ -6,11 +6,13 @@ from infrastructure.database.repo.requests import RequestsRepo
 from infrastructure.webhook.models import (
     Doctor,
     DoctorBookingPayload,
-    Booking
+    Booking,
+    Specialty,
 )
 from infrastructure.webhook.utils import get_repo
 
 doctor_router = APIRouter(prefix="/doctors")
+specialties_router = APIRouter(prefix="/specialties")
 
 
 @doctor_router.get("/", response_model=List[Doctor])
@@ -18,6 +20,11 @@ async def get_all_doctors(repo: RequestsRepo = Depends(get_repo)):
     doctors = await repo.doctors.get_all_doctors()
     return doctors
 
+
+@specialties_router.get("/", response_model=List[Specialty])
+async def get_specialties(repo: RequestsRepo = Depends(get_repo)):
+    specialties = await repo.doctors.get_specialties()
+    return specialties
 
 
 @doctor_router.post("/book_slot", response_model=Booking)

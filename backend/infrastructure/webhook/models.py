@@ -21,6 +21,7 @@ class DiagnosticLocation(BaseModel):
     class Config:
         from_attributes = True
 
+
 class DoctorBookingPayload(BaseModel):
     doctor_slot_id: int
     user_full_name: str
@@ -32,8 +33,21 @@ class Doctor(BaseModel):
     doctor_id: int
     location_id: int
     full_name: str
-    specialty: str
+    specialty_name: str
+    specialty_id: int
     price: float
+    reviews: int
+    avg_rating: float
+    photo_url: str
+    address: str
+
+    class Config:
+        from_attributes = True
+
+
+class Specialty(BaseModel):
+    specialty_id: int
+    specialty_name: str
 
     class Config:
         from_attributes = True
@@ -72,6 +86,7 @@ class Slot(BaseModel):
     location_id: int
     start_time: int
     end_time: int
+
     class Config:
         from_attributes = True
 
@@ -91,7 +106,6 @@ class DiagnosticSlot(BaseModel):
     diagnostic_location_id: int
     slot_id: int
     is_booked: bool
-
 
     class Config:
         from_attributes = True

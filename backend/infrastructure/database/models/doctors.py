@@ -8,9 +8,15 @@ class Doctor(Base, TableNameMixin):
     doctor_id: Mapped[int_pk]
     location_id: Mapped[int] = mapped_column(ForeignKey("locations.location_id"))
     full_name: Mapped[str] = mapped_column(String(128))
-    specialty: Mapped[str] = mapped_column(String(128))
+    specialty_id: Mapped[int] = mapped_column(ForeignKey("specialties.specialty_id"))
     price: Mapped[float] = mapped_column(DECIMAL(10, 2))
     photo_url: Mapped[str] = mapped_column(String(256))
+
+
+class Specialty(Base, TableNameMixin):
+    __tablename__ = "specialties"
+    specialty_id: Mapped[int_pk]
+    specialty_name: Mapped[str] = mapped_column(String(128))
 
 
 class DoctorRating(Base):
@@ -26,4 +32,6 @@ class DoctorBooking(Base, TimestampMixin):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id"))
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctors.doctor_id"))
     slot_id: Mapped[int] = mapped_column(ForeignKey("slots.slot_id"))
-    status: Mapped[str] = mapped_column(Enum("Booked", "Cancelled", name="booking_status"))
+    status: Mapped[str] = mapped_column(
+        Enum("Booked", "Cancelled", name="booking_status")
+    )

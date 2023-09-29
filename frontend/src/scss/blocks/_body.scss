@@ -1,0 +1,37 @@
+.html {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 12px;
+  font-weight: $font-weight-regular;
+  color: $color-primary;
+  background-color: $color-button-text;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  width: 100%;
+  background: $color-gradient-sections;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.body {
+  padding: 0;
+  margin: 0;
+
+
+  p,
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  button {
+    font-family: "Josefin Sans", sans-serif;
+    background: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    line-height: normal;
+  }
+}
