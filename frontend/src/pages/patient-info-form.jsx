@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import arrowRight from '../assets/images/landing-page/arrow-right.svg';
 import Header from "../components/Header.jsx";
-import {useCloudStorage, useInitData, useShowPopup, WebAppProvider} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, useCloudStorage, useInitData, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {useNavigate} from "react-router-dom";
 import LargeButton from "../components/LargeButton.jsx";
 
@@ -64,95 +63,94 @@ const PatientInformation = () => {
 
     return (
         <>
-            <WebAppProvider>
-                <div className="patient-information">
-                    <Header className="patient-information"
-                            title="Patient Information"/>
+            <BackButton onClick={() => navigate(-1)}/>
+            <div className="patient-information">
+                <Header className="patient-information"
+                        title="Patient Information"/>
 
 
-                    <div className="patient-information__form">
-                        {initDataUnsafe && (
-                            <form
-                                onSubmit={handleSubmit}
-                                action="#"
-                                method="post"
-                                className="form"
-                            >
+                <div className="patient-information__form">
+                    {initDataUnsafe && (
+                        <form
+                            onSubmit={handleSubmit}
+                            action="#"
+                            method="post"
+                            className="form"
+                        >
 
-                                <label htmlFor="user_name" className="form__label">
-                                    Name
-                                    <input
-                                        className="form__input"
-                                        id="userName"
-                                        type="text"
-                                        name="user_name"
-                                        required
-                                        autoComplete="off"
-                                        value={formData.userName}
-                                        onChange={handleChange}
-                                    />
-                                </label>
-
-                                <label htmlFor="user_surname" className="form__label">
-                                    Surname
-                                    <input
-                                        className="form__input"
-                                        id="userSurname"
-                                        type="text"
-                                        name="user_surname"
-                                        required
-                                        autoComplete="off"
-                                        value={formData.userSurname}
-                                        onChange={handleChange}
-                                    />
-                                </label>
-
-
-                                <label htmlFor="user_phone" className="form__label">
-                                    Phone number
-                                    <input
-                                        className="form__input"
-                                        id="userPhone"
-                                        type="tel"
-                                        name="user_phone"
-                                        required
-                                        autoComplete="off"
-                                        value={formData.userPhone}
-                                        onChange={handleChange}
-                                    />
-                                </label>
-
-                                <label htmlFor="user_email" className="form__label">
-                                    Your E-Mail
-                                    <input
-                                        className="form__input"
-                                        id="userEmail"
-                                        type="email"
-                                        name="user_email"
-                                        required
-                                        value={formData.userEmail}
-                                        autoComplete="off"
-                                        onChange={handleChange}
-                                    />
-                                </label>
-
-                                <label htmlFor="textarea" className="form__label">Additional information
-                                    <textarea
-                                        className="form__textarea"
-                                        id="userMessage"
-                                        name="user_message"
-                                        onChange={handleChange}
-                                    ></textarea>
-                                </label>
-                                <LargeButton
-                                    title="Next"
-                                    handleSubmit={handleSubmit}
-                                    typeButton="form"
+                            <label htmlFor="user_name" className="form__label">
+                                Name
+                                <input
+                                    className="form__input"
+                                    id="userName"
+                                    type="text"
+                                    name="user_name"
+                                    required
+                                    autoComplete="off"
+                                    value={formData.userName}
+                                    onChange={handleChange}
                                 />
-                            </form>)}
-                    </div>
+                            </label>
+
+                            <label htmlFor="user_surname" className="form__label">
+                                Surname
+                                <input
+                                    className="form__input"
+                                    id="userSurname"
+                                    type="text"
+                                    name="user_surname"
+                                    required
+                                    autoComplete="off"
+                                    value={formData.userSurname}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+
+                            <label htmlFor="user_phone" className="form__label">
+                                Phone number
+                                <input
+                                    className="form__input"
+                                    id="userPhone"
+                                    type="tel"
+                                    name="user_phone"
+                                    required
+                                    autoComplete="off"
+                                    value={formData.userPhone}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            <label htmlFor="user_email" className="form__label">
+                                Your E-Mail
+                                <input
+                                    className="form__input"
+                                    id="userEmail"
+                                    type="email"
+                                    name="user_email"
+                                    required
+                                    value={formData.userEmail}
+                                    autoComplete="off"
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            <label htmlFor="textarea" className="form__label">Additional information
+                                <textarea
+                                    className="form__textarea"
+                                    id="userMessage"
+                                    name="user_message"
+                                    onChange={handleChange}
+                                ></textarea>
+                            </label>
+                            <LargeButton
+                                title="Next"
+                                handleSubmit={handleSubmit}
+                                typeButton="form"
+                            />
+                        </form>)}
                 </div>
-            </WebAppProvider>
+            </div>
         </>);
 };
 

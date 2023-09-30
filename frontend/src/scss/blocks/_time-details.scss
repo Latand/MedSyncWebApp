@@ -1,0 +1,225 @@
+.time-details {
+  @include padding;
+
+  &__header {
+    position: relative;
+    margin-bottom: 40px;
+  
+    &::after{
+      content: "";
+      position: absolute;
+      margin-bottom: -20px;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: $color-address;
+      opacity: 0.3;
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    background: $color-gradient;
+    box-shadow: $color-box-shadow;
+    color: $color-button-text;
+    font-size: 17px;
+    font-weight: $font-weight-bold;
+    border-radius: 30px;
+    padding: 15px 0;
+    width: 100%;
+
+    &:hover {
+      filter: brightness(1.05);
+    }
+  }
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  
+  &::after{
+    content: "";
+    position: absolute;
+    margin-bottom: -20px;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: $color-address;
+    opacity: 0.3;
+  }
+
+  .month-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &__wrap--left {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
+    &__wrap--right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    &__icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    &__text {
+      font-size: 21px;
+      font-weight: $font-weight-bold;
+      line-height: 119%;
+    }
+
+    &__button {
+      border: solid black;
+      border-width: 0 2px 2px 0;
+      padding: 3px;
+      cursor: pointer;
+
+    
+      &--next {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
+
+      &--prev {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+      }
+    }
+  }
+
+  .weekdays-selector {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+    
+    padding: 0;
+    margin: 0 0 20px 0;
+
+    &__weekday {
+      justify-self: center;
+      align-self: center;
+      text-align: center;
+      list-style: none;
+      color: $color-weekdays;
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      font-weight: $font-weight-bold;
+      line-height: normal;
+    }
+  }
+
+  .days-selector {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0;
+    margin: 0;
+
+    &__day {
+      justify-self: center;
+      align-self: center;
+      text-align: center;
+      list-style: none;
+      color: $color-primary;
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      font-weight: $font-weight-regular;
+      line-height: normal;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      border: none;
+      border-radius: 50%;
+      padding-top: 4px;
+      margin-bottom: 4px;
+
+      &--active {
+        background: $color-gradient;
+        color: $color-button-text;
+      }
+    }
+  }
+}
+
+.time-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .time-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 8px;
+
+    &__icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    &__text {
+      font-size: 18px;
+      font-weight: $font-weight-bold;
+      line-height: 119%;
+    }
+  }
+
+  .time-slot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+
+    &__button {
+      background: $color-button-text;
+      color: $color-review;
+      border: none;
+      border-radius: 26px;
+      cursor: pointer;
+      font-family: "Inter", sans-serif;;
+      font-size: 11px;
+      font-weight: $font-weight-bold;
+      line-height: normal;
+      text-align: center;
+      padding: 20px 0;
+      width: 100px;
+
+      &--active {
+        background: $color-gradient;
+        color: $color-button-text;
+        box-shadow: $color-box-shadow;
+      }
+
+      &:hover {
+        background: $color-primary;
+        opacity: 0.1;
+        color: $color-button-text;
+      }
+    }
+  }
+
+}

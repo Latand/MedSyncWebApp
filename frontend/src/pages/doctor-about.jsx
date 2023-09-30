@@ -34,6 +34,7 @@ const About = () => {
                     <TopBar title="About"/>
                     <DoctorInfo
                         name={doctor.full_name}
+                        doctor_id={doctor.doctor_id}
                         specialty={doctor.specialty_name}
                         status="Available"
                         imageSrc={doctor.photo_url}

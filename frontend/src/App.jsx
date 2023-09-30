@@ -8,6 +8,7 @@ import DoctorSelection from "./pages/doctor-selection.jsx";
 import About from "./pages/doctor-about.jsx";
 import PatientInformation from "./pages/patient-info-form.jsx";
 import Resume from "./pages/booking-resume.jsx";
+import AppointmentBooking from "./pages/appointment-booking.jsx";
 
 const App = () => {
 
@@ -31,7 +32,7 @@ const App = () => {
                     <Route path="/see_a_doctor" element={<DoctorSelection/>}/>
                     <Route path="/get_tested" element={<GetTested/>}/>
                     <Route path="/doctor/:doctor_id" element={<About/>}/>
-                    {/*<Route path="/booking/appointment/:doctor_id" element={<AppointmentBooking/>}/>*/}
+                    <Route path="/booking/appointment/:doctor_id" element={<AppointmentBooking/>}/>
                     {/*<Route path="/booking/diagnostic/:diagnostic_id" element={<DiagnosticBooking/>}/>*/}
                     <Route path="/booking/patient-info-form" element={<PatientInformation/>}/>
                     <Route path="/booking/confirmation" element={<Resume/>}/>

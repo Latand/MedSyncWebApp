@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import LargeButton from "../components/LargeButton.jsx";
-import {useCloudStorage, useShowPopup} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, useCloudStorage, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {useNavigate} from "react-router-dom";
 
 import boxIcon from '../assets/images/resume/Vector.svg';
-import WorkingHours from "../assets/images/resume/WorkingHours.jsx";
+import WorkingHours from "../components/Resume/WorkingHours.jsx";
 
 const ResumeBlock = ({title, children}) => (
     <div className="resume__block">
@@ -68,58 +68,60 @@ const Resume = () => {
     }
 
     return (
-
-        <div className="resume">
-            <Header className="resume" title="Resume"/>
-            {userData && doctorData && (
-                <div className="resume__blocks">
-                    <ResumeBlock title="Patient Info">
-                        <div className="resume__block__title">{userData.userName} {userData.userSurname}</div>
-                        {/*<div className="resume__block__title">{userData.userSurname}</div>*/}
-                        <a className="resume__block__link" href={`tel:${userData.userPhone}`}>{userData.userPhone}</a>
-                        <a className="resume__block__link"
-                           href={`mailto:${userData.userEmail}`}>{userData.userEmail}</a>
-                        <div className="resume__block__text--color-dark">
-                            {userData.userMessage}
-                        </div>
-                    </ResumeBlock>
-
-                    <ResumeBlock title="Your Visit">
-                        <div className="resume__block__title">Tuesday, <span
-                            className="resume__block__title--font-regular">October 8, 2023</span></div>
-                        <div className="resume__block__button">9:00 PM</div>
-
-                        <div className="box">
-                            <BoxWrap title="Heatherview">
-                                <div className="box__text">80336 Wendy Fort <br/> Sarashire, NE 59803</div>
-                            </BoxWrap>
-                            <a className="box__button button" href="https://maps.app.goo.gl/VkE3Fkkf6nMcWVp17"
-                               target="_blank" rel="noopener noreferrer">Get direction</a>
-                        </div>
-                        <BoxWrap title="Work Hours">
-                            <WorkingHours hoursArray={hoursArray}/>
-                        </BoxWrap>
-                    </ResumeBlock>
-
-                    <ResumeBlock title="Your Doctor">
-                        <div className="resume__doctor">
-                            <img className="resume__doctor__image" src={doctorData.photo_url}
-                                 alt="Doctor"/>
-                            <div className="resume__doctor__info">
-                                <div className="resume__block__title">{doctorData.full_name}</div>
-                                <div className="resume__block__text--color-dark">{doctorData.specialty_name}</div>
+        <>
+            <BackButton onClick={() => navigate(-1)}/>
+            <div className="resume">
+                <Header className="resume" title="Resume"/>
+                {userData && doctorData && (
+                    <div className="resume__blocks">
+                        <ResumeBlock title="Patient Info">
+                            <div className="resume__block__title">{userData.userName} {userData.userSurname}</div>
+                            {/*<div className="resume__block__title">{userData.userSurname}</div>*/}
+                            <a className="resume__block__link"
+                               href={`tel:${userData.userPhone}`}>{userData.userPhone}</a>
+                            <a className="resume__block__link"
+                               href={`mailto:${userData.userEmail}`}>{userData.userEmail}</a>
+                            <div className="resume__block__text--color-dark">
+                                {userData.userMessage}
                             </div>
-                        </div>
-                    </ResumeBlock>
-                </div>
-            )}
-            <LargeButton
-                handleSubmit={handleSubmit}
-                title="Confirm"
-                typeButton="resume"
-            />
-        </div>
+                        </ResumeBlock>
 
+                        <ResumeBlock title="Your Visit">
+                            <div className="resume__block__title">Tuesday, <span
+                                className="resume__block__title--font-regular">October 8, 2023</span></div>
+                            <div className="resume__block__button">9:00 PM</div>
+
+                            <div className="box">
+                                <BoxWrap title="Heatherview">
+                                    <div className="box__text">80336 Wendy Fort <br/> Sarashire, NE 59803</div>
+                                </BoxWrap>
+                                <a className="box__button button" href="https://maps.app.goo.gl/VkE3Fkkf6nMcWVp17"
+                                   target="_blank" rel="noopener noreferrer">Get direction</a>
+                            </div>
+                            <BoxWrap title="Work Hours">
+                                <WorkingHours hoursArray={hoursArray}/>
+                            </BoxWrap>
+                        </ResumeBlock>
+
+                        <ResumeBlock title="Your Doctor">
+                            <div className="resume__doctor">
+                                <img className="resume__doctor__image" src={doctorData.photo_url}
+                                     alt="Doctor"/>
+                                <div className="resume__doctor__info">
+                                    <div className="resume__block__title">{doctorData.full_name}</div>
+                                    <div className="resume__block__text--color-dark">{doctorData.specialty_name}</div>
+                                </div>
+                            </div>
+                        </ResumeBlock>
+                    </div>
+                )}
+                <LargeButton
+                    handleSubmit={handleSubmit}
+                    title="Confirm"
+                    typeButton="resume"
+                />
+            </div>
+        </>
     );
 };
 

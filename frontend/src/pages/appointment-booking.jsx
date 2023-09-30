@@ -1,17 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment';
 import axios from 'axios';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import Header from "../components/Header.jsx";
+import Calendar from "../components/Booking/Calendar.jsx";
+import TimeSlot from "../components/Booking/TimeSlot.jsx";
+import arrowRight from "../assets/images/landing-page/arrow-right.svg";
+import moment from "moment";
+import {BackButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
+import LargeButton from "../components/LargeButton.jsx";
 
 const AppointmentBooking = () => {
+    let navigate = useNavigate()
+
     const [startDate, setStartDate] = useState(new Date());
     const [slots, setSlots] = useState([]);
-    const { doctor_id } = useParams();
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const {doctor_id} = useParams();
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+    const storage = useCloudStorage();
 
     useEffect(() => {
-        axios.get(`https://medsync.botfather.dev/api/slots?doctor=${doctor_id}&date=${moment(startDate).format('YYYY-MM-DD')}`)
+        axios.get(`https://medsync.botfather.dev/api/slots/${doctor_id}/${moment(startDate).format('YYYY-MM-DD')}`)
             .then(response => {
                 setSlots(response.data);
             })
@@ -19,29 +28,41 @@ const AppointmentBooking = () => {
                 console.error('Error fetching slots:', error);
             });
     }, [doctor_id, startDate]);
-
-    const handleSlotSelection = (slot) => {
-        // Handle slot selection
-        // For example, navigate to a booking page or open a booking modal
+    const handleDateChange = (date) => {
+        selectionChanged();
+        setStartDate(date);
     };
 
+
+    const handleSlotSelection = async (slot) => {
+        setSelectedTimeSlot(slot);
+        selectionChanged();
+        console.log(slot)
+    };
+
+    const handleNext = async () => {
+        await storage.setItem('selectedTimeSlot', selectedTimeSlot);
+        navigate("/booking/patient-info-form")
+    }
+
     return (
-        <div className="calendar">
-            <DatePicker
-                selected={startDate}
-                onChange={date => setStartDate(date)}
-                inline
-            />
-            {slots.length > 0 && (
-                <ul className="slots">
-                    {slots.map(slot => (
-                        <li key={slot.slot_id} onClick={() => handleSlotSelection(slot)}>
-                            {slot.start_time} - {slot.end_time}
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+        <>
+            <BackButton onClick={() => navigate(-1)}/>
+            <div className="time-details">
+                <Header className="time-details" title="Time Details"/>
+                <main className="time-details__main">
+                    <Calendar onDateChange={handleDateChange}/>
+                    <TimeSlot timesArray={slots} selectedTimeSlot={selectedTimeSlot}
+                              setSelectedTimeSlot={handleSlotSelection}
+                    />
+                    <LargeButton
+                        handleSubmit={handleNext}
+                        title="Next"
+                        typeButton="time-details"
+                    >Next</LargeButton>
+                </main>
+            </div>
+        </>
     );
 };
 
