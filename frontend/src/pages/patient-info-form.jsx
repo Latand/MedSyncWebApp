@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import arrowRight from '../assets/images/landing-page/arrow-right.svg';
 import Header from "../components/Header.jsx";
 import {useCloudStorage, useInitData, useShowPopup, WebAppProvider} from "@vkruglikov/react-telegram-web-app";
+import {useNavigate} from "react-router-dom";
+import LargeButton from "../components/LargeButton.jsx";
 
 
 const PatientInformation = () => {
@@ -14,13 +16,18 @@ const PatientInformation = () => {
     });
 
     const storage = useCloudStorage();
+    let navigate = useNavigate();
     const showPopup = useShowPopup();
     const [initDataUnsafe, initData] = useInitData();
     const fetchData = async () => {
         const savedUserData = await storage.getItem('user_data');
-        const savedEmail = savedUserData ? savedUserData.userEmail : null;
-        const savedName = savedUserData ? savedUserData.userName : (initDataUnsafe ? initDataUnsafe.user?.first_name : null);
-        const savedSurname = savedUserData ? savedUserData.userSurname : (initDataUnsafe ? initDataUnsafe.user?.last_name : null);
+        // from JSON to Object
+        const savedUserDataObject = savedUserData ? JSON.parse(savedUserData) : null;
+
+        const savedEmail = savedUserDataObject ? savedUserDataObject.userEmail : null;
+        const savedName = savedUserDataObject ? savedUserDataObject.userName : (initDataUnsafe ? initDataUnsafe.user?.first_name : null);
+        const savedSurname = savedUserDataObject ? savedUserDataObject.userSurname : (initDataUnsafe ? initDataUnsafe.user?.last_name : null);
+        const savedPhone = savedUserDataObject ? savedUserDataObject.userPhone : null
         // Telegram Data may be not available if ran from Inline mode or KeyboardButton
 
         setFormData(prevFormData => ({
@@ -28,6 +35,7 @@ const PatientInformation = () => {
             userName: savedName || null,
             userSurname: savedSurname || null,
             userEmail: savedEmail || null,
+            userPhone: savedPhone || null
         }));
     };
     const handleChange = (event) => {
@@ -35,23 +43,22 @@ const PatientInformation = () => {
             ...prevFormData,
             [event.target.id]: event.target.value
         }));
-        console.log(event.target.id, event.target.value);
     };
     useEffect(() => {
         fetchData();
     }, []);
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
         if (!formData.userName || !formData.userSurname || !formData.userPhone || !formData.userEmail) {
             console.log('Form data submitted: ', formData)
             await showPopup({message: 'Please fill all the fields'});
             return;
         }
 
-        // console.log('Form data submitted: ', formData);
-        // Reset the form
-        fetchData();
+        console.log('Form data submitted: ', formData);
+        await storage.setItem('user_data', JSON.stringify(formData));
+        e.preventDefault();
+        navigate('/booking/confirmation')
     };
 
 
@@ -81,7 +88,7 @@ const PatientInformation = () => {
                                         name="user_name"
                                         required
                                         autoComplete="off"
-                                        defaultValue={formData.userName}
+                                        value={formData.userName}
                                         onChange={handleChange}
                                     />
                                 </label>
@@ -95,7 +102,7 @@ const PatientInformation = () => {
                                         name="user_surname"
                                         required
                                         autoComplete="off"
-                                        defaultValue={formData.userSurname}
+                                        value={formData.userSurname}
                                         onChange={handleChange}
                                     />
                                 </label>
@@ -110,7 +117,7 @@ const PatientInformation = () => {
                                         name="user_phone"
                                         required
                                         autoComplete="off"
-                                        defaultValue={formData.userPhone}
+                                        value={formData.userPhone}
                                         onChange={handleChange}
                                     />
                                 </label>
@@ -123,7 +130,7 @@ const PatientInformation = () => {
                                         type="email"
                                         name="user_email"
                                         required
-                                        defaultValue={formData.userEmail}
+                                        value={formData.userEmail}
                                         autoComplete="off"
                                         onChange={handleChange}
                                     />
@@ -137,13 +144,11 @@ const PatientInformation = () => {
                                         onChange={handleChange}
                                     ></textarea>
                                 </label>
-
-
-                                <a className="button form__button" onClick={handleSubmit}>Next
-                                    <span className="arrow">
-              <img src={arrowRight} alt="Arrow Right"/>
-            </span>
-                                </a>
+                                <LargeButton
+                                    title="Next"
+                                    handleSubmit={handleSubmit}
+                                    typeButton="form"
+                                />
                             </form>)}
                     </div>
                 </div>

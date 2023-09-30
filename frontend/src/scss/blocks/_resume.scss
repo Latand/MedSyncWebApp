@@ -4,8 +4,8 @@
   &__header {
     position: relative;
     margin-bottom: 40px;
-  
-    &::after{
+
+    &::after {
       content: "";
       position: absolute;
       margin-bottom: -20px;
@@ -21,8 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    margin-left: 15px;
-  } 
+  }
 
   &__block {
     display: flex;
@@ -48,10 +47,12 @@
       font-weight: $font-weight-semibold;
       line-height: 119%;
       margin-bottom: 15px;
+      margin-left: 15px;
 
       &--color-dark {
         color: $color-primary;
         margin-top: 5px;
+        margin-left: 15px;
       }
     }
 
@@ -60,6 +61,7 @@
       font-size: 19px;
       font-weight: $font-weight-bold;
       line-height: 119%;
+      margin-left: 15px;
 
       &--font-regular {
         font-weight: $font-weight-regular;
@@ -72,7 +74,9 @@
       font-weight: $font-weight-semibold;
       line-height: 119%;
       margin-top: 5px;
+      margin-left: 15px;
       text-decoration: none;
+
     }
 
     &__button {
@@ -88,6 +92,7 @@
       border-radius: 26px;
       padding: 4px 0;
       width: 80px;
+      margin-left: 15px;
       margin-top: 10px;
       margin-bottom: 17px;
     }
@@ -98,6 +103,7 @@
     font-display: row;
     align-items: center;
     gap: 15px;
+    margin-left: 15px;
 
     &__image {
       width: 57px;
@@ -136,12 +142,12 @@
     align-items: center;
     margin-bottom: 22px;
 
-
     &__title {
       display: flex;
       flex-direction: row;
       gap: 6px;
       margin-bottom: 9px;
+    margin-left: 15px;
 
       &__icon {
         width: 8px;
@@ -161,6 +167,7 @@
       font-weight: $font-weight-regular;
       line-height: 119%;
       margin-bottom: 8px;
+    margin-left: 15px;
 
       &--color-light {
         color: $color-about-available;
