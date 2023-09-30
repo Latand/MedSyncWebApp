@@ -4,8 +4,8 @@
   &__header {
     position: relative;
     margin-bottom: 40px;
-  
-    &::after{
+
+    &::after {
       content: "";
       position: absolute;
       margin-bottom: -20px;
@@ -22,13 +22,13 @@
     flex-direction: column;
     width: 100%;
     gap: 13px;
-   
+
     &__label {
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
       gap: 10px;
-      font-family:  "Josefin Sans", sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       font-size: 13px;
       font-weight: $font-weight-semibold;
       line-height: 119%;
@@ -37,7 +37,7 @@
     }
 
     &__input {
-      font-family:  "Josefin Sans", sans-serif;
+      font-family: "Josefin Sans", "Open Sans", sans-serif;
       height: 46px;
       border-radius: 12px;
       border: none;
@@ -46,13 +46,15 @@
     }
 
     &__textarea {
-      font-family:  "Josefin Sans", sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       height: 120px;
       border-radius: 12px;
       border: none;
       background: $color-button-text;
       box-shadow: $color-box-shadow-form;
       margin-bottom: 90px;
+      resize: vertical;
+      min-height: 50px;
     }
 
     &__button {

@@ -1,5 +1,6 @@
 import React from 'react';
 import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
+import {Link} from "react-router-dom";
 
 const DoctorInfo = ({ name, specialty, status, imageSrc }) => (
   <div className="about__content">
@@ -18,7 +19,7 @@ const DoctorInfo = ({ name, specialty, status, imageSrc }) => (
         alt={status}
       />
     </div>
-    <a className="button about__button">Book Appointment</a>
+    <Link className="button about__button" to="/booking/patient-info-form">Book Appointment</Link>
   </div>
 );
 

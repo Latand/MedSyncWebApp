@@ -6,6 +6,7 @@ import LandingPage from "./pages/landing-page.jsx";
 import GetTested from "./pages/get-tested.jsx";
 import DoctorSelection from "./pages/doctor-selection.jsx";
 import About from "./pages/doctor-about.jsx";
+import PatientInformation from "./pages/patient-info-form.jsx";
 
 const App = () => {
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
@@ -42,6 +43,9 @@ const App = () => {
                     <Route path="/see_a_doctor" element={<DoctorSelection/>}/>
                     <Route path="/get_tested" element={<GetTested/>}/>
                     <Route path="/doctor/:doctor_id" element={<About/>}/>
+                    {/*<Route path="/booking/appointment/:doctor_id" element={<AppointmentBooking/>}/>*/}
+                    {/*<Route path="/booking/diagnostic/:diagnostic_id" element={<DiagnosticBooking/>}/>*/}
+                    <Route path="/booking/patient-info-form" element={<PatientInformation/>}/>
                 </Routes>
             </BrowserRouter>
         </WebAppProvider>
