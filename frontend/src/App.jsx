@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
-import {useHapticFeedback, WebAppProvider} from '@vkruglikov/react-telegram-web-app';
+import {WebAppProvider} from '@vkruglikov/react-telegram-web-app';
 import LandingPage from "./pages/landing-page.jsx";
 import GetTested from "./pages/get-tested.jsx";
 import DoctorSelection from "./pages/doctor-selection.jsx";

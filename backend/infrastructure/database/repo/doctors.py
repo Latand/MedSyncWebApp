@@ -1,12 +1,10 @@
 import datetime
 
-from sqlalchemy import select, insert, update, cast, Date, false, func
+from sqlalchemy import select, insert, cast, Date, func
 
 from infrastructure.database.models import (
     Doctor,
-    DoctorSlot,
     Booking,
-    Slot,
     DoctorRating,
     Location,
 )
@@ -48,19 +46,6 @@ class DoctorRepo(BaseRepo):
         result = await self.session.scalars(stmt)
         return result.all()
 
-    async def get_available_slots(self, doctor_id: int, selected_date: datetime.date):
-        stmt = (
-            select(Slot, DoctorSlot)
-            .join(DoctorSlot, DoctorSlot.slot_id == Slot.slot_id)
-            .where(
-                DoctorSlot.doctor_id == doctor_id,
-                DoctorSlot.is_booked == false(),
-                cast(Slot.start_time, Date) == selected_date,
-            )
-        )
-        result = await self.session.execute(stmt)
-        return result.scalars().all()
-
     async def book_slot(
         self,
         doctor_slot_id: int,
@@ -81,16 +66,6 @@ class DoctorRepo(BaseRepo):
         )
         await self.session.execute(insert_stmt)
 
-        # Update the DoctorSlot to indicate it is booked
-        update_stmt = (
-            update(DoctorSlot)
-            .where(DoctorSlot.doctor_slot_id == doctor_slot_id)
-            .values(is_booked=True)
-        )
-        await self.session.execute(update_stmt)
-
-        await self.session.commit()
-
     async def get_doctor(self, doctor_id: int) -> Doctor:
         stmt = (
             select(
@@ -104,7 +79,7 @@ class DoctorRepo(BaseRepo):
                 Location.address,
                 Doctor.experience,
                 Doctor.certificates,
-                Doctor.working_time,
+                # Doctor.working_time, TODO: Get from the location working time
                 Doctor.services,
             )
             .join(Location, Location.location_id == Doctor.location_id)
@@ -113,3 +88,15 @@ class DoctorRepo(BaseRepo):
         )
         result = await self.session.execute(stmt)
         return result.mappings().first()
+
+    async def get_booked_slots(
+        self, doctor_id: int, location_id: int, month_number: int
+    ) -> list[Booking]:
+        stmt = select(Booking.booking_time).where(
+            Booking.doctor_id == doctor_id,
+            Booking.booking_time >= cast(datetime.date.today(), Date),
+            func.extract("month", Booking.booking_time) == month_number,
+            Booking.location_id == location_id,
+        )
+        result = await self.session.scalars(stmt)
+        return result.all()

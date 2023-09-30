@@ -15,7 +15,6 @@ class Doctor(Base, TableNameMixin):
     photo_url: Mapped[str] = mapped_column(String(256))
     experience: Mapped[Optional[str]] = mapped_column(TEXT)
     certificates: Mapped[Optional[str]] = mapped_column(TEXT)
-    working_time: Mapped[Optional[str]] = mapped_column(TEXT)
     services: Mapped[Optional[str]] = mapped_column(TEXT)
 
 
@@ -31,13 +30,3 @@ class DoctorRating(Base):
     doctor_id: Mapped[int] = mapped_column(ForeignKey("doctors.doctor_id"))
     rating: Mapped[int] = mapped_column(Integer, default=0)
 
-
-class DoctorBooking(Base, TimestampMixin):
-    __tablename__ = "doctor_bookings"
-    appointment_id: Mapped[int_pk]
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id"))
-    doctor_id: Mapped[int] = mapped_column(ForeignKey("doctors.doctor_id"))
-    slot_id: Mapped[int] = mapped_column(ForeignKey("slots.slot_id"))
-    status: Mapped[str] = mapped_column(
-        Enum("Booked", "Cancelled", name="booking_status")
-    )

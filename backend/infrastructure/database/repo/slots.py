@@ -1,11 +1,10 @@
-from sqlalchemy.dialects.postgresql import insert
+from sqlalchemy import select
 
-from infrastructure.database.models import Slot
+from infrastructure.database.models.slots import WorkingHour
 from infrastructure.database.repo.base import BaseRepo
 
 
 class SlotRepo(BaseRepo):
-    async def insert_new_slot(self, new_slot: dict):
-        stmt = insert(Slot).values(new_slot)
-        await self.session.execute(stmt)
-        await self.session.commit()
+    async def get_working_hours(self, location_id: int):
+        query = select(WorkingHour).where(WorkingHour.location_id == location_id)
+        return (await self.session.scalars(query)).all()

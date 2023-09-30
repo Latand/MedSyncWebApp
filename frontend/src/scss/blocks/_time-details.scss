@@ -4,8 +4,8 @@
   &__header {
     position: relative;
     margin-bottom: 40px;
-  
-    &::after{
+
+    &::after {
       content: "";
       position: absolute;
       margin-bottom: -20px;
@@ -49,8 +49,8 @@
   flex-direction: column;
   gap: 20px;
   position: relative;
-  
-  &::after{
+
+  &::after {
     content: "";
     position: absolute;
     margin-bottom: -20px;
@@ -98,7 +98,7 @@
       padding: 3px;
       cursor: pointer;
 
-    
+
       &--next {
         transform: rotate(-45deg);
         -webkit-transform: rotate(-45deg);
@@ -115,7 +115,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: 1fr;
-    
+
     padding: 0;
     margin: 0 0 20px 0;
 
@@ -148,8 +148,8 @@
       font-size: 14px;
       font-weight: $font-weight-regular;
       line-height: normal;
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 22px;
       cursor: pointer;
       border: none;
       border-radius: 50%;

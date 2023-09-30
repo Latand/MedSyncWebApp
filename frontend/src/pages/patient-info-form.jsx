@@ -68,7 +68,6 @@ const PatientInformation = () => {
                 <Header className="patient-information"
                         title="Patient Information"/>
 
-
                 <div className="patient-information__form">
                     {initDataUnsafe && (
                         <form
