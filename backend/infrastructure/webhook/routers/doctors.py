@@ -1,11 +1,10 @@
 from typing import List
 
 from fastapi import Depends, APIRouter, HTTPException
+from starlette.requests import Request
 
 from infrastructure.database.repo.requests import RequestsRepo
 from infrastructure.webhook.models import (
-    DoctorBookingPayload,
-    Booking,
     Specialty,
 )
 from infrastructure.webhook.utils import get_repo
@@ -58,22 +57,11 @@ async def get_specialties(repo: RequestsRepo = Depends(get_repo)):
     return specialties
 
 
-@doctor_router.post("/book_slot", response_model=Booking)
+@doctor_router.post("/book_slot")
 async def book_doctor_slot_endpoint(
-    payload: DoctorBookingPayload, repo: RequestsRepo = Depends(get_repo)
+    request: Request, repo: RequestsRepo = Depends(get_repo)
 ):
-    try:
-        await repo.doctors.book_slot(
-            payload.doctor_slot_id,
-            payload.user_full_name,
-            payload.user_email,
-            payload.user_phone_number,
-        )
-        return {
-            "doctor_slot_id": payload.doctor_slot_id,
-            "user_full_name": payload.user_full_name,
-            "user_email": payload.user_email,
-            "user_phone_number": payload.user_phone_number,
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    payload = await request.json()
+
+    booking_id = await repo.doctors.book_slot(payload)
+    return {"status": "success", "booking_id": booking_id}

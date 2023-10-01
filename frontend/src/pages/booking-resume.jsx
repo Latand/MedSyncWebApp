@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import LargeButton from "../components/LargeButton.jsx";
-import {BackButton, useCloudStorage, useShowPopup} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, useCloudStorage, useInitData, useShowPopup} from "@vkruglikov/react-telegram-web-app";
 import {useNavigate} from "react-router-dom";
 
 import boxIcon from '../assets/images/resume/Vector.svg';
@@ -39,32 +39,40 @@ const Resume = () => {
     const storage = useCloudStorage();
     const showPopup = useShowPopup();
     let navigate = useNavigate();
+    const [InitDataUnsafe, InitData] = useInitData();
 
     useEffect(() => {
         const fetchData = async () => {
-            let savedUserData = JSON.parse(await storage.getItem('user_data'))
-            let savedDoctor = JSON.parse(await storage.getItem('selectedDoctor'))
-            let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
-            // from JSON to Object
-            if (!selectedTimeSlot) {
-                await showPopup({message: 'Sorry, you have not selected Time slot!'});
-                navigate(-2);
-                return;
-            }
             try {
-                const response = await axios.get(`https://medsync.botfather.dev/api/locations/${savedDoctor.location_id}`);
-                setSelectedLocation(response.data);
+                let savedUserData = JSON.parse(await storage.getItem('user_data'))
+                let savedDoctor = JSON.parse(await storage.getItem('selectedDoctor'))
+                let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
+                // from JSON to Object
+                if (!selectedTimeSlot) {
+                    await showPopup({message: 'Sorry, you have not selected Time slot!'});
+                    navigate(-2);
+                    return;
+                }
+                try {
+                    const response = await axios.get(`https://medsync.botfather.dev/api/locations/${savedDoctor.location_id}`);
+                    setSelectedLocation(response.data);
+
+                    // Parse savedUserData and set the state
+                    setUserData(savedUserData);
+                    setDoctorData(savedDoctor);
+                    // make date object from string inside selectedTimeSlot
+                    selectedTimeSlot = new Date(selectedTimeSlot);
+                    setSelectedTimeSlot(selectedTimeSlot);
+                    console.log('User data: ', savedUserData)
+
+                } catch (err) {
+                    console.error(err);
+                }
             } catch (err) {
                 console.error(err);
+                return navigate('/see_a_doctor')
             }
 
-            // Parse savedUserData and set the state
-            setUserData(savedUserData);
-            setDoctorData(savedDoctor);
-            // make date object from string inside selectedTimeSlot
-            selectedTimeSlot.date = new Date(selectedTimeSlot.date);
-            setSelectedTimeSlot(selectedTimeSlot);
-            console.log('User data: ', savedUserData)
         };
 
         fetchData();  // Call fetchData inside useEffect
@@ -72,7 +80,28 @@ const Resume = () => {
     const handleSubmit = async (e) => {
         // Your logic goes here
         e.preventDefault();
-
+        try {
+            const response = await axios.post(`https://medsync.botfather.dev/api/doctors/book_slot`, {
+                doctor_id: doctorData.doctor_id,
+                user_id: InitDataUnsafe.user.id,
+                booking_date_time: selectedTimeSlot,
+                location_id: doctorData.location_id,
+                user_name: userData.userName,
+                user_surname: userData.userSurname,
+                user_phone: userData.userPhone,
+                user_email: userData.userEmail,
+                user_message: userData.userMessage,
+                userInitData: InitData,
+            });
+            console.log(response.data);
+            let bookings = JSON.parse(await storage.getItem('bookings') || '[]')
+            bookings.push(response.data.booking_id);
+            await storage.setItem('bookings', JSON.stringify(bookings))
+            await showPopup({message: 'Your appointment has been confirmed!'});
+        } catch (err) {
+            await showPopup({message: 'Sorry, something went wrong!'})
+            console.error(err);
+        }
     }
 
     return (<>
@@ -95,13 +124,13 @@ const Resume = () => {
                     <>
                         <ResumeBlock title="Your Visit">
                             <div className="resume__block__title">
-                                {format(selectedTimeSlot.date, 'EEEE ')}
+                                {format(selectedTimeSlot, 'EEEE ')}
                                 <span
                                     className="resume__block__title--font-regular">
-                                {format(selectedTimeSlot.date, 'MMMM')}, {format(selectedTimeSlot.date, 'd')}, {format(selectedTimeSlot.date, 'yyyy')}
+                                {format(selectedTimeSlot, 'MMMM')}, {format(selectedTimeSlot, 'd')}, {format(selectedTimeSlot, 'yyyy')}
                                 </span>
                             </div>
-                            <div className="resume__block__button">{selectedTimeSlot.start_time}:00</div>
+                            <div className="resume__block__button">{selectedTimeSlot.getHours()}:00</div>
                             {selectedLocation && <>
                                 <div className="box">
                                     <BoxWrap title={selectedLocation.name}>

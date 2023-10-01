@@ -16,6 +16,7 @@ async def get_available_slots(
     repo: RequestsRepo = Depends(get_repo),
 ):
     slots = await repo.doctors.get_booked_slots(doctor_id, location_id, month_number)
+    logging.info(slots)
     if not slots:
         return []
     return slots

@@ -32,11 +32,15 @@ const Calendar = ({onDateChange, availableDays}) => {
 
     const onPrevMonth = () => {
         const prevMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() - 1, 1);
+        const firstDayOfPrevMonth = startOfMonth(prevMonth);
         setSelectedMonth(prevMonth);
+        handleDayClick(firstDayOfPrevMonth)
     };
 
     const onNextMonth = () => {
         const nextMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1, 1);
+        const firstDayOfNextMonth = startOfMonth(nextMonth);
+        handleDayClick(firstDayOfNextMonth)
         setSelectedMonth(nextMonth);
     };
 

@@ -4,8 +4,10 @@ import logging
 import betterlogging as bl
 from aiogram import Bot, Dispatcher
 
+from infrastructure.database.setup import create_engine, create_session_pool
 from tgbot.config import load_config
 from tgbot.handlers import routers_list
+from tgbot.middlewares.database import DatabaseMiddleware
 from tgbot.services import broadcaster
 
 
@@ -46,6 +48,9 @@ async def main():
 
     bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
     dp = Dispatcher()
+    engine = create_engine(config.db)
+    session_pool = create_session_pool(engine)
+    dp.message.outer_middleware(DatabaseMiddleware(session_pool))
 
     dp.include_routers(*routers_list)
 

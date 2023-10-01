@@ -23,10 +23,18 @@ class DiagnosticLocation(BaseModel):
 
 
 class DoctorBookingPayload(BaseModel):
-    doctor_slot_id: int
-    user_full_name: str
+    doctor_id: int
+    user_id: int
+    date: str
+    start_time: int
+    end_time: int
+    location_id: int
+    user_name: str
+    user_surname: str
+    user_phone: str
     user_email: str
-    user_phone_number: str
+    user_message: str
+    userInitData: str
 
 
 class Specialty(BaseModel):

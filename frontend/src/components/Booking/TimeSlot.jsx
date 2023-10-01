@@ -5,7 +5,7 @@ const TimeSlot = ({availableSlots, selectedDate, selectedTimeSlot, setSelectedTi
 
     // Filter to get only today's slots
     const todaySlots = availableSlots.filter(slot => {
-        return isSameDay(slot.date, selectedDate)
+        return isSameDay(slot, selectedDate)
     });
 
     return (
@@ -22,11 +22,11 @@ const TimeSlot = ({availableSlots, selectedDate, selectedTimeSlot, setSelectedTi
                 <div className="time-slot">
                     {todaySlots.map(time => (
                         <button
-                            className={`time-slot__button${time.start_time === selectedTimeSlot?.start_time ? ' time-slot__button--active' : ''}`}
-                            key={time.start_time}
+                            className={`time-slot__button${time === selectedTimeSlot ? ' time-slot__button--active' : ''}`}
+                            key={time}
                             onClick={() => setSelectedTimeSlot(time)}
                         >
-                            {time.start_time}:00 - {time.end_time}:00
+                            {time.getHours()}:00 - {time.getHours() + 1}:00
                         </button>
                     ))}
                 </div>
