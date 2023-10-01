@@ -32,6 +32,7 @@ const DoctorSelection = () => {
         try {
             const response = await axios.get('https://medsync.botfather.dev/api/doctors/');
             setAllDoctors(response.data);
+            console.log('All doctors:', response.data)
             setDisplayedDoctors(response.data);  // Initially display all doctors
         } catch (error) {
             console.error(error.message);
@@ -87,7 +88,7 @@ const DoctorSelection = () => {
                     title={doctor.specialty_name}
                     address={doctor.address}
                     price={doctor.price}
-                    avg_review={doctor.avg_review ? doctor.avg_review : 0}
+                    avg_rating={doctor.avg_rating ? doctor.avg_rating : 0}
                     reviews={doctor.reviews ? doctor.reviews : 0}
                     doctorImage={doctor.photo_url}
                     onClick={() => {

@@ -84,11 +84,15 @@ class DoctorRepo(BaseRepo):
                 Doctor.experience,
                 Doctor.certificates,
                 Location.name.label("location_name"),
+                func.coalesce(func.avg(DoctorRating.rating), 0).label("avg_rating"),
+                func.coalesce(func.count(DoctorRating.rating_id), 0).label("reviews"),
                 Doctor.services,
             )
             .join(Location, Location.location_id == Doctor.location_id)
+            .outerjoin(DoctorRating, DoctorRating.doctor_id == Doctor.doctor_id)
             .join(Specialty, Specialty.specialty_id == Doctor.specialty_id)
             .where(Doctor.doctor_id == doctor_id)
+            .group_by(Doctor.doctor_id, Location.location_id, Specialty.specialty_id)
         )
         # get the working time of the doctor`s location
         working_times_stmt = (

@@ -2,7 +2,7 @@ import React from 'react';
 import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
 import favorite from '../../assets/images/doctors-listing/favorite.svg';
 
-const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_review, price,
+const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_rating, price,
                      onClick, className}) => (
     <section className={className} onClick={onClick}>
         <div className="card__image">
@@ -25,7 +25,7 @@ const DoctorCard = ({key, name, doctorImage, title, address, reviews, avg_review
                     alt="Star"
                 />
 
-                <p className="card__review__text">{avg_review.toFixed(1)} ({reviews} reviews)</p>
+                <p className="card__review__text">{avg_rating.toFixed(2)} ({reviews} reviews)</p>
             </div>
 
             <p className="card__address">{address}</p>

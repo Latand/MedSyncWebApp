@@ -39,6 +39,8 @@ const About = () => {
                         specialty={doctor.specialty_name}
                         status="Available"
                         imageSrc={doctor.photo_url}
+                        avg_rating={doctor.avg_rating}
+                        reviews={doctor.reviews}
                     />
                 </header>
                 <main className="about__main">
