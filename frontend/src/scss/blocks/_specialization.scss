@@ -1,0 +1,80 @@
+.specialization {
+  @include padding;
+
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+    margin-top: 20px;
+    cursor: pointer;
+
+    &__input {
+      border-radius: 31px;
+      border: 1px solid $color-border;
+      background: $color-gettested-search;
+      width: 100%;
+      font-size: 14px;
+      font-weight: $font-weight-semibold;
+      padding: 14px 0 14px 20px;
+      outline: none;
+      color: $color-search-input;
+    }
+
+    &__icon {
+      position: absolute;
+      top: 16px;
+      right: 35px;
+
+      &__img {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .specialization-block {
+      @include hoverScaleTranslate;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-radius: 12px;
+      border: 1px solid $color-border;
+      background: $color-button-text;
+      padding-block: 20px;
+      padding-left: 23px;
+
+
+      &__title {
+        font-size: 20px;
+        font-weight: $font-weight-bold;
+        line-height: 119%; 
+      }
+
+      &__subtitle {
+        color: $color-search-input;
+        font-size: 16px;
+        line-height: 119%;
+      }
+
+      &--active {
+        background: $color-gradient;
+        border: none;
+        color: $color-button-text;
+
+        .specialization-block__subtitle {
+          color: $color-button-text;
+        }
+      }
+    }
+  }
+}

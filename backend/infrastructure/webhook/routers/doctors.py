@@ -8,6 +8,7 @@ from infrastructure.webhook.models import (
     Specialty,
 )
 from infrastructure.webhook.utils import get_repo
+import sqlalchemy.exc
 
 doctor_router = APIRouter(prefix="/doctors")
 specialties_router = APIRouter(prefix="/specialties")
@@ -43,5 +44,17 @@ async def book_doctor_slot_endpoint(
 ):
     payload = await request.json()
 
-    booking_id = await repo.doctors.book_slot(payload)
+    try:
+        booking_id = await repo.doctors.book_slot(payload)
+    except sqlalchemy.exc.IntegrityError as e:
+        #      insert or update on table "bookings" violates foreign key constraint "bookings_user_id_fkey" handle
+        if "bookings_user_id_fkey" in str(e):
+               raise HTTPException(
+                    status_code=400, detail="User does not exist"
+                ) from e
+        else:
+            raise HTTPException(
+                status_code=400, detail="Invalid payload"
+            ) from e
+
     return {"status": "success", "booking_id": booking_id}

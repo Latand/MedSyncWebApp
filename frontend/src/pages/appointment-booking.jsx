@@ -129,7 +129,7 @@ const AppointmentBooking = () => {
                                                      selectedDate={selectedDate}
                 />)}
 
-                {slots && (<LargeButton
+                {selectedTimeSlot && (<LargeButton
                     handleSubmit={handleNext}
                     title="Next"
                     typeButton="time-details"

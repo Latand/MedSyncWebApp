@@ -9,6 +9,7 @@ import About from "./pages/doctor-about.jsx";
 import PatientInformation from "./pages/patient-info-form.jsx";
 import Resume from "./pages/booking-resume.jsx";
 import AppointmentBooking from "./pages/appointment-booking.jsx";
+import RegistrationConfirmation from "./pages/successful-booking.jsx";
 
 const App = () => {
 
@@ -36,6 +37,7 @@ const App = () => {
                     {/*<Route path="/booking/diagnostic/:diagnostic_id" element={<DiagnosticBooking/>}/>*/}
                     <Route path="/booking/patient-info-form" element={<PatientInformation/>}/>
                     <Route path="/booking/confirmation" element={<Resume/>}/>
+                    <Route path="/successful_booking" element={<RegistrationConfirmation/>}/>
                 </Routes>
             </BrowserRouter>
         </WebAppProvider>

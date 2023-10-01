@@ -23,7 +23,6 @@ const BoxWrap = ({title, children}) => (<div className="box__wrap">
 </div>);
 
 
-
 const Resume = () => {
     const [userData, setUserData] = useState(null);
     const [doctorData, setDoctorData] = useState(null);
@@ -64,6 +63,7 @@ const Resume = () => {
                 } catch (err) {
                     console.error(err);
                 }
+
             } catch (err) {
                 console.error(err);
             }
@@ -93,12 +93,24 @@ const Resume = () => {
             bookings.push(response.data.booking_id);
             await storage.setItem('bookings', JSON.stringify(bookings))
             await showPopup({message: 'Your appointment has been confirmed!'});
-            await webApp.sendData(JSON.stringify({'action': 'booking_confirmed', 'booking_id': response.data.booking_id}));
+            await webApp.sendData(JSON.stringify({
+                'action': 'booking_confirmed', 'booking_id': response.data.booking_id
+            }));
+            navigate('/successful_booking');
         } catch (err) {
-            await showPopup({message: 'Sorry, something went wrong!'})
-            console.error(err);
+
+            console.log(err)
+            if (err.response && err.response.data.detail === "User does not exist") {
+                // Display alert and redirect to the bot
+                await window.Telegram.WebApp.showAlert('You are not registered. Please interact with the bot first.');
+                await window.Telegram.WebApp.openTelegramLink('https://t.me/medsyncbot');
+            } else {
+                await showPopup({message: 'Sorry, something went wrong!'})
+                console.error(err);
+            }
+
         }
-    }
+    };
 
     return (<>
         <BackButton onClick={() => navigate(-1)}/>
@@ -116,34 +128,31 @@ const Resume = () => {
                     </div>
                 </ResumeBlock>
 
-                {selectedTimeSlot && (
-                    <>
-                        <ResumeBlock title="Your Visit">
-                            <div className="resume__block__title">
-                                {format(selectedTimeSlot, 'EEEE ')}
-                                <span
-                                    className="resume__block__title--font-regular">
+                {selectedTimeSlot && (<>
+                    <ResumeBlock title="Your Visit">
+                        <div className="resume__block__title">
+                            {format(selectedTimeSlot, 'EEEE ')}
+                            <span
+                                className="resume__block__title--font-regular">
                                 {format(selectedTimeSlot, 'MMMM')}, {format(selectedTimeSlot, 'd')}, {format(selectedTimeSlot, 'yyyy')}
                                 </span>
+                        </div>
+                        <div className="resume__block__button">{selectedTimeSlot.getHours()}:00</div>
+                        {selectedLocation && <>
+                            <div className="box">
+                                <BoxWrap title={selectedLocation.name}>
+                                    <div className="box__text">{selectedLocation.address}</div>
+                                </BoxWrap>
+                                <a className="box__button button"
+                                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedLocation.address)}`}
+                                   target="_blank" rel="noopener noreferrer">Get direction</a>
                             </div>
-                            <div className="resume__block__button">{selectedTimeSlot.getHours()}:00</div>
-                            {selectedLocation && <>
-                                <div className="box">
-                                    <BoxWrap title={selectedLocation.name}>
-                                        <div className="box__text">{selectedLocation.address}</div>
-                                    </BoxWrap>
-                                    <a className="box__button button" href={
-                                        `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedLocation.address)}`
-                                    }
-                                       target="_blank" rel="noopener noreferrer">Get direction</a>
-                                </div>
-                            </>}
-                            <BoxWrap title="Work Hours">
-                                <WorkingHours hoursArray={hoursArray}/>
-                            </BoxWrap>
-                        </ResumeBlock>
-                    </>
-                )}
+                        </>}
+                        <BoxWrap title="Work Hours">
+                            <WorkingHours hoursArray={hoursArray}/>
+                        </BoxWrap>
+                    </ResumeBlock>
+                </>)}
 
 
                 <ResumeBlock title="Your Doctor">
