@@ -42,19 +42,19 @@ const About = () => {
                     />
                 </header>
                 <main className="about__main">
-                    <Section title="Experience">
+                    <Section title="Experience" tag="experience">
                         {doctor.experience}
                     </Section>
-                    <Section title="Services">
+                    <Section title="Services" tag="services">
                         <ServicesList services={doctor.services}/>
                     </Section>
-                    <Section title="Certificates">
+                    <Section title="Certificates" tag="certificates">
                         {doctor.certificates}
                     </Section>
-                    <Section title="Working Time">
+                    <Section title="Working Time" tag="working-time">
                     <ServicesList services={doctor.working_hours}/>
                     </Section>
-                    <Section title="Location">
+                    <Section title="Location" tag="location">
                         <div className="location">
                             <p className="about__section__title">{doctor.location_name}</p>
                             <p className="about__section__text">{doctor.location_address}</p>
