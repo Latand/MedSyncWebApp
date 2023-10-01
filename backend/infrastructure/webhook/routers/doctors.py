@@ -16,15 +16,36 @@ doctor_router = APIRouter(prefix="/doctors")
 specialties_router = APIRouter(prefix="/specialties")
 
 
-@doctor_router.get("/{doctor_id}", response_model=Doctor)
+@doctor_router.get("/{doctor_id}")
 async def get_doctor(doctor_id: int, repo: RequestsRepo = Depends(get_repo)):
-    doctor = await repo.doctors.get_doctor(doctor_id)
-    if doctor is None:
+    result = await repo.doctors.get_doctor(doctor_id)
+
+    if result is None:
         raise HTTPException(status_code=404, detail="Doctor not found")
-    return doctor
+
+    weekdays = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    ]
+    doctor, working_hours = result
+    working_hours_formatted = "\n".join(
+        [
+            f"{weekdays[working_hour.weekday_index]}: {working_hour.start_time}:00 - {working_hour.end_time}:00"
+            for working_hour in working_hours
+        ]
+    )
+    return {
+        **doctor,
+        "working_hours": working_hours_formatted,
+    }
 
 
-@doctor_router.get("/", response_model=List[Doctor])
+@doctor_router.get("/")
 async def get_all_doctors(repo: RequestsRepo = Depends(get_repo)):
     doctors = await repo.doctors.get_all_doctors()
     return doctors

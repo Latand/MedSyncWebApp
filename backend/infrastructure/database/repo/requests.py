@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from infrastructure.database.repo.diagnostics import DiagnosticRepo
 from infrastructure.database.repo.doctors import DoctorRepo
+from infrastructure.database.repo.locations import LocationsRepo
 from infrastructure.database.repo.slots import SlotRepo
 from infrastructure.database.repo.users import UserRepo
 
@@ -35,3 +36,6 @@ class RequestsRepo:
         return SlotRepo(self.session)
 
 
+    @property
+    def locations(self) -> LocationsRepo:
+        return LocationsRepo(self.session)

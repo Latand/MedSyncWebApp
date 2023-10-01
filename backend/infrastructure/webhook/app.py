@@ -5,6 +5,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from infrastructure.webhook.routers.diagnostics import diagnostics_router
 from infrastructure.webhook.routers.doctors import doctor_router, specialties_router
+from infrastructure.webhook.routers.locations import locations_router
 from infrastructure.webhook.routers.slots import slots_router, working_hours_router
 
 app = FastAPI()
@@ -34,7 +35,8 @@ for router in [
     specialties_router,
     diagnostics_router,
     slots_router,
-working_hours_router,
+    working_hours_router,
+    locations_router,
 ]:
     prefix_router.include_router(router)
 

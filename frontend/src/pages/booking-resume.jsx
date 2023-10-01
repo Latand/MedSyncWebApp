@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import boxIcon from '../assets/images/resume/Vector.svg';
 import WorkingHours from "../components/Resume/WorkingHours.jsx";
 import {format} from "date-fns";
+import axios from "axios";
 
 const ResumeBlock = ({title, children}) => (<div className="resume__block">
     <div className="resume__block__text">{title}</div>
@@ -34,26 +35,33 @@ const Resume = () => {
     const [userData, setUserData] = useState(null);
     const [doctorData, setDoctorData] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const [selectedLocation, setSelectedLocation] = useState(null);
     const storage = useCloudStorage();
     const showPopup = useShowPopup();
     let navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
-            const savedUserData = await storage.getItem('user_data');
-            const savedDoctor = await storage.getItem('selectedDoctor');
-            let selectedTimeSlot = await storage.getItem('selectedTimeSlot');
+            let savedUserData = JSON.parse(await storage.getItem('user_data'))
+            let savedDoctor = JSON.parse(await storage.getItem('selectedDoctor'))
+            let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
             // from JSON to Object
             if (!selectedTimeSlot) {
                 await showPopup({message: 'Sorry, you have not selected Time slot!'});
                 navigate(-2);
                 return;
             }
+            try {
+                const response = await axios.get(`https://medsync.botfather.dev/api/locations/${savedDoctor.location_id}`);
+                setSelectedLocation(response.data);
+            } catch (err) {
+                console.error(err);
+            }
+
             // Parse savedUserData and set the state
-            setUserData(JSON.parse(savedUserData));
-            setDoctorData(JSON.parse(savedDoctor));
+            setUserData(savedUserData);
+            setDoctorData(savedDoctor);
             // make date object from string inside selectedTimeSlot
-            selectedTimeSlot = JSON.parse(selectedTimeSlot);
             selectedTimeSlot.date = new Date(selectedTimeSlot.date);
             setSelectedTimeSlot(selectedTimeSlot);
             console.log('User data: ', savedUserData)
@@ -83,27 +91,32 @@ const Resume = () => {
                     </div>
                 </ResumeBlock>
 
-                {selectedTimeSlot && (<ResumeBlock title="Your Visit">
-                    <div className="resume__block__title">
-                        {format(selectedTimeSlot.date, 'EEEE ')}
-                        <span
-                            className="resume__block__title--font-regular">
+                {selectedTimeSlot && (
+                    <>
+                        <ResumeBlock title="Your Visit">
+                            <div className="resume__block__title">
+                                {format(selectedTimeSlot.date, 'EEEE ')}
+                                <span
+                                    className="resume__block__title--font-regular">
                                 {format(selectedTimeSlot.date, 'MMMM')}, {format(selectedTimeSlot.date, 'd')}, {format(selectedTimeSlot.date, 'yyyy')}
                                 </span>
-                    </div>
-                    <div className="resume__block__button">{selectedTimeSlot.start_time}:00</div>
-
-                    <div className="box">
-                        <BoxWrap title="Heatherview">
-                            <div className="box__text">80336 Wendy Fort <br/> Sarashire, NE 59803</div>
-                        </BoxWrap>
-                        <a className="box__button button" href="https://maps.app.goo.gl/VkE3Fkkf6nMcWVp17"
-                           target="_blank" rel="noopener noreferrer">Get direction</a>
-                    </div>
-                    <BoxWrap title="Work Hours">
-                        <WorkingHours hoursArray={hoursArray}/>
-                    </BoxWrap>
-                </ResumeBlock>)}
+                            </div>
+                            <div className="resume__block__button">{selectedTimeSlot.start_time}:00</div>
+                            {selectedLocation && <>
+                                <div className="box">
+                                    <BoxWrap title={selectedLocation.name}>
+                                        <div className="box__text">{selectedLocation.address}</div>
+                                    </BoxWrap>
+                                    <a className="box__button button" href="https://maps.app.goo.gl/VkE3Fkkf6nMcWVp17"
+                                       target="_blank" rel="noopener noreferrer">Get direction</a>
+                                </div>
+                            </>}
+                            <BoxWrap title="Work Hours">
+                                <WorkingHours hoursArray={hoursArray}/>
+                            </BoxWrap>
+                        </ResumeBlock>
+                    </>
+                )}
 
 
                 <ResumeBlock title="Your Doctor">

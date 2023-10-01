@@ -14,7 +14,10 @@ const Calendar = ({onDateChange}) => {
         const start = startOfMonth(selectedMonth);
         const end = endOfMonth(selectedMonth);
         const dayList = eachDayOfInterval({start, end});
-        const firstDayOfWeekIndex = getDay(start) - 1;
+        let firstDayOfWeekIndex = getDay(start)-1;
+        if (firstDayOfWeekIndex === -1) {
+            firstDayOfWeekIndex = 6;
+        }
         const placeholders = Array.from({length: firstDayOfWeekIndex}).fill(null);
         setDays([...placeholders, ...dayList]);
     }, [selectedMonth]);

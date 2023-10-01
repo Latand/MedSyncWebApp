@@ -16,7 +16,6 @@ async def get_available_slots(
     repo: RequestsRepo = Depends(get_repo),
 ):
     slots = await repo.doctors.get_booked_slots(doctor_id, location_id, month_number)
-    logging.info(f'slots: {slots}')
     if not slots:
         return []
     return slots
@@ -28,7 +27,6 @@ async def get_working_hours(
     repo: RequestsRepo = Depends(get_repo),
 ):
     working_hours = await repo.slots.get_working_hours(location_id)
-    logging.info(f'working_hours: {working_hours}')
     if not working_hours:
         return []
     return working_hours

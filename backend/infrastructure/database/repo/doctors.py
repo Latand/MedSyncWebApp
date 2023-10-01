@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from sqlalchemy import select, insert, cast, Date, func
 
@@ -9,6 +10,7 @@ from infrastructure.database.models import (
     Location,
 )
 from infrastructure.database.models.doctors import Specialty
+from infrastructure.database.models.slots import WorkingHour
 from infrastructure.database.repo.base import BaseRepo
 
 
@@ -23,7 +25,8 @@ class DoctorRepo(BaseRepo):
                 Specialty.specialty_id,
                 Doctor.price,
                 Doctor.photo_url,
-                Location.address,
+                Location.name.label("location_name"),
+                Location.address.label("location_address"),
                 func.coalesce(func.avg(DoctorRating.rating), 0).label("avg_rating"),
                 func.coalesce(func.count(DoctorRating.rating_id), 0).label("reviews"),
             )
@@ -34,7 +37,8 @@ class DoctorRepo(BaseRepo):
         )
 
         result = await self.session.execute(stmt)
-        return result.all()
+        result = result.mappings().all()
+        return result
 
     async def get_specialties(self) -> list[Specialty]:
         stmt = (
@@ -76,18 +80,28 @@ class DoctorRepo(BaseRepo):
                 Specialty.specialty_id,
                 Doctor.price,
                 Doctor.photo_url,
-                Location.address,
+                Location.address.label("location_address"),
                 Doctor.experience,
                 Doctor.certificates,
-                # Doctor.working_time, TODO: Get from the location working time
+                Location.name.label("location_name"),
                 Doctor.services,
             )
             .join(Location, Location.location_id == Doctor.location_id)
             .join(Specialty, Specialty.specialty_id == Doctor.specialty_id)
             .where(Doctor.doctor_id == doctor_id)
         )
+        # get the working time of the doctor`s location
+        working_times_stmt = (
+            select(WorkingHour)
+            .join(Location)
+            .join(Doctor)
+            .where(Doctor.doctor_id == doctor_id)
+        )
+
+        working_times = await self.session.scalars(working_times_stmt)
+
         result = await self.session.execute(stmt)
-        return result.mappings().first()
+        return result.mappings().first(), working_times.all()
 
     async def get_booked_slots(
         self, doctor_id: int, location_id: int, month_number: int

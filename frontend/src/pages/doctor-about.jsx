@@ -12,6 +12,7 @@ const About = () => {
     const [doctor, setDoctor] = useState(null);
     let navigate = useNavigate()
 
+
     useEffect(() => {
         const fetchDoctorInfo = async () => {
             try {
@@ -51,7 +52,13 @@ const About = () => {
                         {doctor.certificates}
                     </Section>
                     <Section title="Working Time">
-                        {doctor.working_time}
+                    <ServicesList services={doctor.working_hours}/>
+                    </Section>
+                    <Section title="Location">
+                        <div className="location">
+                            <p className="about__section__title">{doctor.location_name}</p>
+                            <p className="about__section__text">{doctor.location_address}</p>
+                        </div>
                     </Section>
                 </main>
             </div>

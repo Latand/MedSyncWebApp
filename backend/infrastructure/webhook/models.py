@@ -32,6 +32,8 @@ class DoctorBookingPayload(BaseModel):
 class Doctor(BaseModel):
     doctor_id: int
     location_id: int
+    name: str
+    address: str
     full_name: str
     specialty_name: str
     specialty_id: int
@@ -42,7 +44,7 @@ class Doctor(BaseModel):
     address: str
     experience: Optional[str] = None
     certificates: Optional[str] = None
-    working_time: Optional[str] = None
+    working_hours: Optional[str] = None
     services: Optional[str] = None
 
     class Config:
