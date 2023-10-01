@@ -6,7 +6,7 @@ import Calendar from "../components/Booking/Calendar.jsx";
 import TimeSlot from "../components/Booking/TimeSlot.jsx";
 import {BackButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import LargeButton from "../components/LargeButton.jsx";
-import {eachDayOfInterval, endOfMonth, getDay, setHours, startOfMonth} from 'date-fns';
+import {eachDayOfInterval, endOfMonth, getDay, startOfMonth} from 'date-fns';
 
 const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => {
     const allSlots = [];
@@ -26,7 +26,7 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
         const weekdayIndex = getDay(day);
 
         // Find the working hours for this weekday
-        const workingHour = workingHours.find(wh => wh.weekday_index === weekdayIndex );
+        const workingHour = workingHours.find(wh => wh.weekday_index === weekdayIndex - 1);
 
         if (workingHour) {
             // Generate slots based on the working hours
@@ -36,9 +36,7 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
             for (let hour = start_hour; hour < end_hour; hour++) {
 
                 allSlots.push({
-                    date: day,
-                    start_time: hour,
-                    end_time: hour + 1
+                    date: day, start_time: hour, end_time: hour + 1
                 });
             }
         }
@@ -48,110 +46,105 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
 };
 const isSlotBooked = (slot, bookedSlots) => {
     return bookedSlots.some(bookedSlot => {
-        return bookedSlot.date === slot.date &&
-            bookedSlot.start_time === slot.start_time
+        return bookedSlot.date === slot.date && bookedSlot.start_time === slot.start_time
     });
 };
 
 
 const AppointmentBooking = () => {
-        let navigate = useNavigate()
-        const [workingHours, setWorkingHours] = useState([]);
-        const [bookedSlots, setBookedSlots] = useState([]); // Add this line to store booked slots
-        const [parsedDoctor, setParsedDoctor] = useState(null); // Add this line to store the parsed doctor
+    let navigate = useNavigate()
+    const [workingHours, setWorkingHours] = useState([]);
+    const [bookedSlots, setBookedSlots] = useState([]); // Add this line to store booked slots
+    const [availableDays, setAvailableDays] = useState([]); // Add this line to store available days
+    const [parsedDoctor, setParsedDoctor] = useState(null); // Add this line to store the parsed doctor
 
-        const [selectedDate, setStartDate] = useState(new Date());
-        const [slots, setSlots] = useState([]);
-        const [doctor, setDoctor] = useState([]);
-        const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-        const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
-        const storage = useCloudStorage();
+    const [selectedDate, setStartDate] = useState(new Date());
+    const [slots, setSlots] = useState(null);
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+    const storage = useCloudStorage();
 
-        useEffect(() => {
-            // Fetch doctor information from storage first
-            storage.getItem('selectedDoctor').then((storedDoctor) => {
-                setParsedDoctor(JSON.parse(storedDoctor));  // Add this line to set the parsed doctor
-            });
-        }, []);
+    useEffect(() => {
+        // Fetch doctor information from storage first
+        storage.getItem('selectedDoctor').then((storedDoctor) => {
+            setParsedDoctor(JSON.parse(storedDoctor));  // Add this line to set the parsed doctor
+        });
+    }, []);
 
-        useEffect(() => {
-            if (parsedDoctor && parsedDoctor.doctor_id && parsedDoctor.location_id) {
-                axios.get(`https://medsync.botfather.dev/api/working_hours/${parsedDoctor.location_id}`)
-                    .then(response => {
-                        setWorkingHours(response.data);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching working hours:', error);
-                    });
+    useEffect(() => {
+        if (parsedDoctor && parsedDoctor.doctor_id && parsedDoctor.location_id) {
+            axios.get(`https://medsync.botfather.dev/api/working_hours/${parsedDoctor.location_id}`)
+                .then(response => {
+                    setWorkingHours(response.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching working hours:', error);
+                });
 
-            }
-        }, [parsedDoctor]);
-
+        }
+    }, [parsedDoctor]);
 
 
-        useEffect(() => {
-            if (parsedDoctor && parsedDoctor.doctor_id && parsedDoctor.location_id && workingHours.length > 0) {
-                // Fetch slots
-                axios.get(`https://medsync.botfather.dev/api/slots/${parsedDoctor.doctor_id}/${parsedDoctor.location_id}/${selectedDate.getMonth()}`)
-                    .then(response => {
-                        setBookedSlots(response.data); // Add this line to set the booked slots
-                    })
-                    .catch(error => {
-                        console.error('Error fetching slots:', error);
-                    });
+    useEffect(() => {
+        if (parsedDoctor && parsedDoctor.doctor_id && parsedDoctor.location_id && workingHours.length > 0 && !slots) {
+            // Fetch slots
+            axios.get(`https://medsync.botfather.dev/api/slots/${parsedDoctor.doctor_id}/${parsedDoctor.location_id}/${selectedDate.getMonth()}`)
+                .then(response => {
+                    setBookedSlots(response.data); // Add this line to set the booked slots
+                })
+                .catch(error => {
+                    console.error('Error fetching slots:', error);
+                });
 
             const allPossibleSlots = generateAllSlotsForMonth(workingHours, selectedDate.getMonth(), selectedDate.getFullYear()); // Note the date object
-                const availableSlots = allPossibleSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
+            const availableSlots = allPossibleSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
+            // Extract unique days that are available for booking
+            const availableDays = Array.from(new Set(availableSlots.map(slot => slot.date.toDateString())));
+            setAvailableDays(availableDays);  // Set the available days
 
-                setSlots(availableSlots);  // Set only the available slots
+            setSlots(availableSlots);  // Set only the available slots
 
-            }
-        }, [parsedDoctor, selectedDate, workingHours]);  // Removed slots and workingHours to prevent infinite loop
-
-
-        const handleDateChange = (date) => {
-            selectionChanged();
-            setStartDate(date);
-        };
-
-        const handleSlotSelection = async (slot) => {
-            setSelectedTimeSlot(slot);
-            selectionChanged();
-            console.log(slot)
-        };
-
-        const handleNext = async () => {
-            await storage.setItem('selectedTimeSlot', JSON.stringify(selectedTimeSlot));
-            navigate("/booking/patient-info-form")
         }
+    }, [parsedDoctor, selectedDate, workingHours]);  // Removed slots and workingHours to prevent infinite loop
 
-        return (
-            <>
-                <BackButton onClick={() => navigate(-1)}/>
-                <div className="time-details">
-                    <Header className="time-details" title="Time Details"/>
-                    <main className="time-details__main">
-                        <Calendar onDateChange={handleDateChange}
-                        />
-                        {selectedDate && (
-                            <TimeSlot availableSlots={slots} selectedTimeSlot={selectedTimeSlot}
-                                  setSelectedTimeSlot={handleSlotSelection}
-                                  selectedDate={selectedDate}
-                        />)
-                        }
 
-                        {slots.length !== 0 && (
-                            <LargeButton
-                                handleSubmit={handleNext}
-                                title="Next"
-                                typeButton="time-details"
-                            >Next</LargeButton>
-                        )}
-                    </main>
-                </div>
-            </>
-        );
+    const handleDateChange = (date) => {
+        selectionChanged();
+        setStartDate(date);
+    };
+
+    const handleSlotSelection = async (slot) => {
+        setSelectedTimeSlot(slot);
+        selectionChanged();
+        console.log(slot)
+    };
+
+    const handleNext = async () => {
+        await storage.setItem('selectedTimeSlot', JSON.stringify(selectedTimeSlot));
+        navigate("/booking/patient-info-form")
     }
-;
+
+    return (<>
+            <BackButton onClick={() => navigate(-1)}/>
+            <div className="time-details">
+                <Header className="time-details" title="Time Details"/>
+                <main className="time-details__main">
+                    <Calendar onDateChange={handleDateChange}
+                                availableDays={availableDays}
+                    />
+                    {selectedDate && slots && (<TimeSlot availableSlots={slots} selectedTimeSlot={selectedTimeSlot}
+                                                setSelectedTimeSlot={handleSlotSelection}
+                                                selectedDate={selectedDate}
+                    />)}
+
+                    {slots && (<LargeButton
+                            handleSubmit={handleNext}
+                            title="Next"
+                            typeButton="time-details"
+                        >Next</LargeButton>)}
+                </main>
+            </div>
+        </>);
+};
 
 export default AppointmentBooking;

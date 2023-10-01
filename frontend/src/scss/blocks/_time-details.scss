@@ -160,6 +160,17 @@
         background: $color-gradient;
         color: $color-button-text;
       }
+      &--unavailable {
+        color: $color-address;
+      }
+
+      &--available {
+        background: $color-button-text;
+        &:hover {
+          background: $color-primary;
+          color: $color-button-text;
+        }
+      }
     }
   }
 }
@@ -214,11 +225,6 @@
         box-shadow: $color-box-shadow;
       }
 
-      &:hover {
-        background: $color-primary;
-        opacity: 0.1;
-        color: $color-button-text;
-      }
     }
   }
 

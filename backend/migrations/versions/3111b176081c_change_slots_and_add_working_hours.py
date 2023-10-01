@@ -63,9 +63,10 @@ def upgrade() -> None:
     result = conn.scalars(sa.text("SELECT location_id FROM locations;"))
     # Insert working hours for each location
     for location_id in result:
-        for weekday_index in range(7):  # 0=Monday, 1=Tuesday, ..., 6=Sunday
+        for weekday_index in range(6):  # 0=Monday, 1=Tuesday, ..., 6=Sunday, Sunday is not working day
             # Randomly select working hours variant
             working_hours = random.choice(working_hours_variants)
+
             conn.execute(
                 sa.text(
                     """

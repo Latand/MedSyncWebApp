@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {eachDayOfInterval, endOfMonth, format, getDay, isSameDay, startOfMonth} from 'date-fns';
+import {eachDayOfInterval, endOfMonth, format, getDay, startOfMonth} from 'date-fns';
 import monthIcon from '../../assets/images/time-details/month-icon.svg';
+import Day from "./Day.jsx";
 
 
-const Calendar = ({onDateChange}) => {
+const Calendar = ({onDateChange, availableDays}) => {
     const weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
     const now = new Date();
     const [selectedMonth, setSelectedMonth] = useState(startOfMonth(now));
@@ -14,7 +15,7 @@ const Calendar = ({onDateChange}) => {
         const start = startOfMonth(selectedMonth);
         const end = endOfMonth(selectedMonth);
         const dayList = eachDayOfInterval({start, end});
-        let firstDayOfWeekIndex = getDay(start)-1;
+        let firstDayOfWeekIndex = getDay(start) - 1;
         if (firstDayOfWeekIndex === -1) {
             firstDayOfWeekIndex = 6;
         }
@@ -68,17 +69,13 @@ const Calendar = ({onDateChange}) => {
 
                     <ul className="days-selector">
                         {days.map((day, index) => (
-                            <li
+                            <Day
                                 key={index}
-                                className={
-                                    day ?
-                                        (isSameDay(selectedDay, day) ? "days-selector__day days-selector__day--active" : "days-selector__day") :
-                                        "days-selector__day days-selector__day--placeholder"
-                                }
-                                onClick={() => handleDayClick(day)}
-                            >
-                                {day ? format(day, 'd') : ''}
-                            </li>
+                                day={day}
+                                selectedDay={selectedDay}
+                                availableDays={availableDays}
+                                handleDayClick={handleDayClick}
+                            />
                         ))}
                     </ul>
                 </div>
