@@ -72,7 +72,7 @@ const DoctorSelection = () => {
 
 
     return (<>
-        <BackButton onClick={() => navigate(-1)}/>
+        <BackButton onClick={() => navigate("/")}/>
         <div className="wrapper">
             <Header/>
             <SearchBar search={search} setSearch={setSearch}/>

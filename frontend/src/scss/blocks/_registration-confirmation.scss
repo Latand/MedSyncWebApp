@@ -1,12 +1,16 @@
-.landing-page {
+.registration-confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-inline: 30px;
   padding-top: 20px;
   padding-bottom: 35px;
+  gap: 5px;
 
   &__logo {
     display: block;
     margin-bottom: 42px;
-
     &__img {
       object-fit: contain;
       object-position: center;
@@ -15,23 +19,20 @@
     }
   }
 
-  &__icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-
-    &--img {
-      width: 208px;
-      height: 40px;
-    }
+  &__title {
+    color: $color-tertiary;
+    font-size: 37px;
+    font-weight: $font-weight-bold;
+    text-align: center;
+    line-height: 119%;
   }
 
   &__text {
-    color: $color-secondary;
+    font-size: 15px;
+    font-weight: $font-weight-regular;
     text-align: center;
-    font-size: 19px;
-    line-height: normal;
+    line-height: 119%;
+
   }
 
   .arrow-button {
@@ -48,18 +49,11 @@
     border-radius: 45px;
     padding: 15px 0;
     width: 200px;
-    margin: 63px auto 27px;
+    margin: 22px auto 27px;
 
     &:hover {
       filter: brightness(1.05);
     }
-  }
-
-  .arrow {
-    display: flex;
-    align-items: center;
-    width: 12px;
-    height: 12px;
   }
 
   .button-second {
@@ -74,12 +68,5 @@
     &:hover {
       filter: brightness(1.05);
     }
-  }
-  
-  &__bottom {
-    color: $color-primary;
-    line-height: 118.5%;
-    text-align: center;
-    font-size: 13px;
   }
 }

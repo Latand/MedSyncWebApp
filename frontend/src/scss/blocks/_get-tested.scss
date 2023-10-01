@@ -1,0 +1,136 @@
+.get-tested {
+  @include padding;
+
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+    margin-top: 20px;
+    cursor: pointer;
+
+
+    &__input {
+      border-radius: 31px;
+      border: 1px solid $color-border;
+      background: $color-gettested-search;
+      width: 100%;
+      font-size: 14px;
+      font-weight: $font-weight-semibold;
+      padding: 14px 0 14px 20px;
+      outline: none;
+      color: $color-search-input;
+    }
+
+    &__icon {
+      position: absolute;
+      top: 16px;
+      right: 35px;
+
+        &__img {
+          width: 14px;
+          height: 14px;
+        }
+    }
+  }
+
+  .nav {
+    margin-bottom: 20px;
+
+    &__list {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      list-style: none;
+      text-align: center;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+    }
+
+    &__item {
+      font-size: 10px;
+      line-height: normal;
+      font-weight: $font-weight-bold;
+      color: $color-primary;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    &__button {
+      border-radius: 26px;
+      border: 1px solid #E2E2E2;
+      padding: 7px 18px;
+
+      &:hover {
+        background: $color-gradient;
+        color: $color-button-text;
+        border: none;
+      }
+
+      &:active {
+        background: $color-gradient;
+        color: $color-button-text;
+        border: none;
+      }
+    }
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+  }
+
+
+}
+
+.specialization-card {
+  @include hoverScaleTranslate;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  border: 1px solid $color-button-text;
+  padding: 20px;
+  cursor: pointer;
+
+
+
+  &--red {
+    background: linear-gradient(142deg, #FF9788 5.88%, #FF3A27 98.75%);;
+  }
+
+  &--blue {
+    background: linear-gradient(142deg, #BAE9F7 5.88%, #77ACDE 98.75%);
+  }
+
+  &__img {
+    width: 93px;
+    height: 66px;
+  }
+
+  &__title {
+    color: $color-button-text;
+    text-align: center;
+    font-size: 16px;
+    font-weight: $font-weight-bold;
+    line-height: normal;
+  }
+
+  &__subtitle {
+    color: $color-button-text;
+    text-align: center;
+    font-size: 8px;
+    font-weight: $font-weight-regular;
+    line-height: normal;
+  }
+}

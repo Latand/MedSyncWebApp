@@ -31,10 +31,10 @@
     &__input {
 
       border-radius: 31px;
-      border: 1px solid $color-button-text;
+      border: 1px solid $color-border;
       background: $color-button-text;
       width: 100%;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: $font-weight-semibold;
       padding: 10px 0 10px 20px;
       width: 100%;
@@ -46,12 +46,10 @@
       position: absolute;
       top: 13px;
       right: 35px;
-
-
-      &__img {
-        width: 10px;
-        height: 10px;
-      }
+        &__img {
+          width: 14px;
+          height: 14px;
+        }
     }
   }
 
@@ -85,14 +83,16 @@
       border: 1px solid #E2E2E2;
       padding: 7px 20px;
 
-      &:hover,
       &--active {
         background: $color-gradient;
         color: $color-button-text;
         border: none;
       }
+
       &:hover {
-        filter: brightness(1.05);
+        background: $color-gradient;
+        color: $color-button-text;
+        border: none;
       }
     }
   }
@@ -106,6 +106,7 @@
   .card {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     gap: 20px;
     background: $color-button-text;
     border-radius: 12px;
@@ -152,7 +153,7 @@
     }
 
     &__title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: $font-weight-bold;
       line-height: 119%;
     }

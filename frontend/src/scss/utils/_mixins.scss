@@ -3,3 +3,10 @@
   padding-top: 32px;
   padding-bottom: 10px;
 }
+
+@mixin hoverScaleTranslate {
+  &:hover {
+    transform: scale(1.05) translate(0, -5px);
+    transition: all 0.3s ease-in-out;
+  }
+}
