@@ -22,13 +22,6 @@ const BoxWrap = ({title, children}) => (<div className="box__wrap">
     {children}
 </div>);
 
-const hoursArray = [{day: 'Monday', start: '9:00 am', end: '17:00 pm'}, {
-    day: 'Tuesday', start: '9:00 am', end: '17:00 pm'
-}, {day: 'Wednesday', start: '9:00 am', end: '17:00 pm'}, {
-    day: 'Thursday', start: '9:00 am', end: '17:00 pm'
-}, {day: 'Friday', start: '9:00 am', end: '17:00 pm'}, {
-    day: 'Saturday', start: '9:00 am', end: '17:00 pm'
-}, {day: 'Sunday'}];
 
 
 const Resume = () => {
@@ -36,9 +29,11 @@ const Resume = () => {
     const [doctorData, setDoctorData] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [selectedLocation, setSelectedLocation] = useState(null);
+    const [hoursArray, setHoursArray] = useState([]);
     const storage = useCloudStorage();
     const showPopup = useShowPopup();
     let navigate = useNavigate();
+    const webApp = window.Telegram?.WebApp;
     const [InitDataUnsafe, InitData] = useInitData();
 
     useEffect(() => {
@@ -48,18 +43,19 @@ const Resume = () => {
                 let savedDoctor = JSON.parse(await storage.getItem('selectedDoctor'))
                 let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
                 // from JSON to Object
-                if (!selectedTimeSlot) {
-                    await showPopup({message: 'Sorry, you have not selected Time slot!'});
-                    navigate(-2);
+                if (!selectedTimeSlot || !savedDoctor || !savedUserData) {
+                    await showPopup({message: 'Sorry, there is missing data! Start again!'});
+                    navigate('/see_a_doctor');
                     return;
                 }
                 try {
-                    const response = await axios.get(`https://medsync.botfather.dev/api/locations/${savedDoctor.location_id}`);
-                    setSelectedLocation(response.data);
-
+                    const locationInfo = await axios.get(`https://medsync.botfather.dev/api/locations/${savedDoctor.location_id}`);
+                    setSelectedLocation(locationInfo.data);
+                    const workingHours = await axios.get(`https://medsync.botfather.dev/api/working_hours/${savedDoctor.location_id}`);
                     // Parse savedUserData and set the state
                     setUserData(savedUserData);
                     setDoctorData(savedDoctor);
+                    setHoursArray(workingHours.data);
                     // make date object from string inside selectedTimeSlot
                     selectedTimeSlot = new Date(selectedTimeSlot);
                     setSelectedTimeSlot(selectedTimeSlot);
@@ -70,7 +66,6 @@ const Resume = () => {
                 }
             } catch (err) {
                 console.error(err);
-                return navigate('/see_a_doctor')
             }
 
         };
@@ -83,7 +78,7 @@ const Resume = () => {
         try {
             const response = await axios.post(`https://medsync.botfather.dev/api/doctors/book_slot`, {
                 doctor_id: doctorData.doctor_id,
-                user_id: InitDataUnsafe.user.id,
+                user_id: InitDataUnsafe.user?.id,
                 booking_date_time: selectedTimeSlot,
                 location_id: doctorData.location_id,
                 user_name: userData.userName,
@@ -98,6 +93,7 @@ const Resume = () => {
             bookings.push(response.data.booking_id);
             await storage.setItem('bookings', JSON.stringify(bookings))
             await showPopup({message: 'Your appointment has been confirmed!'});
+            await webApp.sendData(JSON.stringify({'action': 'booking_confirmed', 'booking_id': response.data.booking_id}));
         } catch (err) {
             await showPopup({message: 'Sorry, something went wrong!'})
             console.error(err);
@@ -136,7 +132,9 @@ const Resume = () => {
                                     <BoxWrap title={selectedLocation.name}>
                                         <div className="box__text">{selectedLocation.address}</div>
                                     </BoxWrap>
-                                    <a className="box__button button" href="https://maps.app.goo.gl/VkE3Fkkf6nMcWVp17"
+                                    <a className="box__button button" href={
+                                        `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedLocation.address)}`
+                                    }
                                        target="_blank" rel="noopener noreferrer">Get direction</a>
                                 </div>
                             </>}

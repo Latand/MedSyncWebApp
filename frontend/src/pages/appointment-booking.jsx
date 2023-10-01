@@ -47,7 +47,6 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
 };
 
 const isSlotBooked = (slot, bookedSlots) => {
-    console.log('slot', slot)
     return bookedSlots.some(bookedSlot => {
         let bookedSlotDateWithHours = new Date(bookedSlot);
         return slot.getTime() === bookedSlotDateWithHours.getTime();
@@ -56,10 +55,8 @@ const isSlotBooked = (slot, bookedSlots) => {
 const AppointmentBooking = () => {
     let navigate = useNavigate()
     const [workingHours, setWorkingHours] = useState([]);
-    const [bookedSlots, setBookedSlots] = useState([]); // Add this line to store booked slots
     const [availableDays, setAvailableDays] = useState([]); // Add this line to store available days
     const [parsedDoctor, setParsedDoctor] = useState(null); // Add this line to store the parsed doctor
-
     const [selectedDate, setStartDate] = useState(new Date());
     const [slots, setSlots] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -88,8 +85,6 @@ const AppointmentBooking = () => {
             axios.get(`https://medsync.botfather.dev/api/slots/${parsedDoctor.doctor_id}/${parsedDoctor.location_id}/${selectedDate.getMonth()}`)
                 .then(response => {
                     let bookedSlots = response.data
-                    setBookedSlots(bookedSlots); // Add this line to set the booked slots
-
                     const allPossibleSlots = generateAllSlotsForMonth(workingHours, selectedDate.getMonth(), selectedDate.getFullYear()); // Note the date object
                     // Extract unique days that are available for booking
                     const availableSlots = allPossibleSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
@@ -110,7 +105,6 @@ const AppointmentBooking = () => {
     };
 
     const handleSlotSelection = async (slot) => {
-        console.log('selected slot', slot)
         setSelectedTimeSlot(slot);
         selectionChanged();
         console.log(slot)

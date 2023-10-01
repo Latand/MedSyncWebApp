@@ -1,3 +1,5 @@
+import json
+
 from aiogram import types, Router, F
 
 from tgbot.config import Config
@@ -27,4 +29,8 @@ async def send_webapp(message: types.Message, config: Config):
 
 @echo_router.message(F.web_app_data)
 async def bot_echo(message: types.Message):
-    await message.answer(text=message.web_app_data.data)
+    data = json.loads(message.web_app_data.data)
+    if data.get("action") == "booking_confirmed":
+        booking_id = data.get("booking_id")
+        await message.answer(text=f"Your booking is confirmed! Booking ID: {booking_id}")
+    # await message.answer(text=message.web_app_data.data)

@@ -100,18 +100,9 @@ class DoctorRepo(BaseRepo):
             .where(Doctor.doctor_id == doctor_id)
             .group_by(Doctor.doctor_id, Location.location_id, Specialty.specialty_id)
         )
-        # get the working time of the doctor`s location
-        working_times_stmt = (
-            select(WorkingHour)
-            .join(Location)
-            .join(Doctor)
-            .where(Doctor.doctor_id == doctor_id)
-        )
-
-        working_times = await self.session.scalars(working_times_stmt)
 
         result = await self.session.execute(stmt)
-        return result.mappings().first(), working_times.all()
+        return result.mappings().first()
 
     async def get_booked_slots(
         self, doctor_id: int, location_id: int, month_number: int

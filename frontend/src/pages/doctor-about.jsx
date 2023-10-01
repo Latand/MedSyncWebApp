@@ -6,19 +6,23 @@ import Section from "../components/DoctorAbout/Section.jsx";
 import ServicesList from "../components/DoctorAbout/ServicesList.jsx";
 import axios from "axios";
 import {BackButton} from "@vkruglikov/react-telegram-web-app";
+import workingHours from "../components/Resume/WorkingHours.jsx";
+import WorkingHours from "../components/Resume/WorkingHours.jsx";
 
 const About = () => {
     const {doctor_id} = useParams();
     const [doctor, setDoctor] = useState(null);
+    const [workingHours, setWorkingHours] = useState([]);
     let navigate = useNavigate()
 
 
     useEffect(() => {
         const fetchDoctorInfo = async () => {
             try {
-                const response = await axios.get(`https://medsync.botfather.dev/api/doctors/${doctor_id}`);
-                console.log(response.data)
-                setDoctor(response.data);
+                const doctor = await axios.get(`https://medsync.botfather.dev/api/doctors/${doctor_id}`);
+                const workingHours = await axios.get(`https://medsync.botfather.dev/api/working_hours/${doctor.data.location_id}`);
+                setWorkingHours(workingHours.data);
+                setDoctor(doctor.data);
             } catch (err) {
                 console.error(err);
             }
@@ -54,7 +58,7 @@ const About = () => {
                         {doctor.certificates}
                     </Section>
                     <Section title="Working Time" tag="working-time">
-                    <ServicesList services={doctor.working_hours}/>
+                    <WorkingHours hoursArray={workingHours}/>
                     </Section>
                     <Section title="Location" tag="location">
                         <div className="location">

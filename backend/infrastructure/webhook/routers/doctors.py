@@ -20,28 +20,8 @@ async def get_doctor(doctor_id: int, repo: RequestsRepo = Depends(get_repo)):
     if result is None:
         raise HTTPException(status_code=404, detail="Doctor not found")
 
-    weekdays = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-    ]
-    doctor, working_hours = result
-    working_days = [working_hour.weekday_index for working_hour in working_hours]
-    working_hours_formatted = "\n".join(
-        [
-            f"{weekday_name}: {working_hours[weekday_index].start_time}:00 - {working_hours[weekday_index].end_time}:00"
-            if weekday_index in working_days
-            else f"{weekday_name}: Closed"
-            for weekday_index, weekday_name in enumerate(weekdays)
-        ]
-    )
     return {
-        **doctor,
-        "working_hours": working_hours_formatted,
+        **result,
     }
 
 

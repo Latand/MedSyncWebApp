@@ -32,7 +32,6 @@ const DoctorSelection = () => {
         try {
             const response = await axios.get('https://medsync.botfather.dev/api/doctors/');
             setAllDoctors(response.data);
-            console.log('All doctors:', response.data)
             setDisplayedDoctors(response.data);  // Initially display all doctors
         } catch (error) {
             console.error(error.message);
