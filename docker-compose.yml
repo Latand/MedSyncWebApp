@@ -87,17 +87,17 @@ services:
         max-size: "200k"
         max-file: "10"
 
-  ngrok:
-    image: ngrok/ngrok:latest
-    restart: unless-stopped
-    environment:
-      - NGROK_CONFIG=/etc/ngrok.yml
-    volumes:
-      - ./ngrok.yml:/etc/ngrok.yml
-    expose:
-      - 443
-    networks:
-      - tg_bot
+#  ngrok:
+#    image: ngrok/ngrok:latest
+#    restart: unless-stopped
+#    environment:
+#      - NGROK_CONFIG=/etc/ngrok.yml
+#    volumes:
+#      - ./ngrok.yml:/etc/ngrok.yml
+#    expose:
+#      - 443
+#    networks:
+#      - tg_bot
 
 networks:
   tg_bot:
