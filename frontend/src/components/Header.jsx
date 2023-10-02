@@ -1,4 +1,3 @@
-import React from 'react';
 import aboutIcon from '../assets/images/about/about-icon.svg';
 
 

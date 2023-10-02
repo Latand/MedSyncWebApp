@@ -18,7 +18,7 @@ async def get_all_diagnostics(repo: RequestsRepo = Depends(get_repo)):
 
 
 @diagnostics_router.get(
-    "/{diagnostic_id}/locations", response_model=List[DiagnosticLocation]
+    "/{diagnostic_id}/locations"
 )
 async def get_locations_by_type(
     diagnostic_id: int, repo: RequestsRepo = Depends(get_repo)

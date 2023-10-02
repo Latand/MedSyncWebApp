@@ -1,4 +1,4 @@
-import React from 'react';
+
 import searchIcon from '../../assets/images/doctors-listing/search.svg';
 
 const SearchBar = ({search, setSearch}) => (

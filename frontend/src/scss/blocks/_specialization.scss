@@ -48,11 +48,11 @@
       flex-direction: column;
       gap: 15px;
       border-radius: 12px;
-      border: 1px solid $color-border;
-      background: $tg-theme-button;
+      border: 1px solid $tg-theme-secondary-bg;
+      background: $tg-theme-secondary-bg;
       padding-block: 20px;
       padding-left: 23px;
-
+      color: $tg-theme-text;
 
       &__title {
         font-size: 20px;
@@ -62,7 +62,6 @@
       }
 
       &__subtitle {
-        color: $color-search-input;
         font-size: 16px;
         line-height: 119%;
       }

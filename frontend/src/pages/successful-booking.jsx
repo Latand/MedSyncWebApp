@@ -1,4 +1,4 @@
-import React from 'react';
+
 import logo from '../assets/images/landing-page/medsync-logo.svg'; // Adjust the import path as necessary
 
 function RegistrationConfirmation() {

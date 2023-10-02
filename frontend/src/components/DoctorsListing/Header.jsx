@@ -1,4 +1,4 @@
-import React from 'react';
+
 import filter from '../../assets/images/doctors-listing/filter.svg';
 
 const Header = () => (

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
 import favorite from '../../assets/images/doctors-listing/favorite.svg';
 
