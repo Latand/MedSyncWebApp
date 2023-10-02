@@ -13,7 +13,7 @@ const GetTested = () => {
     const [diagnosticTypes, setDiagnosticTypes] = useState([]);
     useEffect(() => {
         // Replace with your actual API endpoint
-        const apiUrl = 'https://your-api.com/diagnostic-types';
+        const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL}/api/diagnostics/`;
 
         axios.get(apiUrl)
             .then(response => {
@@ -34,10 +34,10 @@ const GetTested = () => {
                     {diagnosticTypes.map((type, index) => (
                         <SpecializationCard
                             key={index}
-                            className={index % 2 === 0 ? "specialization-card--red" : "specialization-card--blue"}
-                            imgSrc={`./images/get-tested/get-tested-${index + 1}.svg`}
-                            title={type.title}
-                            subtitle={`${type.clinics_count} Clinics`}
+                            className="specialization-card"
+                            imgSrc={type.photo_url}
+                            title={type.type_name}
+                            subtitle={`${type.clinics_count || 0} Clinics`}
                         />
                     ))}
                 </main>

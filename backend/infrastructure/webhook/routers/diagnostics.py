@@ -11,7 +11,7 @@ from infrastructure.webhook.utils import get_repo
 diagnostics_router = APIRouter(prefix="/diagnostics")
 
 
-@diagnostics_router.get("/", response_model=List[Diagnostic])
+@diagnostics_router.get("/")
 async def get_all_diagnostics(repo: RequestsRepo = Depends(get_repo)):
     diagnostics = await repo.diagnostics.get_all_diagnostic_types()
     return diagnostics
