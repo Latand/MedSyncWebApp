@@ -1,7 +1,5 @@
 .top-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include displayFlex(space-between, center, row);
 
   &__text {
     color: $tg-theme-text;
@@ -13,13 +11,12 @@
   }
 
   &__icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include displayFlex(center, center, row);
   
     &__img {
       width: 15px;
       height: 12px;
+      filter: invert(1);
 
       &--about {
         width: 24px;

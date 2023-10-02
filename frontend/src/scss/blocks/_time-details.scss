@@ -31,7 +31,7 @@
     text-decoration: none;
     background: $tg-theme-button;
     box-shadow: $tg-theme-secondary-bg;
-      color: $tg-theme-button-text;
+    color: $tg-theme-button-text;
 
     font-size: 17px;
     font-weight: $font-weight-bold;
@@ -67,6 +67,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding-inline: 13px;
 
     &__wrap--left {
       display: flex;
@@ -95,11 +96,11 @@
     }
 
     &__button {
-      border: solid black;
-      border-width: 0 2px 2px 0;
-      padding: 3px;
+      background: $tg-theme-bg;
+      border: solid $tg-theme-text;
+      border-width: 0 3px 3px 0;
+      padding: 4px;
       cursor: pointer;
-
 
       &--next {
         transform: rotate(-45deg);
@@ -159,8 +160,8 @@
       margin-bottom: 4px;
 
       &--active {
-        background: $tg-theme-secondary-bg;
-        color: $tg-theme-link;
+        background: $tg-theme-button;
+        color: $tg-theme-bg;
       }
       &--unavailable {
         color: $tg-theme-hint;
@@ -189,10 +190,12 @@
     justify-content: start;
     align-items: center;
     gap: 8px;
+    padding-inline: 13px;
 
     &__icon {
       width: 12px;
       height: 12px;
+      filter: invert(1);
     }
 
     &__text {
@@ -214,12 +217,12 @@
       border: none;
       border-radius: 26px;
       cursor: pointer;
-      font-family: "Inter", sans-serif;;
-      font-size: 11px;
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
       font-weight: $font-weight-bold;
       line-height: normal;
       text-align: center;
-      padding: 20px 0;
+      padding: 15px 0;
       width: 100px;
 
       &--active {
@@ -227,8 +230,6 @@
         color: $tg-theme-bg;
         box-shadow: $color-box-shadow;
       }
-
     }
   }
-
 }

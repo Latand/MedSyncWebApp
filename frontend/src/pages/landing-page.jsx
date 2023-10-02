@@ -10,7 +10,7 @@ const LandingPage = () => {
             <div className="landing-page">
                 <div className="landing-page__logo">
                     <img
-                        className="landing-page__logo__img"
+                        className="logo"
                         src={medSyncLogo}
                         alt="MedSync Logo"
                     />
