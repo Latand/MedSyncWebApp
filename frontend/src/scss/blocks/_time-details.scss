@@ -2,46 +2,14 @@
   @include padding;
 
   &__header {
-    position: relative;
+    @include lineAfter;
     margin-bottom: 40px;
-
-    &::after {
-      content: "";
-      position: absolute;
-      margin-bottom: -20px;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background: $tg-theme-text;
-      opacity: 0.3;
-    }
   }
 
   &__main {
     display: flex;
     flex-direction: column;
     gap: 50px;
-  }
-
-  &__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    background: $tg-theme-button;
-    box-shadow: $tg-theme-secondary-bg;
-    color: $tg-theme-button-text;
-
-    font-size: 17px;
-    font-weight: $font-weight-bold;
-    border-radius: 30px;
-    padding: 15px 0;
-    width: 100%;
-
-    &:hover {
-      filter: brightness(1.05);
-    }
   }
 }
 
@@ -63,23 +31,12 @@
   }
 
   .month-selector {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    @include displayFlex(space-between, center, row);
+ 
     padding-inline: 13px;
 
-    &__wrap--left {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 8px;
-    }
-
-    &__wrap--right {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    &__wrap {
+      @include displayFlex(center, center, row);
       gap: 8px;
     }
 
@@ -118,7 +75,6 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: 1fr;
-
     padding: 0;
     margin: 0 0 20px 0;
 
@@ -185,10 +141,8 @@
   gap: 20px;
 
   .time-selector {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
+    @include displayFlex(start, center, row);
+
     gap: 8px;
     padding-inline: 13px;
 
@@ -213,14 +167,12 @@
 
     &__button {
       background: $tg-theme-secondary-bg;
-      color: $tg-theme-text;
       border: none;
       border-radius: 26px;
       cursor: pointer;
       font-family: "Inter", sans-serif;
       font-size: 12px;
       font-weight: $font-weight-bold;
-      line-height: normal;
       text-align: center;
       padding: 15px 0;
       width: 100px;

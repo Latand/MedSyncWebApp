@@ -10,9 +10,8 @@
 }
 
 .arrow-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include displayFlex(center, center, row);
+
   text-decoration: none;
   gap: 10px;
   background: $tg-theme-button;
@@ -31,9 +30,8 @@
 }
 
 .button-second {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include displayFlex(center, center, row);
+
   color: $tg-theme-button;
   font-size: 18px;
   font-weight: $font-weight-bold;
