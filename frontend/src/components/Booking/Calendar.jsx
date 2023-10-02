@@ -51,7 +51,7 @@ const Calendar = ({onDateChange, availableDays}) => {
                     <div className="month-selector">
                         <button className="month-selector__button month-selector__button--prev"
                                 onClick={onPrevMonth}></button>
-                        <div className="month-selector__wrap--left">
+                        <div className="month-selector__wrap">
                             <img
                                 src={monthIcon}
                                 alt="Calendar Icon"
@@ -60,10 +60,10 @@ const Calendar = ({onDateChange, availableDays}) => {
                             <div className="month-selector__text">{format(selectedMonth, 'MMMM')}</div>
                         </div>
 
-                        <div className="month-selector__wrap--right">
-                            <button className="month-selector__button month-selector__button--next"
-                                    onClick={onNextMonth}></button>
-                        </div>
+                        
+                        <button className="month-selector__button month-selector__button--next"
+                                onClick={onNextMonth}></button>
+                        
                     </div>
                     <ul className="weekdays-selector">
                         {weekdays.map((day, index) => (
