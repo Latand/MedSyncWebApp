@@ -12,11 +12,11 @@ import AppointmentBooking from "./pages/appointment-booking.jsx";
 import RegistrationConfirmation from "./pages/successful-booking.jsx";
 
 const App = () => {
-
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             // Alternatively to what can be set with react-telegram-web-app, you can directly set the following properties:
             window.Telegram.WebApp.isClosingConfirmationEnabled = true;
+            window.Telegram.WebApp.expand();
         }
     }, []);
 

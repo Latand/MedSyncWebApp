@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BackButton} from '@vkruglikov/react-telegram-web-app';
 import {useNavigate} from 'react-router-dom';
 import Header from "../components/Header.jsx";
 import SearchBar from "../components/DoctorsListing/SearchBar.jsx";
 import SpecializationCard from "../components/GetTested/DiagnosticType.jsx";
+import axios from "axios";
 
 
 const GetTested = () => {

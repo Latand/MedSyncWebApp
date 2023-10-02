@@ -48,9 +48,9 @@ const Resume = () => {
                     return;
                 }
                 try {
-                    const locationInfo = await axios.get(`https://medsync.botfather.dev/api/locations/${savedDoctor.location_id}`);
+                    const locationInfo = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/locations/${savedDoctor.location_id}`);
                     setSelectedLocation(locationInfo.data);
-                    const workingHours = await axios.get(`https://medsync.botfather.dev/api/working_hours/${savedDoctor.location_id}`);
+                    const workingHours = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/working_hours/${savedDoctor.location_id}`);
                     // Parse savedUserData and set the state
                     setUserData(savedUserData);
                     setDoctorData(savedDoctor);
@@ -76,7 +76,7 @@ const Resume = () => {
         // Your logic goes here
         e.preventDefault();
         try {
-            const response = await axios.post(`https://medsync.botfather.dev/api/doctors/book_slot`, {
+            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/book_slot`, {
                 doctor_id: doctorData.doctor_id,
                 user_id: InitDataUnsafe.user?.id,
                 booking_date_time: selectedTimeSlot,
