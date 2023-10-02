@@ -23,11 +23,11 @@ female_photos = [4, 7, 8, 9, 11, 12]
 
 diagnostics_list = [
     {
-        "type_name": "Magnetic Resonance Imaging (MRI)",
+        "type_name": "Magnetic Resonance Imaging",
         "description": "A procedure using magnetic fields and radio waves to create detailed images of the organs and tissues within the body.",
     },
     {
-        "type_name": "Computed Tomography (CT)",
+        "type_name": "Computed Tomography",
         "description": "An imaging procedure using X-rays and computer technology to produce cross-sectional images of the body.",
     },
     {
@@ -39,7 +39,7 @@ diagnostics_list = [
         "description": "An imaging technique using high-frequency sound waves to create images of structures within the body.",
     },
     {
-        "type_name": "Positron Emission Tomography (PET)",
+        "type_name": "Positron Emission Tomography",
         "description": "A procedure that helps show how tissues and organs are functioning, using a radioactive drug to show activity.",
     },
     {
@@ -55,7 +55,7 @@ diagnostics_list = [
         "description": "A procedure where a piece of tissue or a sample of cells is removed from the body to be examined under a microscope.",
     },
     {
-        "type_name": "Electrocardiogram (ECG)",
+        "type_name": "Electrocardiogram",
         "description": "A test that measures the electrical activity of the heartbeat to identify abnormalities.",
     },
     {

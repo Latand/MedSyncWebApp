@@ -14,7 +14,7 @@ from infrastructure.database.repo.base import BaseRepo
 
 class DiagnosticRepo(BaseRepo):
     async def get_all_diagnostic_types(self):
-        stmt = select(Diagnostic)
+        stmt = select(Diagnostic).order_by(Diagnostic.diagnostic_id)
         result = await self.session.scalars(stmt)
         return result.all()
 
