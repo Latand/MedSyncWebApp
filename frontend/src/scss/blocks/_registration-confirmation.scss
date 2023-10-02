@@ -1,5 +1,5 @@
 .registration-confirmation {
-   @include displayFlex(center, center, column);
+  @include displayFlex(center, center, column);
 
   padding-inline: 30px;
   padding-top: 20px;
@@ -20,3 +20,5 @@
     text-align: center;
     line-height: 119%;
 
+  }
+}
