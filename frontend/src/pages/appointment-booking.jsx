@@ -128,7 +128,6 @@ const AppointmentBooking = () => {
                                                      setSelectedTimeSlot={handleSlotSelection}
                                                      selectedDate={selectedDate}
                 />)}
-
                 {selectedTimeSlot && (
                 <MainButton onClick={handleNext}
                 ></MainButton>

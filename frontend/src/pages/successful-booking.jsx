@@ -5,7 +5,7 @@ function RegistrationConfirmation() {
     return (
         <div className="registration-confirmation">
             <img
-                className="registration-confirmation__logo__img"
+                className="logo"
                 src={logo}
                 alt="MedSync logo"
             />

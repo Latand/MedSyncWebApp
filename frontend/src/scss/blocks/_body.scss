@@ -7,7 +7,7 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   width: 100%;
-  background: $color-gradient-sections;
+  background: var(--tg-theme-bg-color);
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;

@@ -3,22 +3,8 @@
   padding-top: 20px;
   padding-bottom: 35px;
 
-  &__logo {
-    display: block;
-    margin-bottom: 42px;
-
-    &__img {
-      object-fit: contain;
-      object-position: center;
-      width: 100%;
-      height: 150px;
-    }
-  }
-
   &__icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include displayFlex(center, center, column);
     margin-bottom: 20px;
 
     &--img {
@@ -34,53 +20,10 @@
     line-height: normal;
   }
 
-  .arrow-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    gap: 10px;
-      background: $tg-theme-button;
-      box-shadow: $color-box-shadow;
-      color: $tg-theme-button-text;
-
-    font-size: 18px;
-    font-weight: $font-weight-bold;
-    border-radius: 45px;
-    padding: 15px 0;
-    width: 200px;
-    margin: 63px auto 27px;
-
-    &:hover {
-      filter: brightness(1.05);
-    }
-  }
-
-  .arrow {
-    display: flex;
-    align-items: center;
-    width: 12px;
-    height: 12px;
-  }
-
-  .button-second {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $tg-theme-button;
-    font-size: 18px;
-    font-weight: $font-weight-bold;
-    margin-bottom: 80px;
-
-    &:hover {
-      filter: brightness(1.05);
-    }
-  }
-  
   &__bottom {
     color: $tg-theme-text;
-    line-height: 118.5%;
     text-align: center;
     font-size: 13px;
+    line-height: 118.5%;
   }
 }
