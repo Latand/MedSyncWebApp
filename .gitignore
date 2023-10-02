@@ -89,3 +89,4 @@ venv.bak/
 .idea/
 .env
 cache/
+ngrok.yml

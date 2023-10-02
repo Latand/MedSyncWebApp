@@ -16,7 +16,7 @@
     &__input {
       border-radius: 31px;
       border: 1px solid $color-border;
-      background: $color-gettested-search;
+      background: $tg-theme-secondary-bg;
       width: 100%;
       font-size: 14px;
       font-weight: $font-weight-semibold;
@@ -49,15 +49,14 @@
       gap: 15px;
       border-radius: 12px;
       border: 1px solid $color-border;
-      background: $color-button-text;
+      background: $tg-theme-button;
       padding-block: 20px;
       padding-left: 23px;
-
 
       &__title {
         font-size: 20px;
         font-weight: $font-weight-bold;
-        line-height: 119%; 
+        line-height: 119%;
       }
 
       &__subtitle {
@@ -69,12 +68,13 @@
       &--active {
         background: $color-gradient;
         border: none;
-        color: $color-button-text;
+        color: $tg-theme-button;
 
         .specialization-block__subtitle {
-          color: $color-button-text;
+          color: $tg-theme-button;
         }
       }
     }
   }
 }
+

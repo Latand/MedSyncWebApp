@@ -8,3 +8,38 @@
   line-height: normal;
   text-decoration: none;
 }
+
+.arrow-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  gap: 10px;
+  background: $tg-theme-button;
+  box-shadow: $color-box-shadow;
+  color: $tg-theme-button-text;
+  font-size: 18px;
+  font-weight: $font-weight-bold;
+  border-radius: 45px;
+  padding: 15px 0;
+  width: 200px;
+  margin: 22px auto 27px;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+}
+
+.button-second {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $tg-theme-button;
+  font-size: 18px;
+  font-weight: $font-weight-bold;
+  margin-bottom: 80px;
+
+  &:hover {
+    filter: brightness(1.05);
+  }
+}

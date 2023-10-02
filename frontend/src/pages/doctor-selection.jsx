@@ -73,7 +73,7 @@ const DoctorSelection = () => {
 
     return (<>
         <BackButton onClick={() => navigate("/")}/>
-        <div className="wrapper">
+        <div className="doctor-selection">
             <Header/>
             <SearchBar search={search} setSearch={setSearch}/>
             {specialties &&
@@ -103,7 +103,6 @@ const DoctorSelection = () => {
         </div>
         {selectedDoctor && <MainButton
             textColor="#FFF"
-            color="#8A6CDF"
             text={`Book with ${selectedDoctor.full_name}`}
             onClick={async () => {
                 selectionChanged();

@@ -16,7 +16,7 @@
 
   &__title {
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: $font-weight-bold;
     line-height: 119%;
     margin-bottom: 2px;
@@ -24,7 +24,7 @@
 
   &__subtitle {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: $font-weight-regular;
     line-height: 119%;
   }
@@ -39,8 +39,8 @@
     margin-bottom: 10px;
 
     &__text {
-      color: $color-about-available ;
-      font-size: 12px;
+      color: $tg-theme-text ;
+      font-size: 14px;
       font-weight: $font-weight-regular;
       line-height: 119%;
     }
@@ -56,9 +56,9 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    background: $color-gradient;
-    box-shadow: $color-box-shadow;
-    color: $color-button-text;
+    background: $tg-theme-button;
+    box-shadow: $tg-theme-secondary-bg;
+    color: $tg-theme-button-text;
     font-size: 17px;
     font-weight: $font-weight-bold;
     border-radius: 31px;
@@ -89,7 +89,7 @@
     }
 
     &__text {
-      color: $color-address;
+      color: $tg-theme-text;
       font-size: 13px;
       font-weight: $font-weight-regular;
       line-height: 119%;
@@ -107,7 +107,7 @@
     bottom: 0;
     width: 100%;
     height: 1px;
-    background: $color-address;
+    background: $tg-theme-text;
     opacity: 0.3;
   }
 }
@@ -122,7 +122,7 @@
     bottom: 0;
     width: 100%;
     height: 1px;
-    background: $color-address;
+    background: $tg-theme-text;
     opacity: 0.3;
   }
 
@@ -142,7 +142,7 @@
     bottom: 0;
     width: 100%;
     height: 1px;
-    background: $color-address;
+    background: $tg-theme-text;
     opacity: 0.3;
   }
 }
@@ -157,7 +157,7 @@
     bottom: 0;
     width: 100%;
     height: 1px;
-    background: $color-address;
+    background: $tg-theme-text;
     opacity: 0.3;
   }
 }

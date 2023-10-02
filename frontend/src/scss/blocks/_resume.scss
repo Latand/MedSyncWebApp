@@ -12,7 +12,7 @@
       bottom: 0;
       width: 100%;
       height: 1px;
-      background: $color-address;
+      background: $tg-theme-text;
       opacity: 0.3;
     }
   }
@@ -36,29 +36,29 @@
         bottom: 0;
         width: 100%;
         height: 1px;
-        background: $color-address;
+        background: $tg-theme-text;
         opacity: 0.3;
       }
     }
 
     &__text {
-      color: $color-label;
-      font-size: 10px;
+      color: $tg-theme-hint;
+      font-size: 13px;
       font-weight: $font-weight-semibold;
       line-height: 119%;
       margin-bottom: 15px;
       margin-left: 15px;
 
       &--color-dark {
-        color: $color-primary;
+        color: $tg-theme-text;
         margin-top: 5px;
         margin-left: 15px;
       }
     }
 
     &__title {
-      color: $color-primary;
-      font-size: 19px;
+      color: $tg-theme-text;
+      font-size: 17px;
       font-weight: $font-weight-bold;
       line-height: 119%;
       margin-left: 15px;
@@ -69,14 +69,13 @@
     }
 
     &__link {
-      color: $color-primary;
-      font-size: 12px;
+      color: $tg-theme-text;
+      font-size: 15px;
       font-weight: $font-weight-semibold;
       line-height: 119%;
       margin-top: 5px;
       margin-left: 15px;
       text-decoration: none;
-
     }
 
     &__button {
@@ -85,9 +84,10 @@
       align-items: center;
       text-decoration: none;
       gap: 4px;
-      background: $color-primary;
-      color: $color-button-text;
-      font-size: 11px;
+      background: $tg-theme-button;
+      color: $tg-theme-button-text;
+
+      font-size: 13px;
       font-weight: $font-weight-bold;
       border-radius: 26px;
       padding: 4px 0;
@@ -99,10 +99,8 @@
   }
 
   &__doctor {
-    display: flex;
-    font-display: row;
-    align-items: center;
-    gap: 15px;
+    @include displayFlex(start, center, row);
+    gap: 7px;
     margin-left: 15px;
 
     &__image {
@@ -111,18 +109,16 @@
       object-fit: cover;
       border-radius: 12px;
     }
-
   }
 
   &__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include displayFlex(center, center, row);
+
     gap: 10px;
     text-decoration: none;
-    background: $color-gradient;
+    background: $tg-theme-button;
     box-shadow: $color-box-shadow;
-    color: $color-button-text;
+    color: $tg-theme-button-text;
     font-size: 17px;
     font-weight: $font-weight-bold;
     border-radius: 30px;
@@ -136,20 +132,19 @@
   }
 
   .box {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    @include displayFlex(space-between, center, row);
+
     margin-bottom: 22px;
 
     &__title {
-      display: flex;
-      flex-direction: row;
+      @include displayFlex(start, center, row);
+
       gap: 6px;
       margin-bottom: 9px;
-    margin-left: 15px;
+      margin-left: 15px;
 
       &__icon {
+        filter: invert(1);
         width: 8px;
         height: 12px;
         object-fit: cover;
@@ -163,30 +158,32 @@
     }
 
     &__text {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: $font-weight-regular;
       line-height: 119%;
       margin-bottom: 8px;
-    margin-left: 15px;
+      margin-left: 15px;
 
       &--color-light {
-        color: $color-about-available;
+        color: $tg-theme-text;
       }
     }
 
     &__button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      text-align: center;
       text-decoration: none;
       gap: 4px;
-      background: $color-primary;
-      color: $color-button-text;
-      font-size: 10px;
+      background: $tg-theme-button;
+      color: $tg-theme-button-text;
+      font-size: 12px;
       font-weight: $font-weight-bold;
       border-radius: 26px;
-      padding: 5px 0;
-      width: 80px;
+      padding: 7px 0;
+      width: 90px;
+
+      &:hover {
+        filter: brightness(1.05);
+      }
     }
   }
 }

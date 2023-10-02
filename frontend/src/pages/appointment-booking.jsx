@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import Header from "../components/Header.jsx";
 import Calendar from "../components/Booking/Calendar.jsx";
 import TimeSlot from "../components/Booking/TimeSlot.jsx";
-import {BackButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import LargeButton from "../components/LargeButton.jsx";
 import {eachDayOfInterval, endOfMonth, getDay, startOfMonth} from 'date-fns';
 
@@ -128,12 +128,10 @@ const AppointmentBooking = () => {
                                                      setSelectedTimeSlot={handleSlotSelection}
                                                      selectedDate={selectedDate}
                 />)}
-
-                {selectedTimeSlot && (<LargeButton
-                    handleSubmit={handleNext}
-                    title="Next"
-                    typeButton="time-details"
-                >Next</LargeButton>)}
+                {selectedTimeSlot && (
+                <MainButton onClick={handleNext}
+                ></MainButton>
+                )}
             </main>
         </div>
     </>);
