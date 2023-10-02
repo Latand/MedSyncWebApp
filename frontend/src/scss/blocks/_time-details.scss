@@ -12,7 +12,7 @@
       bottom: 0;
       width: 100%;
       height: 1px;
-      background: $color-address;
+      background: $tg-theme-text;
       opacity: 0.3;
     }
   }
@@ -29,9 +29,10 @@
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    background: $color-gradient;
-    box-shadow: $color-box-shadow;
-    color: $color-button-text;
+    background: $tg-theme-button;
+    box-shadow: $tg-theme-secondary-bg;
+      color: $tg-theme-button-text;
+
     font-size: 17px;
     font-weight: $font-weight-bold;
     border-radius: 30px;
@@ -57,7 +58,7 @@
     bottom: 0;
     width: 100%;
     height: 1px;
-    background: $color-address;
+    background: $tg-theme-text;
     opacity: 0.3;
   }
 
@@ -84,6 +85,7 @@
     &__icon {
       width: 12px;
       height: 12px;
+      filter: invert(1);
     }
 
     &__text {
@@ -124,7 +126,7 @@
       align-self: center;
       text-align: center;
       list-style: none;
-      color: $color-weekdays;
+      color: $tg-theme-text;
       font-family: "Inter", sans-serif;
       font-size: 14px;
       font-weight: $font-weight-bold;
@@ -143,7 +145,7 @@
       align-self: center;
       text-align: center;
       list-style: none;
-      color: $color-primary;
+      color: $tg-theme-text;
       font-family: "Inter", sans-serif;
       font-size: 14px;
       font-weight: $font-weight-regular;
@@ -157,18 +159,19 @@
       margin-bottom: 4px;
 
       &--active {
-        background: $color-gradient;
-        color: $color-button-text;
+        background: $tg-theme-secondary-bg;
+        color: $tg-theme-link;
       }
       &--unavailable {
-        color: $color-address;
+        color: $tg-theme-hint;
+        background: $tg-theme-bg;
       }
 
       &--available {
-        background: $color-button-text;
+        background: $tg-theme-bg;
         &:hover {
-          background: $color-primary;
-          color: $color-button-text;
+          background: $tg-theme-button;
+          color: $tg-theme-bg;
         }
       }
     }
@@ -206,8 +209,8 @@
     gap: 10px;
 
     &__button {
-      background: $color-button-text;
-      color: $color-review;
+      background: $tg-theme-secondary-bg;
+      color: $tg-theme-text;
       border: none;
       border-radius: 26px;
       cursor: pointer;
@@ -220,8 +223,8 @@
       width: 100px;
 
       &--active {
-        background: $color-gradient;
-        color: $color-button-text;
+        background: $tg-theme-button;
+        color: $tg-theme-bg;
         box-shadow: $color-box-shadow;
       }
 

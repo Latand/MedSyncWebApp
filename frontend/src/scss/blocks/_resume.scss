@@ -12,7 +12,7 @@
       bottom: 0;
       width: 100%;
       height: 1px;
-      background: $color-address;
+      background: $tg-theme-text;
       opacity: 0.3;
     }
   }
@@ -36,13 +36,13 @@
         bottom: 0;
         width: 100%;
         height: 1px;
-        background: $color-address;
+        background: $tg-theme-text;
         opacity: 0.3;
       }
     }
 
     &__text {
-      color: $color-label;
+      color: $tg-theme-hint;
       font-size: 10px;
       font-weight: $font-weight-semibold;
       line-height: 119%;
@@ -50,14 +50,14 @@
       margin-left: 15px;
 
       &--color-dark {
-        color: $color-primary;
+        color: $tg-theme-text;
         margin-top: 5px;
         margin-left: 15px;
       }
     }
 
     &__title {
-      color: $color-primary;
+      color: $tg-theme-text;
       font-size: 19px;
       font-weight: $font-weight-bold;
       line-height: 119%;
@@ -69,7 +69,7 @@
     }
 
     &__link {
-      color: $color-primary;
+      color: $tg-theme-text;
       font-size: 12px;
       font-weight: $font-weight-semibold;
       line-height: 119%;
@@ -85,8 +85,11 @@
       align-items: center;
       text-decoration: none;
       gap: 4px;
-      background: $color-primary;
-      color: $color-button-text;
+      background: $tg-theme-button;
+      box-shadow: $color-box-shadow;
+      color: $tg-theme-button-text;
+
+
       font-size: 11px;
       font-weight: $font-weight-bold;
       border-radius: 26px;
@@ -120,9 +123,11 @@
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    background: $color-gradient;
-    box-shadow: $color-box-shadow;
-    color: $color-button-text;
+      background: $tg-theme-button;
+      box-shadow: $color-box-shadow;
+      color: $tg-theme-button-text;
+
+
     font-size: 17px;
     font-weight: $font-weight-bold;
     border-radius: 30px;
@@ -170,7 +175,7 @@
     margin-left: 15px;
 
       &--color-light {
-        color: $color-about-available;
+        color: $tg-theme-text;
       }
     }
 
@@ -180,8 +185,11 @@
       align-items: center;
       text-decoration: none;
       gap: 4px;
-      background: $color-primary;
-      color: $color-button-text;
+      background: $tg-theme-button;
+      box-shadow: $color-box-shadow;
+        color: $tg-theme-button-text;
+
+
       font-size: 10px;
       font-weight: $font-weight-bold;
       border-radius: 26px;

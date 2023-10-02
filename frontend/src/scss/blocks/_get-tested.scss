@@ -17,7 +17,7 @@
     &__input {
       border-radius: 31px;
       border: 1px solid $color-border;
-      background: $color-gettested-search;
+      background: $tg-theme-secondary-bg;
       width: 100%;
       font-size: 14px;
       font-weight: $font-weight-semibold;
@@ -56,7 +56,7 @@
       font-size: 10px;
       line-height: normal;
       font-weight: $font-weight-bold;
-      color: $color-primary;
+      color: $tg-theme-text;
       text-decoration: none;
       cursor: pointer;
     }
@@ -68,13 +68,13 @@
 
       &:hover {
         background: $color-gradient;
-        color: $color-button-text;
+        color: $tg-theme-button;
         border: none;
       }
 
       &:active {
         background: $color-gradient;
-        color: $color-button-text;
+        color: $tg-theme-button;
         border: none;
       }
     }
@@ -99,7 +99,7 @@
   align-items: center;
   gap: 12px;
   border-radius: 12px;
-  border: 1px solid $color-button-text;
+  border: 1px solid $tg-theme-button;
   padding: 20px;
   cursor: pointer;
 
@@ -119,7 +119,7 @@
   }
 
   &__title {
-    color: $color-button-text;
+    color: $tg-theme-button;
     text-align: center;
     font-size: 16px;
     font-weight: $font-weight-bold;
@@ -127,7 +127,7 @@
   }
 
   &__subtitle {
-    color: $color-button-text;
+    color: $tg-theme-button;
     text-align: center;
     font-size: 8px;
     font-weight: $font-weight-regular;

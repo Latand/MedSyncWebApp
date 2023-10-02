@@ -20,7 +20,7 @@
   }
 
   &__title {
-    color: $color-tertiary;
+    color: $tg-theme-hint;
     font-size: 37px;
     font-weight: $font-weight-bold;
     text-align: center;
@@ -41,9 +41,10 @@
     align-items: center;
     text-decoration: none;
     gap: 10px;
-    background: $color-gradient;
-    box-shadow: $color-box-shadow;
-    color: $color-button-text;
+      background: $tg-theme-button;
+      box-shadow: $color-box-shadow;
+      color: $tg-theme-bg;
+
     font-size: 18px;
     font-weight: $font-weight-bold;
     border-radius: 45px;
@@ -60,7 +61,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $color-tertiary;
+    color: $tg-theme-button;
     font-size: 18px;
     font-weight: $font-weight-bold;
     margin-bottom: 80px;

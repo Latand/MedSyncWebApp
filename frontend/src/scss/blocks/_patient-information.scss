@@ -12,7 +12,7 @@
       bottom: 0;
       width: 100%;
       height: 1px;
-      background: $color-address;
+      background: $tg-theme-text;
       opacity: 0.3;
     }
   }
@@ -32,26 +32,30 @@
       font-size: 13px;
       font-weight: $font-weight-semibold;
       line-height: 119%;
-      color: $color-label;
+      color: $tg-theme-hint;
       text-transform: capitalize;
     }
 
     &__input {
       font-family: "Josefin Sans", "Open Sans", sans-serif;
+      color: $tg-theme-text;
+
       height: 46px;
       border-radius: 12px;
       border: none;
-      background: $color-button-text;
-      box-shadow: $color-box-shadow-form;
+      background: $tg-theme-secondary-bg;
+      box-shadow: $tg-theme-secondary-bg;
     }
 
     &__textarea {
       font-family: "Josefin Sans", sans-serif;
+      color: $tg-theme-button-text;
+
       height: 120px;
       border-radius: 12px;
       border: none;
-      background: $color-button-text;
-      box-shadow: $color-box-shadow-form;
+      background: $tg-theme-secondary-bg;
+      box-shadow: $tg-theme-secondary-bg;
       margin-bottom: 40px;
       resize: vertical;
       min-height: 50px;
@@ -63,9 +67,10 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      background: $color-gradient;
+      background: $tg-theme-button;
       box-shadow: $color-box-shadow;
-      color: $color-button-text;
+      color: $tg-theme-button-text;
+
       font-size: 17px;
       font-weight: $font-weight-bold;
       border-radius: 30px;

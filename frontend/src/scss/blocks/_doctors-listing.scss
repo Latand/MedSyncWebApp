@@ -8,8 +8,13 @@
     flex-direction: row;
     margin-bottom: 20px;
 
+    &__icon__img {
+      filter: invert(1);
+
+    }
+
     &__text {
-      color: $color-primary;
+      color: $tg-theme-text;
       font-size: 24px;
       font-weight: $font-weight-bold;
       line-height: normal;
@@ -29,27 +34,29 @@
 
 
     &__input {
-
       border-radius: 31px;
-      border: 1px solid $color-border;
-      background: $color-button-text;
+      border: 1px solid $tg-theme-secondary-bg;
+      background: $tg-theme-secondary-bg;
       width: 100%;
       font-size: 14px;
       font-weight: $font-weight-semibold;
       padding: 10px 0 10px 20px;
       width: 100%;
       outline: none;
-      color: $color-search-input;
+      color: $tg-theme-text;
     }
 
     &__icon {
       position: absolute;
       top: 13px;
       right: 35px;
-        &__img {
-          width: 14px;
-          height: 14px;
-        }
+
+      &__img {
+        width: 14px;
+        height: 14px;
+        filter: invert(1);
+
+      }
     }
   }
 
@@ -73,25 +80,30 @@
       font-size: 10px;
       line-height: normal;
       font-weight: $font-weight-bold;
-      color: $color-primary;
+      color: $tg-theme-text;
       text-decoration: none;
       cursor: pointer;
     }
 
     &__button {
       border-radius: 26px;
-      border: 1px solid #E2E2E2;
+      border: $tg-theme-hint;
+      background: $tg-theme-secondary-bg;
+      color: $tg-theme-text;
       padding: 7px 20px;
 
       &--active {
-        background: $color-gradient;
-        color: $color-button-text;
+        background: $tg-theme-button;
         border: none;
+        color: $tg-theme-button-text;
+
+        &:hover {
+          background: $tg-theme-button; // Keeps the background the same on hover
+          // No need to change text color on hover, so it's omitted
+        }
       }
 
       &:hover {
-        background: $color-gradient;
-        color: $color-button-text;
         border: none;
       }
     }
@@ -108,37 +120,43 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 20px;
-    background: $color-button-text;
+    background: $tg-theme-bg;
     border-radius: 12px;
     width: 97%;
     justify-content: space-between;
     padding: 4px 0;
 
-    &:hover,
-    &--active{
-      color: $color-button-text;
-      background: $color-gradient;
-      cursor: pointer;
+    .card__review__img {
+      filter: invert(1);
 
-      &:hover {
-        filter: brightness(1.05);
-      }
-      .card__review__img {
-        filter: invert(1);
-      }
+    }
 
-      .card__review__text {
-        color: $color-button-text;
-      }
 
+    &:hover {
+      background: $tg-theme-secondary-bg;
+    }
+
+    &--active {
+      background: $tg-theme-button;
+      color: $tg-theme-button-text; // This sets the text color inside the active card
+
+      .card__title,
+      .card__subtitle,
+      .card__review__text,
       .card__address,
       .card__price {
-        color: $color-button-text;
+        color: $tg-theme-button-text;
+      }
+
+      &:hover {
+        background: $tg-theme-button; // Keeps the background the same on hover
+        // No need to change text color on hover, so it's omitted
       }
 
     }
 
     &__image {
+
       &__img {
         object-fit: contain;
         width: 125px;
@@ -156,6 +174,7 @@
       font-size: 18px;
       font-weight: $font-weight-bold;
       line-height: 119%;
+      color: $tg-theme-text;
     }
 
     &__subtitle {
@@ -163,6 +182,7 @@
       font-weight: $font-weight-regular;
       line-height: 119%;
       margin-bottom: 11px;
+      color: $tg-theme-text;
     }
 
     &__review {
@@ -179,7 +199,7 @@
       }
 
       &__text {
-        color: $color-review;
+        color: $tg-theme-text;
         text-align: center;
         font-size: 12px;
         font-weight: $font-weight-semibold;
@@ -188,14 +208,14 @@
     }
 
     &__price {
-      color: $color-address;
+      color: $tg-theme-text;
       line-height: 119%;
       font-size: 12px;
       font-weight: bold;
     }
 
     &__address {
-      color: $color-address;
+      color: $tg-theme-text;
       line-height: 119%;
       font-size: 12px;
       margin-bottom: 5px;
@@ -214,4 +234,7 @@
       }
     }
   }
+
+
 }
+

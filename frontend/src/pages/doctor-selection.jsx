@@ -103,7 +103,6 @@ const DoctorSelection = () => {
         </div>
         {selectedDoctor && <MainButton
             textColor="#FFF"
-            color="#8A6CDF"
             text={`Book with ${selectedDoctor.full_name}`}
             onClick={async () => {
                 selectionChanged();
