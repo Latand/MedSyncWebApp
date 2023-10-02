@@ -68,7 +68,7 @@ const AppointmentBooking = () => {
         storage.getItem('selectedDoctor').then((storedDoctor) => {
             let parsedDoctor = JSON.parse(storedDoctor);
             setParsedDoctor(parsedDoctor);  // Add this line to set the parsed doctor
-            axios.get(`https://medsync.botfather.dev/api/working_hours/${parsedDoctor.location_id}`)
+            axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/working_hours/${parsedDoctor.location_id}`)
                 .then(response => {
                     setWorkingHours(response.data);
                 })
@@ -82,7 +82,7 @@ const AppointmentBooking = () => {
     useEffect(() => {
         if (parsedDoctor && parsedDoctor.doctor_id && parsedDoctor.location_id && workingHours.length > 0) {
             // Fetch slots
-            axios.get(`https://medsync.botfather.dev/api/slots/${parsedDoctor.doctor_id}/${parsedDoctor.location_id}/${selectedDate.getMonth()}`)
+            axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/slots/${parsedDoctor.doctor_id}/${parsedDoctor.location_id}/${selectedDate.getMonth()}`)
                 .then(response => {
                     let bookedSlots = response.data
                     const allPossibleSlots = generateAllSlotsForMonth(workingHours, selectedDate.getMonth(), selectedDate.getFullYear()); // Note the date object

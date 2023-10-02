@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const Section = ({title, tag, children}) => (
     <section className={`about__section ${tag}`}>

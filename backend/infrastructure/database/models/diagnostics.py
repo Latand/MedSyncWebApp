@@ -9,6 +9,8 @@ class Diagnostic(Base, TableNameMixin):
     type_name: Mapped[str] = mapped_column(String(128))
     description: Mapped[str] = mapped_column(String(256))
     price: Mapped[float] = mapped_column(DECIMAL(10, 2))
+    photo_url: Mapped[str] = mapped_column(String(256))
+
 
 
 class DiagnosticLocation(Base):

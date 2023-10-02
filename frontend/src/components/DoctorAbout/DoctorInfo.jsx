@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
 import {Link} from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {format, isSameDay} from 'date-fns';
 
 const Day = ({day, selectedDay, availableDays, handleDayClick}) => {

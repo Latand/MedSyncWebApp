@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios'; // Install Axios via npm if you haven't already
+import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import DoctorCard from "../components/DoctorsListing/DoctorCard.jsx";
@@ -22,7 +22,7 @@ const DoctorSelection = () => {
 
     const fetchSpecialties = async () => {
         try {
-            const response = await axios.get('https://medsync.botfather.dev/api/specialties/');
+            const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/specialties/`);
             setSpecialties(response.data);
         } catch (error) {
             console.error(error.message);
@@ -30,7 +30,7 @@ const DoctorSelection = () => {
     };
     const fetchAllDoctors = async () => {
         try {
-            const response = await axios.get('https://medsync.botfather.dev/api/doctors/');
+            const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/`);
             setAllDoctors(response.data);
             setDisplayedDoctors(response.data);  // Initially display all doctors
         } catch (error) {

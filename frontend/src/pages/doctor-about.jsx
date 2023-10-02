@@ -19,8 +19,8 @@ const About = () => {
     useEffect(() => {
         const fetchDoctorInfo = async () => {
             try {
-                const doctor = await axios.get(`https://medsync.botfather.dev/api/doctors/${doctor_id}`);
-                const workingHours = await axios.get(`https://medsync.botfather.dev/api/working_hours/${doctor.data.location_id}`);
+                const doctor = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/${doctor_id}`);
+                const workingHours = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/working_hours/${doctor.data.location_id}`);
                 setWorkingHours(workingHours.data);
                 setDoctor(doctor.data);
             } catch (err) {

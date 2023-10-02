@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BackButton} from '@vkruglikov/react-telegram-web-app';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Header from "../components/Header.jsx";
 import SearchBar from "../components/DoctorsListing/SearchBar.jsx";
 import SpecializationCard from "../components/GetTested/DiagnosticType.jsx";
+import axios from "axios";
 
 
 const GetTested = () => {
@@ -12,7 +13,7 @@ const GetTested = () => {
     const [diagnosticTypes, setDiagnosticTypes] = useState([]);
     useEffect(() => {
         // Replace with your actual API endpoint
-        const apiUrl = 'https://your-api.com/diagnostic-types';
+        const apiUrl = `${import.meta.env.VITE_REACT_APP_API_URL}/api/diagnostics/`;
 
         axios.get(apiUrl)
             .then(response => {
@@ -31,13 +32,16 @@ const GetTested = () => {
                 <SearchBar search={search} setSearch={setSearch}/>
                 <main className="get-tested__main">
                     {diagnosticTypes.map((type, index) => (
-                        <SpecializationCard
-                            key={index}
-                            className={index % 2 === 0 ? "specialization-card--red" : "specialization-card--blue"}
-                            imgSrc={`./images/get-tested/get-tested-${index + 1}.svg`}
-                            title={type.title}
-                            subtitle={`${type.clinics_count} Clinics`}
-                        />
+                        <Link to={`/booking/diagnostics/${type.diagnostic_id}`}
+                             key={index}
+                        >
+                            <SpecializationCard
+                                className="specialization-card"
+                                imgSrc={type.photo_url}
+                                title={type.type_name}
+                                subtitle={`${type.clinics_count || 0} Clinics`}
+                            />
+                        </Link>
                     ))}
                 </main>
             </div>

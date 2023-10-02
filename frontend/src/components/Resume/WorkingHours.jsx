@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const mapIndexToWeekday = (index) => {
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

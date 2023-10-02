@@ -1,4 +1,4 @@
-import React from 'react';
+
 import medSyncIcon from '../assets/images/landing-page/medsync-icon.svg';
 import arrowRight from '../assets/images/landing-page/arrow-right.svg';
 import medSyncLogo from "../assets/images/landing-page/medsync-logo.svg";

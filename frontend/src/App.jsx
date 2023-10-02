@@ -10,13 +10,14 @@ import PatientInformation from "./pages/patient-info-form.jsx";
 import Resume from "./pages/booking-resume.jsx";
 import AppointmentBooking from "./pages/appointment-booking.jsx";
 import RegistrationConfirmation from "./pages/successful-booking.jsx";
+import ClinicSelection from "./pages/clinic-selection.jsx";
 
 const App = () => {
-
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             // Alternatively to what can be set with react-telegram-web-app, you can directly set the following properties:
             window.Telegram.WebApp.isClosingConfirmationEnabled = true;
+            window.Telegram.WebApp.expand();
         }
     }, []);
 
@@ -34,7 +35,7 @@ const App = () => {
                     <Route path="/get_tested" element={<GetTested/>}/>
                     <Route path="/doctor/:doctor_id" element={<About/>}/>
                     <Route path="/booking/appointment/:doctor_id" element={<AppointmentBooking/>}/>
-                    {/*<Route path="/booking/diagnostic/:diagnostic_id" element={<DiagnosticBooking/>}/>*/}
+                    <Route path="/booking/diagnostics/:diagnostic_id" element={<ClinicSelection/>}/>
                     <Route path="/booking/patient-info-form" element={<PatientInformation/>}/>
                     <Route path="/booking/confirmation" element={<Resume/>}/>
                     <Route path="/successful_booking" element={<RegistrationConfirmation/>}/>
