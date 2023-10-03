@@ -3,38 +3,6 @@
   padding-top: 32px;
   padding-bottom: 10px;
 
-  .search-bar {
-    @include displayFlex(center, center, row);
-
-    margin-bottom: 15px;
-    position: relative;
-    margin-top: 20px;
-
-    &__input {
-      border-radius: 31px;
-      border: 1px solid $tg-theme-secondary-bg;
-      background: $tg-theme-secondary-bg;
-      width: 100%;
-      font-size: 14px;
-      font-weight: $font-weight-semibold;
-      padding: 10px 0 10px 20px;
-      outline: none;
-      color: $tg-theme-text;
-    }
-
-    &__icon {
-      position: absolute;
-      top: 13px;
-      right: 35px;
-      cursor: pointer;
-
-      &__img {
-        width: 14px;
-        height: 14px;
-        filter: invert(1);
-      }
-    }
-  }
 
   .nav {
     margin-bottom: 20px;
@@ -71,8 +39,7 @@
         color: $tg-theme-button-text;
 
         &:hover {
-          background: $tg-theme-button; // Keeps the background the same on hover
-          // No need to change text color on hover, so it's omitted
+          background: $tg-theme-button;
         }
       }
     }
@@ -98,7 +65,7 @@
 
     &--active {
       background: $tg-theme-button;
-      color: $tg-theme-button-text; // This sets the text color inside the active card
+      color: $tg-theme-button-text;
 
       .card__title,
       .card__subtitle,
@@ -109,8 +76,7 @@
       }
 
       &:hover {
-        background: $tg-theme-button; // Keeps the background the same on hover
-        // No need to change text color on hover, so it's omitted
+        background: $tg-theme-button;
       }
     }
 
