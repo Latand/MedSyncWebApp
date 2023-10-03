@@ -37,4 +37,3 @@ async def get_specialties(repo: RequestsRepo = Depends(get_repo)):
     specialties = await repo.doctors.get_specialties()
     return specialties
 
-

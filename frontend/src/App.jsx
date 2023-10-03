@@ -7,6 +7,7 @@ import GetTested from "./pages/get-tested.jsx";
 import DoctorSelection from "./pages/doctor-selection.jsx";
 import About from "./pages/doctor-about.jsx";
 import PatientInformation from "./pages/patient-info-form.jsx";
+
 import SlotSelection from "./pages/appointment-booking.jsx";
 import RegistrationConfirmation from "./pages/successful-booking.jsx";
 import ClinicSelection from "./pages/clinic-selection.jsx";
@@ -44,7 +45,9 @@ const App = () => {
                         itemType="diagnostics"
                     />}/>
                     <Route path="/booking/patient-info-form/:itemType" element={<PatientInformation/>}/>
+
                     <Route path="/booking/confirmation/:itemType" element={<FullSummary/>}/>
+
                     <Route path="/successful_booking" element={<RegistrationConfirmation/>}/>
                 </Routes>
             </BrowserRouter>

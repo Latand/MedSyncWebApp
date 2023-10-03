@@ -14,6 +14,7 @@ import {ResumeBlock} from "../components/Resume/ResumeBlock.jsx";
 import fetchUserDataAndLocationInfo from "../utils/summaryData.js";
 import Resume from "../components/Resume/SummaryInfo.jsx";
 
+
 const FullSummary = () => {
     const webApp = window.Telegram?.WebApp
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
@@ -160,3 +161,4 @@ const FullSummary = () => {
 };
 
 export default FullSummary;
+
