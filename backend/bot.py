@@ -3,10 +3,14 @@ import logging
 
 import betterlogging as bl
 from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.redis import DefaultKeyBuilder, RedisStorage
+from aiogram_dialog import setup_dialogs
 
 from infrastructure.database.setup import create_engine, create_session_pool
 from tgbot.config import load_config
 from tgbot.handlers import routers_list
+from tgbot.handlers.bookings import booking_dialog
+from tgbot.handlers.test_results import test_results_router, test_results_dialog
 from tgbot.middlewares.database import DatabaseMiddleware
 from tgbot.services import broadcaster
 
@@ -47,12 +51,18 @@ async def main():
     config = load_config(".env")
 
     bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
-    dp = Dispatcher()
+    storage = RedisStorage.from_url(
+        config.redis.dsn(),
+        key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),
+    )
+    dp = Dispatcher(storage=storage)
     engine = create_engine(config.db)
     session_pool = create_session_pool(engine)
-    dp.message.outer_middleware(DatabaseMiddleware(session_pool))
+    dp.update.outer_middleware(DatabaseMiddleware(session_pool))
 
     dp.include_routers(*routers_list)
+    dp.include_routers(booking_dialog, test_results_dialog)
+    setup_dialogs(dp)
 
     await on_startup(bot, config.tg_bot.admin_ids)
     await dp.start_polling(bot, config=config)

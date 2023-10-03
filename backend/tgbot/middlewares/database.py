@@ -18,11 +18,14 @@ class DatabaseMiddleware(BaseMiddleware):
     ) -> Any:
         async with self.session_pool() as session:
             repo = RequestsRepo(session)
+            event_from_user = data.get("event_from_user")
+            if not event_from_user:
+                return await handler(event, data)
 
             user = await repo.users.get_or_create_user(
-                event.from_user.id,
-                event.from_user.full_name,
-                event.from_user.username
+                event_from_user.id,
+                event_from_user.full_name,
+                event_from_user.username
             )
 
             data["session"] = session

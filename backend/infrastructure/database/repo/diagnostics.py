@@ -58,10 +58,12 @@ class DiagnosticRepo(BaseRepo):
                 location_id=payload.get("location_id"),
                 booking_time=parse(payload.get("booking_date_time")),
             )
-            .returning(Booking)
+            .returning(Booking.booking_id)
         )
-        await self.session.execute(insert_stmt)
+        result = await self.session.scalar(insert_stmt)
         await self.session.commit()
+
+        return result
 
     async def get_booked_slots(
         self, diagnostic_id: int, location_id: int, month_number: int

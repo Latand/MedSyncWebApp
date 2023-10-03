@@ -23,6 +23,7 @@ services:
     working_dir: "/usr/src/app/${BOT_NAME}"
     volumes:
       - ./backend:/usr/src/app/${BOT_NAME}
+      - ./frontend/src/assets/results:/usr/src/app/${BOT_NAME}/assets/results
     command: python3 -m bot
     restart: always
     env_file:
@@ -87,6 +88,20 @@ services:
         max-size: "200k"
         max-file: "10"
 
+
+  redis_cache:
+    image: redis:6.2-alpine
+    container_name: "${REDIS_CONTAINER_NAME}"
+    restart: always
+    command: redis-server --port $REDIS_PORT --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
+    env_file:
+      - ".env"
+    volumes:
+      - ./cache:/data
+    networks:
+      - tg_bot
+
+
 #  ngrok:
 #    image: ngrok/ngrok:latest
 #    restart: unless-stopped
@@ -104,4 +119,4 @@ networks:
     driver: bridge
 
 volumes:
-  pgdata: {}
+  pgdata: { }

@@ -9,9 +9,8 @@ from .doctors import doctor_router
 
 
 async def book_slot_endpoint(
-    request: Request, item_type: str, repo: RequestsRepo = Depends(get_repo)
+    payload: dict, item_type: str, repo: RequestsRepo = Depends(get_repo)
 ):
-    payload = await request.json()
     book_repo = repo.doctors if item_type == "doctor" else repo.diagnostics
     try:
         booking_id = await book_repo.book_slot(payload)
@@ -33,9 +32,14 @@ async def book_slot_endpoint(
 
 @doctor_router.post("/book_slot")
 async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
-    return await book_slot_endpoint(request, "doctor", repo)
+    data = await request.json()
+    return await book_slot_endpoint(data, "doctor", repo)
 
 
 @diagnostics_router.post("/book_slot")
 async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
-    return await book_slot_endpoint(request, "diagnostic", repo)
+    data = await request.json()
+    result = await book_slot_endpoint(data, "diagnostic", repo)
+    # This is just for test purposes, we will create a diagnostic result here straightaway
+    await repo.results.create_result(result["booking_id"], diagnostic_id=data["diagnostic_id"])
+    return result
