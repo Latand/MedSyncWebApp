@@ -98,16 +98,9 @@ const Resume = () => {
             }));
             navigate('/successful_booking');
         } catch (err) {
-
-            console.log(err)
-            if (err.response && err.response.data.detail === "User does not exist") {
-                // Display alert and redirect to the bot
-                await window.Telegram.WebApp.showAlert('You are not registered. Please interact with the bot first.');
-                await window.Telegram.WebApp.openTelegramLink('https://t.me/medsyncbot');
-            } else {
-                await showPopup({message: 'Sorry, something went wrong!'})
-                console.error(err);
-            }
+            await showPopup({message: 'Sorry, something went wrong!'})
+            console.error(err);
+            // }
 
         }
     };

@@ -5,7 +5,6 @@ import Header from "../components/Header.jsx";
 import Calendar from "../components/Booking/Calendar.jsx";
 import TimeSlot from "../components/Booking/TimeSlot.jsx";
 import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
-import LargeButton from "../components/LargeButton.jsx";
 import {eachDayOfInterval, endOfMonth, getDay, startOfMonth} from 'date-fns';
 
 const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => {
@@ -26,7 +25,7 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
         const weekdayIndex = getDay(day);
 
         // Find the working hours for this weekday
-        const workingHour = workingHours.find(wh => wh.weekday_index === weekdayIndex - 1);
+        const workingHour = workingHours.find(wh => wh.weekday_index === weekdayIndex);
 
         if (workingHour) {
             // Generate slots based on the working hours
@@ -35,8 +34,8 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
 
             for (let hour = start_hour; hour < end_hour; hour++) {
                 const slotStart = new Date(day);
+                slotStart.setHours(hour);
                 if (slotStart >= new Date()) {
-                    slotStart.setHours(hour);
                     allSlots.push(slotStart);
                 }
             }
@@ -52,6 +51,7 @@ const isSlotBooked = (slot, bookedSlots) => {
         return slot.getTime() === bookedSlotDateWithHours.getTime();
     });
 };
+
 const AppointmentBooking = () => {
     let navigate = useNavigate()
     const [workingHours, setWorkingHours] = useState([]);
@@ -87,8 +87,10 @@ const AppointmentBooking = () => {
                     let bookedSlots = response.data
                     const allPossibleSlots = generateAllSlotsForMonth(workingHours, selectedDate.getMonth(), selectedDate.getFullYear()); // Note the date object
                     // Extract unique days that are available for booking
+                    console.log('All possible slots: ', allPossibleSlots)
                     const availableSlots = allPossibleSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
                     const availableDays = Array.from(new Set(availableSlots.map(slot => slot.toDateString())));
+                    console.log(availableDays)
                     setAvailableDays(availableDays);  // Set the available days
                     setSlots(availableSlots);  // Set only the available slots
                 })
@@ -129,8 +131,8 @@ const AppointmentBooking = () => {
                                                      selectedDate={selectedDate}
                 />)}
                 {selectedTimeSlot && (
-                <MainButton onClick={handleNext}
-                ></MainButton>
+                    <MainButton onClick={handleNext}
+                    ></MainButton>
                 )}
             </main>
         </div>
