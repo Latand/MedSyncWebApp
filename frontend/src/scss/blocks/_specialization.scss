@@ -1,26 +1,19 @@
 .specialization {
   @include padding;
 
-  &__header {
-    margin-bottom: 20px;
-  }
-
   &__main {
     display: flex;
     flex-direction: column;
     gap: 15px;
 
     .specialization-block {
-      @include hoverScaleTranslate;
       display: flex;
       flex-direction: column;
       gap: 15px;
       border-radius: 12px;
-      border: 1px solid $tg-theme-secondary-bg;
-      background: $tg-theme-secondary-bg;
+      border: 3px solid $tg-theme-secondary-bg;
       padding-block: 20px;
       padding-left: 23px;
-      color: $tg-theme-text;
 
       &__title {
         font-size: 20px;
@@ -34,8 +27,7 @@
       }
 
       &--active {
-        background: $color-gradient;
-        border: none;
+        background: $tg-theme-secondary-bg;
         color: $tg-theme-button;
 
         .specialization-block__subtitle {

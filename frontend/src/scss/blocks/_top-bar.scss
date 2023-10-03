@@ -2,12 +2,9 @@
   @include displayFlex(space-between, center, row);
 
   &__text {
-    color: $tg-theme-text;
     font-size: 24px;
     font-weight: $font-weight-bold;
-    line-height: normal;
     margin-right: 120px;
-    text-align: center;
   }
 
   &__icon {
