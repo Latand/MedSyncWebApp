@@ -20,6 +20,8 @@ const DoctorSelection = () => {
     const [specialty, setSpecialty] = useState("");
     const [selectedDoctor, setSelectedDoctor] = useState(null);
 
+    window.Telegram.WebApp.enableClosingConfirmation();
+
     const fetchSpecialties = async () => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/specialties/`);
@@ -48,7 +50,6 @@ const DoctorSelection = () => {
     }
 
     const handleDoctorClick = async (doctor) => {
-        console.log('doctor', doctor)
         if (selectedDoctor?.doctor_id === doctor.doctor_id) {
             selectionChanged();
             setSelectedDoctor(null);
@@ -92,9 +93,8 @@ const DoctorSelection = () => {
         }
 
         setDisplayedDoctors(filteredDoctors);
-        window.Telegram.WebApp.enableClosingConfirmation();
 
-    }, [specialty, search, allDoctors]);
+    }, [specialty, search]);
 
 
     return (<>
