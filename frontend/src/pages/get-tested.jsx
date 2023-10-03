@@ -53,6 +53,7 @@ const GetTested = () => {
                                 imgSrc={type.photo_url}
                                 title={type.type_name}
                                 subtitle={`${type.clinics_count || 0} Clinics`}
+                                price={type.price}
                             />
                         </Link>
                     ))}

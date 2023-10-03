@@ -22,7 +22,7 @@ const DoctorInfo = ({name, doctor_id, specialty, status, imageSrc, avg_rating, r
                 alt={status}
             />
         </div>
-        <Link className="button about__button" to={`/booking/appointment/${doctor_id}`}
+        <Link className="button about__button" to={`/booking/appointment`}
               onClick={() => {
                   notificationOccurred("success");
               }}
