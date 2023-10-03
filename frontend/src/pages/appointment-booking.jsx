@@ -29,8 +29,8 @@ const generateAllSlotsForMonth = (workingHours, selectedMonth, selectedYear) => 
 
         if (workingHour) {
             // Generate slots based on the working hours
-            const start_hour = workingHour.start_time;  // Assuming this is an integer hour, e.g., 9 for 9 AM
-            const end_hour = workingHour.end_time;  // e.g., 17 for 5 PM
+            const start_hour = workingHour.start_time;  // This is an integer hour, e.g., 9 for 9 AM
+            const end_hour = workingHour.end_time;
 
             for (let hour = start_hour; hour < end_hour; hour++) {
                 const slotStart = new Date(day);
@@ -55,8 +55,8 @@ const isSlotBooked = (slot, bookedSlots) => {
 const AppointmentBooking = () => {
     let navigate = useNavigate()
     const [workingHours, setWorkingHours] = useState([]);
-    const [availableDays, setAvailableDays] = useState([]); // Add this line to store available days
-    const [parsedDoctor, setParsedDoctor] = useState(null); // Add this line to store the parsed doctor
+    const [availableDays, setAvailableDays] = useState([]);
+    const [parsedDoctor, setParsedDoctor] = useState(null);
     const [selectedDate, setStartDate] = useState(new Date());
     const [slots, setSlots] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -67,7 +67,7 @@ const AppointmentBooking = () => {
         // Fetch doctor information from storage first
         storage.getItem('selectedDoctor').then((storedDoctor) => {
             let parsedDoctor = JSON.parse(storedDoctor);
-            setParsedDoctor(parsedDoctor);  // Add this line to set the parsed doctor
+            setParsedDoctor(parsedDoctor);
             axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/working_hours/${parsedDoctor.location_id}`)
                 .then(response => {
                     setWorkingHours(response.data);
@@ -85,20 +85,18 @@ const AppointmentBooking = () => {
             axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/slots/${parsedDoctor.doctor_id}/${parsedDoctor.location_id}/${selectedDate.getMonth()}`)
                 .then(response => {
                     let bookedSlots = response.data
-                    const allPossibleSlots = generateAllSlotsForMonth(workingHours, selectedDate.getMonth(), selectedDate.getFullYear()); // Note the date object
+                    const allPossibleSlots = generateAllSlotsForMonth(workingHours, selectedDate.getMonth(), selectedDate.getFullYear());
                     // Extract unique days that are available for booking
-                    console.log('All possible slots: ', allPossibleSlots)
                     const availableSlots = allPossibleSlots.filter(slot => !isSlotBooked(slot, bookedSlots));
                     const availableDays = Array.from(new Set(availableSlots.map(slot => slot.toDateString())));
-                    console.log(availableDays)
-                    setAvailableDays(availableDays);  // Set the available days
-                    setSlots(availableSlots);  // Set only the available slots
+                    setAvailableDays(availableDays);
+                    setSlots(availableSlots);
                 })
                 .catch(error => {
                     console.error('Error fetching slots:', error);
                 });
         }
-    }, [selectedDate, workingHours]);  // Removed slots and workingHours to prevent infinite loop
+    }, [selectedDate, workingHours]);
 
 
     const handleDateChange = (date) => {

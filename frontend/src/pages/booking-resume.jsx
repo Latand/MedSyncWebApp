@@ -79,10 +79,9 @@ const Resume = () => {
 
         };
 
-        fetchData();  // Call fetchData inside useEffect
-    }, [storage, showPopup, navigate]);  // Add dependencies to useEffect
+        fetchData();
+    }, [storage, showPopup, navigate]);
     const handleSubmit = async (e) => {
-        // Your logic goes here
         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/book_slot`, {

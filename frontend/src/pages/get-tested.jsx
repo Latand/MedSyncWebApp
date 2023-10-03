@@ -14,8 +14,6 @@ const GetTested = () => {
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
 
     useEffect(() => {
-        // Replace with your actual API endpoint
-
         axios.get( `${import.meta.env.VITE_REACT_APP_API_URL}/api/diagnostics/`)
             .then(response => {
                 let filteredDiagnosticTypes = response.data;
