@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Header from "../components/Header.jsx";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
-import {BackButton, MainButton, useCloudStorage} from "@vkruglikov/react-telegram-web-app";
+import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 
 const SpecializationBlock = ({title, subtitle, isActive}) => {
     return (
@@ -20,22 +20,53 @@ const ClinicSelection = () => {
     const [selectedClinic, setSelectedClinic] = useState(null);
     const navigate = useNavigate();
     const storage = useCloudStorage();
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
 
 
     useEffect(() => {
         const fetchClinics = async () => {
             try {
                 const clinics = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/diagnostics/${diagnostic_id}/locations`);
-                setClinics(clinics.data);
+                let filteredClinics = clinics.data;
+                if (search) {
+                    const searchLower = search.toLowerCase();
+                    filteredClinics = clinics.data.filter(clinic =>
+                        clinic.name.toLowerCase().includes(searchLower) ||
+                        clinic.address.toLowerCase().includes(searchLower)
+                    );
+                }
+                setClinics(filteredClinics);
+
             } catch (err) {
                 console.error(err);
             }
         };
+
         fetchClinics();
-    }, []);
+    }, [search]);
 
     const handleNext = async () => {
         navigate(`/booking/diagnostics/${diagnostic_id}/locations/${selectedClinic}/doctors`)
+    }
+
+    const handleChooseClinic = async (clinic) => {
+        const isSameClinicSelected = clinic.location_id === selectedClinic?.location_id;
+        console.log('clinic', clinic)
+        if (isSameClinicSelected) {
+            setSelectedClinic(null);
+            selectionChanged();
+            await storage.removeItem('clinic');
+            console.log('clinic removed')
+        } else {
+            if (selectedClinic) {
+                selectionChanged();
+            } else {
+                notificationOccurred('success');
+            }
+            setSelectedClinic(clinic);
+            console.log('clinic set')
+            await storage.setItem('clinic', clinic);
+        }
     }
 
 
@@ -47,13 +78,13 @@ const ClinicSelection = () => {
                 <SearchBar search={search} setSearch={setSearch}/>
                 <main className="specialization__main">
                     {clinics && clinics.map((clinic, index) => (
-                        <div onClick={() => setSelectedClinic(clinic.location_id)}
+                        <div onClick={() => handleChooseClinic(clinic)}
                              key={index}
                         >
                             <SpecializationBlock
                                 title={clinic.name}
                                 subtitle={clinic.address}
-                                isActive={selectedClinic === clinic.location_id}
+                                isActive={selectedClinic?.location_id === clinic.location_id}
                             />
                         </div>))}
                 </main>

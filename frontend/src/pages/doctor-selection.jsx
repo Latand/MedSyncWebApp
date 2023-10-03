@@ -38,6 +38,21 @@ const DoctorSelection = () => {
         }
     };
 
+    const handleDoctorClick = async (doctor) => {
+        console.log('doctor', doctor)
+        if (selectedDoctor?.doctor_id === doctor.doctor_id) {
+            selectionChanged();
+            setSelectedDoctor(null);
+            await storage.removeItem("selectedDoctor");
+            return;
+        } else if (selectedDoctor) {
+            selectionChanged();
+        } else {
+            notificationOccurred("success");
+        }
+        setSelectedDoctor(doctor);
+    };
+
     useEffect(() => {
         notificationOccurred("success");
         fetchAllDoctors();
@@ -91,19 +106,7 @@ const DoctorSelection = () => {
                     avg_rating={doctor.avg_rating ? doctor.avg_rating : 0}
                     reviews={doctor.reviews ? doctor.reviews : 0}
                     doctorImage={doctor.photo_url}
-                    onClick={async () => {
-                        if (selectedDoctor?.doctor_id === doctor.doctor_id) {
-                            selectionChanged();
-                            setSelectedDoctor(null);
-                            await storage.removeItem("selectedDoctor");
-                            return;
-                        } else if (selectedDoctor) {
-                            selectionChanged();
-                        } else {
-                            notificationOccurred("success");
-                        }
-                        setSelectedDoctor(doctor);
-                    }}
+                    onClick={() => handleDoctorClick(doctor)}
                 />))}
             </main>}
         </div>
