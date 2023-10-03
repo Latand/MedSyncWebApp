@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import LargeButton from "../components/LargeButton.jsx";
-import {BackButton, useCloudStorage, useInitData, useShowPopup} from "@vkruglikov/react-telegram-web-app";
+import {
+    BackButton,
+    useCloudStorage,
+    useHapticFeedback,
+    useInitData,
+    useShowPopup
+} from "@vkruglikov/react-telegram-web-app";
 import {useNavigate} from "react-router-dom";
 
 import boxIcon from '../assets/images/resume/Vector.svg';
@@ -31,8 +37,10 @@ const Resume = () => {
     const [hoursArray, setHoursArray] = useState([]);
     const storage = useCloudStorage();
     const showPopup = useShowPopup();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const webApp = window.Telegram?.WebApp;
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
+
     const [InitDataUnsafe, InitData] = useInitData();
 
     useEffect(() => {
@@ -43,6 +51,7 @@ const Resume = () => {
                 let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
                 // from JSON to Object
                 if (!selectedTimeSlot || !savedDoctor || !savedUserData) {
+                    notificationOccurred('error')
                     await showPopup({message: 'Sorry, there is missing data! Start again!'});
                     navigate('/see_a_doctor');
                     return;
@@ -91,6 +100,7 @@ const Resume = () => {
             console.log(response.data);
             let bookings = JSON.parse(await storage.getItem('bookings') || '[]')
             bookings.push(response.data.booking_id);
+            notificationOccurred('success')
             await storage.setItem('bookings', JSON.stringify(bookings))
             await showPopup({message: 'Your appointment has been confirmed!'});
             await webApp.sendData(JSON.stringify({
@@ -98,6 +108,7 @@ const Resume = () => {
             }));
             navigate('/successful_booking');
         } catch (err) {
+            notificationOccurred('error')
             await showPopup({message: 'Sorry, something went wrong!'})
             console.error(err);
             // }

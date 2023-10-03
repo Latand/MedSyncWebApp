@@ -113,6 +113,7 @@ const AppointmentBooking = () => {
     };
 
     const handleNext = async () => {
+        notificationOccurred("success")
         await storage.setItem('selectedTimeSlot', JSON.stringify(selectedTimeSlot));
         navigate("/booking/patient-info-form")
     }
