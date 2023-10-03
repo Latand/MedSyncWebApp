@@ -29,7 +29,7 @@ const SlotSelection = ({storageKey, itemType}) => {
         selectedItem?.location_id,
         selectedDate,
         workingHours,
-        itemType === 'diagnostic',
+        itemType
     );
 
     const handleDateChange = (date) => {
