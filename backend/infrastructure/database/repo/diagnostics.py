@@ -1,3 +1,6 @@
+import datetime
+
+from dateutil.parser import parse
 from sqlalchemy import func
 from sqlalchemy import select, insert
 
@@ -38,20 +41,35 @@ class DiagnosticRepo(BaseRepo):
 
     async def book_slot(
         self,
-        diagnostic_slot_id: int,
-        user_full_name: str,
-        user_email: str,
-        user_phone_number: str,
+        payload: dict,
     ):
         # Insert into Booking
         insert_stmt = (
             insert(Booking)
             .values(
-                diagnostic_slot_id=diagnostic_slot_id,
-                user_full_name=user_full_name,
-                user_email=user_email,
-                user_phone_number=user_phone_number,
+                user_id=payload.get("user_id"),
+                user_full_name=payload.get("user_name", "")
+                + " "
+                + payload.get("user_surname", ""),
+                user_email=payload.get("user_email"),
+                user_phone_number=payload.get("user_phone"),
+                user_message=payload.get("user_message"),
+                doctor_id=payload.get("diagnostic_id"),
+                location_id=payload.get("location_id"),
+                booking_time=parse(payload.get("booking_date_time")),
             )
             .returning(Booking)
         )
         await self.session.execute(insert_stmt)
+
+    async def get_booked_slots(
+        self, diagnostic_id: int, location_id: int, month_number: int
+    ) -> list[Booking]:
+        stmt = select(Booking.booking_time).where(
+            Booking.diagnostic_id == diagnostic_id,
+            Booking.booking_time >= datetime.date.today(),
+            func.extract("month", Booking.booking_time) == month_number + 1,
+            Booking.location_id == location_id,
+        )
+        result = await self.session.scalars(stmt)
+        return result.all()

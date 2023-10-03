@@ -38,14 +38,14 @@ async def get_specialties(repo: RequestsRepo = Depends(get_repo)):
     return specialties
 
 
-@doctor_router.post("/book_slot")
+@doctor_router.post("/book_slot/{item_type}")
 async def book_doctor_slot_endpoint(
-    request: Request, repo: RequestsRepo = Depends(get_repo)
+    request: Request, item_type:str, repo: RequestsRepo = Depends(get_repo)
 ):
     payload = await request.json()
-
+    book_repo = repo.doctors if item_type == "doctor" else repo.diagnostics
     try:
-        booking_id = await repo.doctors.book_slot(payload)
+        booking_id = await book_repo.book_slot(payload)
     except sqlalchemy.exc.IntegrityError as e:
         await repo.session.rollback()
         if "bookings_user_id_fkey" in str(e) and payload.get("user_id"):
@@ -53,7 +53,7 @@ async def book_doctor_slot_endpoint(
                 user_id=payload.get("user_id"),
                 full_name=payload.get('user_name', '') + " " + payload.get('user_surname', ''),
             )
-            booking_id = await repo.doctors.book_slot(payload)
+            booking_id = await book_repo.book_slot(payload)
         else:
             raise HTTPException(status_code=400, detail="Invalid payload") from e
 

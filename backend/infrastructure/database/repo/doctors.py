@@ -1,9 +1,7 @@
 import datetime
-import logging
 
 from dateutil.parser import parse
-from dateutil.tz import tzutc
-from sqlalchemy import select, insert, cast, Date, func
+from sqlalchemy import select, insert, func
 
 from infrastructure.database.models import (
     Doctor,
@@ -12,9 +10,7 @@ from infrastructure.database.models import (
     Location,
 )
 from infrastructure.database.models.doctors import Specialty
-from infrastructure.database.models.slots import WorkingHour
 from infrastructure.database.repo.base import BaseRepo
-from infrastructure.webhook.models import DoctorBookingPayload
 
 
 class DoctorRepo(BaseRepo):
@@ -53,28 +49,26 @@ class DoctorRepo(BaseRepo):
         result = await self.session.scalars(stmt)
         return result.all()
 
-
     async def book_slot(self, payload: dict):
-        # booking_date_time = parse(payload.get('booking_date_time'))
-
         insert_stmt = (
             insert(Booking)
-            .values(user_id=payload.get('user_id'),
-                    user_full_name=payload.get('user_name', '') + " " + payload.get('user_surname', ''),
-                    user_email=payload.get('user_email'),
-                    user_phone_number=payload.get('user_phone'),
-                    user_message=payload.get('user_message'),
-                    doctor_id=payload.get('doctor_id'),
-                    location_id=payload.get('location_id'),
-                    booking_time=parse(payload.get('booking_date_time')),
-                    )
+            .values(
+                user_id=payload.get("user_id"),
+                user_full_name=payload.get("user_name", "")
+                + " "
+                + payload.get("user_surname", ""),
+                user_email=payload.get("user_email"),
+                user_phone_number=payload.get("user_phone"),
+                user_message=payload.get("user_message"),
+                doctor_id=payload.get("doctor_id"),
+                location_id=payload.get("location_id"),
+                booking_time=parse(payload.get("booking_date_time")),
+            )
             .returning(Booking.booking_id)
         )
         result = await self.session.scalar(insert_stmt)
         await self.session.commit()
         return result
-
-
 
     async def get_doctor(self, doctor_id: int) -> Doctor:
         stmt = (

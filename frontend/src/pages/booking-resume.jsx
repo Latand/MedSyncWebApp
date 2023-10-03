@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import LargeButton from "../components/LargeButton.jsx";
 import {
@@ -29,7 +29,7 @@ const BoxWrap = ({title, children}) => (<div className="box__wrap">
 </div>);
 
 
-const DoctorResume = () => {
+const Resume = () => {
     const [userData, setUserData] = useState(null);
     const [doctorData, setDoctorData] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -178,4 +178,4 @@ const DoctorResume = () => {
     </>);
 };
 
-export default DoctorResume;
+export default Resume;
