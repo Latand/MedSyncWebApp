@@ -5,7 +5,7 @@ import {generateAllSlotsForMonth, isSlotBooked} from '../utils/slotUtils';
 export const useSlots = (itemId, locationId, selectedDate, workingHours, itemType) => {
     const [slots, setSlots] = useState(null);
     const [availableDays, setAvailableDays] = useState([]);
-    const endpoint = itemType === 'diagnostics' ? '/api/diagnostic_slots' : '/api/slots';
+    const endpoint = `/api/slots/${itemType}`;
     useEffect(() => {
         if (itemId && locationId && selectedDate && workingHours.length > 0) {
             axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}${endpoint}/${itemId}/${locationId}/${selectedDate.getMonth()}`)

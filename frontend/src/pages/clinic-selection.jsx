@@ -41,21 +41,22 @@ const ClinicSelection = () => {
                 console.error(err);
             }
         };
-
         fetchClinics();
     }, [search]);
 
     const handleNext = async () => {
-        navigate(`/booking/patient-info-form/diagnostics`)
+        console.log('selectedClinic', selectedClinic)
+        await storage.setItem('selectedLocation', JSON.stringify(selectedClinic));
+        navigate(`/booking/clinic`);
     }
 
     const handleChooseClinic = async (clinic) => {
         const isSameClinicSelected = clinic.location_id === selectedClinic?.location_id;
         console.log('clinic', clinic)
+
         if (isSameClinicSelected) {
             setSelectedClinic(null);
             selectionChanged();
-            await storage.removeItem('clinic');
             console.log('clinic removed')
         } else {
             if (selectedClinic) {
@@ -64,8 +65,7 @@ const ClinicSelection = () => {
                 notificationOccurred('success');
             }
             setSelectedClinic(clinic);
-            console.log('clinic set')
-            await storage.setItem('selectedClinic', clinic);
+            console.log('clinic set, ', clinic)
         }
     }
 

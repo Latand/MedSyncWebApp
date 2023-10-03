@@ -1,5 +1,3 @@
-import logging
-
 from fastapi import Depends, APIRouter
 
 from infrastructure.database.repo.requests import RequestsRepo
@@ -8,7 +6,7 @@ from infrastructure.webhook.utils import get_repo
 slots_router = APIRouter(prefix="/slots")
 working_hours_router = APIRouter(prefix="/working_hours")
 
-@slots_router.get("/{doctor_id}/{location_id}/{month_number}")
+@slots_router.get("/doctors/{doctor_id}/{location_id}/{month_number}")
 async def get_available_slots(
     doctor_id: int,
     location_id: int,
@@ -16,10 +14,22 @@ async def get_available_slots(
     repo: RequestsRepo = Depends(get_repo),
 ):
     slots = await repo.doctors.get_booked_slots(doctor_id, location_id, month_number)
-    logging.info(slots)
     if not slots:
         return []
     return slots
+
+@slots_router.get("/diagnostics/{diagnostic_id}/{location_id}/{month_number}")
+async def get_available_slots_diagnostic(
+    diagnostic_id: int,
+    location_id: int,
+    month_number: int,
+    repo: RequestsRepo = Depends(get_repo),
+):
+    slots = await repo.diagnostics.get_booked_slots(diagnostic_id, location_id, month_number)
+    if not slots:
+        return []
+    return slots
+
 
 
 @working_hours_router.get("/{location_id}")

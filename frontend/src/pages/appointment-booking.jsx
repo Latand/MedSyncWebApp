@@ -15,21 +15,24 @@ const SlotSelection = ({storageKey, itemType}) => {
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const storage = useCloudStorage();
-    console.log('itemType', itemType)
+    const [selectedLocation, setSelectedLocation] = useState(null);
 
     useEffect(() => {
         storage.getItem(storageKey).then((storedItem) => {
             setParsedItem(JSON.parse(storedItem));
         });
+        storage.getItem('selectedLocation').then((storedLocation) => {
+            setSelectedLocation(JSON.parse(storedLocation));
+        })
     }, [storage]);
 
-    const workingHours = useWorkingHours(selectedItem?.location_id);
+    const workingHours = useWorkingHours(selectedLocation?.location_id);
     const {slots, availableDays} = useSlots(
-        itemType === 'doctor' ? selectedItem?.doctor_id : selectedItem?.diagnostic_id,
-        selectedItem?.location_id,
+        itemType === 'doctors' ? selectedItem?.doctor_id : selectedItem?.diagnostic_id,
+        selectedLocation?.location_id,
         selectedDate,
         workingHours,
-        itemType === 'diagnostic',
+        itemType
     );
 
     const handleDateChange = (date) => {

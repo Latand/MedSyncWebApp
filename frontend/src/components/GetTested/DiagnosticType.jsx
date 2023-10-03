@@ -1,4 +1,4 @@
-const SpecializationCard = ({className, imgSrc, title, subtitle}) => {
+const SpecializationCard = ({className, imgSrc, title, subtitle, price}) => {
     return (
         <section className={`specialization-card ${className}`}>
             <div className="specialization-card__overlay">
@@ -11,6 +11,7 @@ const SpecializationCard = ({className, imgSrc, title, subtitle}) => {
             <div className="specialization-card__text">
                 <div className="specialization-card__title">{title}</div>
                 <div className="specialization-card__subtitle">{subtitle}</div>
+                <div className="specialization-card__price">${price.toFixed(0)}</div>
             </div>
         </section>
     );

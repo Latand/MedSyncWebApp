@@ -3,10 +3,7 @@ import logging
 from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 
-from infrastructure.webhook.routers.diagnostics import diagnostics_router
-from infrastructure.webhook.routers.doctors import doctor_router, specialties_router
-from infrastructure.webhook.routers.locations import locations_router
-from infrastructure.webhook.routers.slots import slots_router, working_hours_router
+from infrastructure.webhook import routers
 
 app = FastAPI()
 prefix_router = APIRouter(prefix="/api")
@@ -32,12 +29,12 @@ logging.basicConfig(
 
 
 for router in [
-    doctor_router,
-    specialties_router,
-    diagnostics_router,
-    slots_router,
-    working_hours_router,
-    locations_router,
+    routers.doctors.doctor_router,
+    routers.diagnostics.diagnostics_router,
+    routers.slots.slots_router,
+    routers.slots.working_hours_router,
+    routers.locations.locations_router,
+    routers.doctors.specialties_router,
 ]:
     prefix_router.include_router(router)
 
