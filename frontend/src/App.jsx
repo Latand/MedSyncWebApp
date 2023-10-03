@@ -7,11 +7,10 @@ import GetTested from "./pages/get-tested.jsx";
 import DoctorSelection from "./pages/doctor-selection.jsx";
 import About from "./pages/doctor-about.jsx";
 import PatientInformation from "./pages/patient-info-form.jsx";
-import DoctorResume from "./pages/booking-resume.jsx";
-import Resume from "./pages/booking-resume.jsx";
 import SlotSelection from "./pages/appointment-booking.jsx";
 import RegistrationConfirmation from "./pages/successful-booking.jsx";
 import ClinicSelection from "./pages/clinic-selection.jsx";
+import DoctorResume from "./pages/booking-resume.jsx";
 
 const App = () => {
     useEffect(() => {
@@ -42,7 +41,7 @@ const App = () => {
                     <Route path="/booking/diagnostics/:diagnostic_id" element={<ClinicSelection/>}/>
                     <Route path="/booking/patient-info-form/:itemType" element={<PatientInformation/>}/>
                     <Route path="/booking/confirmation/doctor" element={<DoctorResume/>}/>
-                    <Route path="/booking/confirmation/diagnostics" element={<Resume/>}/>
+                    {/*<Route path="/booking/confirmation/diagnostics" element={<Resume/>}/>*/}
                     <Route path="/successful_booking" element={<RegistrationConfirmation/>}/>
                 </Routes>
             </BrowserRouter>
