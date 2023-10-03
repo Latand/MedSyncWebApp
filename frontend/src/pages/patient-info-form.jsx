@@ -57,6 +57,7 @@ const PatientInformation = () => {
     }, []);
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         if (!formData.userName || !formData.userSurname || !formData.userPhone || !formData.userEmail) {
             console.log('Form data submitted: ', formData)
             notificationOccurred("error")
@@ -66,7 +67,6 @@ const PatientInformation = () => {
 
         console.log('Form data submitted: ', formData);
         await storage.setItem('user_data', JSON.stringify(formData));
-        e.preventDefault();
         notificationOccurred("success")
         navigate(`/booking/confirmation/${itemType}`)
     };

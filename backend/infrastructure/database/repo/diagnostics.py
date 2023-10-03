@@ -54,13 +54,14 @@ class DiagnosticRepo(BaseRepo):
                 user_email=payload.get("user_email"),
                 user_phone_number=payload.get("user_phone"),
                 user_message=payload.get("user_message"),
-                doctor_id=payload.get("diagnostic_id"),
+                diagnostic_id=payload.get("diagnostic_id"),
                 location_id=payload.get("location_id"),
                 booking_time=parse(payload.get("booking_date_time")),
             )
             .returning(Booking)
         )
         await self.session.execute(insert_stmt)
+        await self.session.commit()
 
     async def get_booked_slots(
         self, diagnostic_id: int, location_id: int, month_number: int

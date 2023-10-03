@@ -1,7 +1,18 @@
 import logo from '../assets/images/landing-page/medsync-logo.svg';
+import {useCloudStorage} from "@vkruglikov/react-telegram-web-app";
+import {useEffect} from "react";
 
 function RegistrationConfirmation() {
     window.Telegram.WebApp.disableClosingConfirmation();
+    const storage = useCloudStorage();
+
+    useEffect(() => {
+        storage.removeItem('selectedDoctor');
+        storage.removeItem('selectedDiagnostic');
+        storage.removeItem('selectedLocation');
+        storage.removeItem('selectedTimeSlot');
+    }, []);
+
     return (
         <div className="registration-confirmation">
             <img
@@ -13,15 +24,15 @@ function RegistrationConfirmation() {
             <p className="registration-confirmation__text">
                 You have successfully booked your appointment with MedSync.
                 <br/><br/>
-                You can close now or get tested in one of our clinics
+                You can close now or book another appointment!
             </p>
-            <a href="/see-doctor"
+            <div
                className="button arrow-button"
                onClick={() => {
                    window.Telegram.WebApp.close();
                }}
-            >Done!</a>
-            <a href="/get_tested" className="button button-second">Get Tested</a>
+            >Close</div>
+            <a href="/" className="button button-second">Book another Appointment</a>
         </div>
     );
 }

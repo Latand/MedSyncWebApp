@@ -6,7 +6,9 @@ from infrastructure.webhook.utils import get_repo
 slots_router = APIRouter(prefix="/slots")
 working_hours_router = APIRouter(prefix="/working_hours")
 
-@slots_router.get("/doctor/{doctor_id}/{location_id}/{month_number}")
+
+@slots_router.get("/doctors/{doctor_id}/{location_id}/{month_number}")
+
 async def get_available_slots(
     doctor_id: int,
     location_id: int,

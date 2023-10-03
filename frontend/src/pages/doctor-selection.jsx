@@ -38,6 +38,15 @@ const DoctorSelection = () => {
         }
     };
 
+    const fetchLocationInfo = async (location_id) => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/locations/${location_id}`);
+            await storage.setItem("selectedLocation", JSON.stringify(response.data))
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     const handleDoctorClick = async (doctor) => {
         console.log('doctor', doctor)
         if (selectedDoctor?.doctor_id === doctor.doctor_id) {
@@ -50,6 +59,7 @@ const DoctorSelection = () => {
         } else {
             notificationOccurred("success");
         }
+        await fetchLocationInfo(doctor.location_id);
         setSelectedDoctor(doctor);
     };
 

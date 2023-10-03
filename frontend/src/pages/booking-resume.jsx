@@ -8,87 +8,87 @@ import {
     useInitData,
     useShowPopup
 } from "@vkruglikov/react-telegram-web-app";
-import {useNavigate} from "react-router-dom";
-
-import boxIcon from '../assets/images/resume/Vector.svg';
-import WorkingHours from "../components/Resume/WorkingHours.jsx";
-import {format} from "date-fns";
+import {useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-
-const ResumeBlock = ({title, children}) => (<div className="resume__block">
-    <div className="resume__block__text">{title}</div>
-    {children}
-</div>);
-
-const BoxWrap = ({title, children}) => (<div className="box__wrap">
-    <div className="box__title">
-        <img className="box__title__icon" src={boxIcon} alt="Map icon"/>
-        <div className="box__title__text">{title}</div>
-    </div>
-    {children}
-</div>);
+import {ResumeBlock} from "../components/Resume/ResumeBlock.jsx";
+import fetchUserDataAndLocationInfo from "../utils/summaryData.js";
+import Resume from "../components/Resume/SummaryInfo.jsx";
 
 
-const Resume = () => {
-    const [userData, setUserData] = useState(null);
-    const [doctorData, setDoctorData] = useState(null);
-    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-    const [selectedLocation, setSelectedLocation] = useState(null);
-    const [hoursArray, setHoursArray] = useState([]);
-    const storage = useCloudStorage();
-    const showPopup = useShowPopup();
-    const navigate = useNavigate();
-    const webApp = window.Telegram?.WebApp;
+const FullSummary = () => {
+    const webApp = window.Telegram?.WebApp
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
+    const [InitDataUnsafe, InitData] = useInitData()
+    const [doctorData, setDoctorData] = useState(null)
+    const [diagnosticData, setDiagnosticData] = useState(null)
+    const [userData, setUserData] = useState(null)
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
+    const [workingHours, setWorkingHours] = useState(null)
+    const [selectedLocation, setSelectedLocation] = useState(null)
+    const storage = useCloudStorage()
+    const showPopup = useShowPopup()
+    const navigate = useNavigate()
+    const {itemType} = useParams()
 
-    const [InitDataUnsafe, InitData] = useInitData();
+    const fetchDoctorData = async () => {
+        const doctor = JSON.parse(await storage.getItem('selectedDoctor'))
+        setDoctorData(doctor);
+        return doctor;
+    }
+    const fetchDiagnosticData = async () => {
+        const diagnostic = JSON.parse(await storage.getItem('selectedDiagnostic'))
+        setDiagnosticData(diagnostic);
+        console.log('diagnostic', diagnostic)
+        return diagnostic;
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                let savedUserData = JSON.parse(await storage.getItem('user_data'))
-                let savedDoctor = JSON.parse(await storage.getItem('selectedDoctor'))
-                let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
-                // from JSON to Object
-                if (!selectedTimeSlot || !savedDoctor || !savedUserData) {
-                    notificationOccurred('error')
-                    await showPopup({message: 'Sorry, there is missing data! Start again!'});
-                    navigate('/see_a_doctor');
-                    return;
-                }
-                try {
-                    const locationInfo = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/locations/${savedDoctor.location_id}`);
-                    setSelectedLocation(locationInfo.data);
-                    const workingHours = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/working_hours/${savedDoctor.location_id}`);
-                    // Parse savedUserData and set the state
-                    setUserData(savedUserData);
-                    setDoctorData(savedDoctor);
-                    setHoursArray(workingHours.data);
-                    // make date object from string inside selectedTimeSlot
-                    selectedTimeSlot = new Date(selectedTimeSlot);
-                    setSelectedTimeSlot(selectedTimeSlot);
-                    console.log('User data: ', savedUserData)
+        if (itemType === 'doctors') {
+            fetchDoctorData().then(
+                doctor => {
+                    fetchUserDataAndLocationInfo(
+                        storage, showPopup, navigate, doctor.location_id
+                    ).then(
+                        data => {
+                            setUserData(data.userData);
+                            setSelectedTimeSlot(data.selectedTimeSlot);
+                            setDoctorData(doctor);
+                            setWorkingHours(data.hoursArray);
+                            setSelectedLocation(data.selectedLocation);
+                        }
+                    );
 
-                } catch (err) {
-                    console.error(err);
-                }
+                })
+        } else {
+            fetchDiagnosticData().then(
+                diagnostic => {
+                    fetchUserDataAndLocationInfo(
+                        storage, showPopup, navigate
+                    ).then(
+                        data => {
+                            console.log('data', data)
+                            setUserData(data.userData)
+                            setSelectedTimeSlot(data.selectedTimeSlot)
+                            setWorkingHours(data.hoursArray)
+                            setSelectedLocation(data.selectedLocation)
+                            setDiagnosticData(diagnostic)
+                        }
+                    );
+                })
+        }
+    }, []);
 
-            } catch (err) {
-                console.error(err);
-            }
 
-        };
-
-        fetchData();
-    }, [storage, showPopup, navigate]);
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('diag', diagnosticData)
         try {
-            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/book_slot`, {
-                doctor_id: doctorData.doctor_id,
+            const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/${itemType}/book_slot`, {
+                doctor_id: doctorData?.doctor_id,
                 user_id: InitDataUnsafe.user?.id,
+                diagnostic_id: diagnosticData?.diagnostic_id,
                 booking_date_time: selectedTimeSlot,
-                location_id: doctorData.location_id,
+                location_id: selectedLocation?.location_id,
                 user_name: userData.userName,
                 user_surname: userData.userSurname,
                 user_phone: userData.userPhone,
@@ -96,7 +96,6 @@ const Resume = () => {
                 user_message: userData.userMessage,
                 userInitData: InitData,
             });
-            console.log(response.data);
             let bookings = JSON.parse(await storage.getItem('bookings') || '[]')
             bookings.push(response.data.booking_id);
             notificationOccurred('success')
@@ -110,72 +109,56 @@ const Resume = () => {
             notificationOccurred('error')
             await showPopup({message: 'Sorry, something went wrong!'})
             console.error(err);
-            // }
-
         }
     };
 
-    return (<>
-        <BackButton onClick={() => navigate(-1)}/>
-        <div className="resume">
-            <Header className="resume" title="Resume"/>
-            {userData && doctorData && (<div className="resume__blocks">
-                <ResumeBlock title="Patient Info">
-                    <div className="resume__block__title">{userData.userName} {userData.userSurname}</div>
-                    <a className="resume__block__link"
-                       href={`tel:${userData.userPhone}`}>{userData.userPhone}</a>
-                    <a className="resume__block__link"
-                       href={`mailto:${userData.userEmail}`}>{userData.userEmail}</a>
-                    <div className="resume__block__text--color-dark">
-                        {userData.userMessage}
-                    </div>
-                </ResumeBlock>
 
-                {selectedTimeSlot && (<>
-                    <ResumeBlock title="Your Visit">
-                        <div className="resume__block__title">
-                            {format(selectedTimeSlot, 'EEEE ')}
-                            <span
-                                className="resume__block__title--font-regular">
-                                {format(selectedTimeSlot, 'MMMM')}, {format(selectedTimeSlot, 'd')}, {format(selectedTimeSlot, 'yyyy')}
-                                </span>
-                        </div>
-                        <div className="resume__block__button">{selectedTimeSlot.getHours()}:00</div>
-                        {selectedLocation && <>
-                            <div className="box">
-                                <BoxWrap title={selectedLocation.name}>
-                                    <div className="box__text">{selectedLocation.address}</div>
-                                </BoxWrap>
-                                <a className="box__button button"
-                                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedLocation.address)}`}
-                                   target="_blank" rel="noopener noreferrer">Get direction</a>
+    return (
+        <>
+            <BackButton onClick={() => navigate(-1)}/>
+            <div className="resume">
+                {userData && (
+                    <div className="resume__blocks">
+                        <Header className="resume" title="Summary"/>
+                        <Resume userData={userData} selectedTimeSlot={selectedTimeSlot}
+                                selectedLocation={selectedLocation} hoursArray={workingHours}
+                        />
+
+                        {doctorData && <ResumeBlock title="Your Doctor">
+                            <div className="resume__doctor">
+                                <img className="resume__doctor__image" src={doctorData.photo_url}
+                                     alt="Doctor"/>
+                                <div className="resume__doctor__info">
+                                    <div className="resume__block__title">{doctorData.full_name}</div>
+                                    <div className="resume__block__text--color-dark">{doctorData.specialty_name}</div>
+                                </div>
                             </div>
-                        </>}
-                        <BoxWrap title="Work Hours">
-                            <WorkingHours hoursArray={hoursArray}/>
-                        </BoxWrap>
-                    </ResumeBlock>
-                </>)}
+                        </ResumeBlock>
+                        }
+                        {diagnosticData && <ResumeBlock title="Your Diagnostic">
+                            <div className="resume__doctor">
+                                <img className="resume__doctor__image" src={diagnosticData.photo_url}
+                                        alt="Diagnostic"/>
+                                <div className="resume__doctor__info">
+                                    <div className="resume__block__title">{diagnosticData.type_name}</div>
+                                    <div className="resume__block__text">{diagnosticData.description}</div>
+                                    <div className="resume__block__text">Price: ${diagnosticData.price.toFixed(0)}</div>
 
+                                </div>
+                            </div>
+                        </ResumeBlock>
+                        }
+                    </div>)}
+                <LargeButton
+                    handleSubmit={handleSubmit}
+                    title="Confirm"
+                    typeButton="resume"
+                />
+            </div>
 
-                <ResumeBlock title="Your Doctor">
-                    <div className="resume__doctor">
-                        <img className="resume__doctor__image" src={doctorData.photo_url}
-                             alt="Doctor"/>
-                        <div className="resume__doctor__info">
-                            <div className="resume__block__title">{doctorData.full_name}</div>
-                            <div className="resume__block__text--color-dark">{doctorData.specialty_name}</div>
-                        </div>
-                    </div>
-                </ResumeBlock>
-            </div>)}
-            <LargeButton
-                handleSubmit={handleSubmit}
-                title="Confirm"
-                typeButton="resume"
-            />
-        </div>
-    </>);
+        </>
+    );
 };
 
-export default Resume;
+export default FullSummary;
+
