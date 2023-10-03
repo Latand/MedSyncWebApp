@@ -14,25 +14,13 @@
 }
 
 .calendar-container {
+  @include lineAfter;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    margin-bottom: -20px;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: $tg-theme-text;
-    opacity: 0.3;
-  }
 
   .month-selector {
     @include displayFlex(space-between, center, row);
- 
     padding-inline: 13px;
 
     &__wrap {
@@ -106,7 +94,6 @@
       font-family: "Inter", sans-serif;
       font-size: 14px;
       font-weight: $font-weight-regular;
-      line-height: normal;
       width: 28px;
       height: 22px;
       cursor: pointer;
