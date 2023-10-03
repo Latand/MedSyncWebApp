@@ -5,39 +5,6 @@
     margin-bottom: 20px;
   }
 
-  .search-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    position: relative;
-    margin-top: 20px;
-    cursor: pointer;
-
-
-    &__input {
-      border-radius: 31px;
-      border: 1px solid $color-border;
-      background: $tg-theme-secondary-bg;
-      width: 100%;
-      font-size: 14px;
-      font-weight: $font-weight-semibold;
-      padding: 14px 0 14px 20px;
-      outline: none;
-      color: $color-search-input;
-    }
-
-    &__icon {
-      position: absolute;
-      top: 16px;
-      right: 35px;
-
-      &__img {
-        width: 14px;
-        height: 14px;
-      }
-    }
-  }
-
   .nav {
     margin-bottom: 20px;
 
@@ -79,7 +46,9 @@
       }
     }
   }
-
+  &__link {
+    text-decoration: none;
+  }
   &__main {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -97,6 +66,7 @@
   flex-direction: column;
   justify-content: center;
   height: 130px;
+  width: 150px;
   align-items: center;
   gap: 12px;
   border-radius: 12px;
@@ -152,14 +122,16 @@
 
   &__title {
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: $font-weight-bold;
     line-height: normal;
+    max-width: 125px;
+    word-wrap: break-word;
   }
 
   &__subtitle {
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: $font-weight-regular;
     line-height: normal;
   }

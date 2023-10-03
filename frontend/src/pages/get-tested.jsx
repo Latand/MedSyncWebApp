@@ -33,7 +33,8 @@ const GetTested = () => {
                 <main className="get-tested__main">
                     {diagnosticTypes.map((type, index) => (
                         <Link to={`/booking/diagnostics/${type.diagnostic_id}`}
-                             key={index}
+                              key={index}
+                              className="get-tested__link"
                         >
                             <SpecializationCard
                                 className="specialization-card"
