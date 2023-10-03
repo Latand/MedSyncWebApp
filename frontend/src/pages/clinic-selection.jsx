@@ -46,7 +46,7 @@ const ClinicSelection = () => {
     }, [search]);
 
     const handleNext = async () => {
-        navigate(`/booking/diagnostics/${diagnostic_id}/locations/${selectedClinic}/doctors`)
+        navigate(`/booking/patient-info-form/diagnostics`)
     }
 
     const handleChooseClinic = async (clinic) => {
@@ -65,7 +65,7 @@ const ClinicSelection = () => {
             }
             setSelectedClinic(clinic);
             console.log('clinic set')
-            await storage.setItem('clinic', clinic);
+            await storage.setItem('selectedClinic', clinic);
         }
     }
 

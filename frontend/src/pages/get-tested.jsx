@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BackButton, useHapticFeedback} from '@vkruglikov/react-telegram-web-app';
+import {BackButton, useCloudStorage, useHapticFeedback} from '@vkruglikov/react-telegram-web-app';
 import {Link, useNavigate} from 'react-router-dom';
 import Header from "../components/Header.jsx";
 import SearchBar from "../components/DoctorsListing/SearchBar.jsx";
@@ -12,9 +12,10 @@ const GetTested = () => {
     const [search, setSearch] = useState("")
     const [diagnosticTypes, setDiagnosticTypes] = useState([]);
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+    const storage = useCloudStorage();
 
     useEffect(() => {
-        axios.get( `${import.meta.env.VITE_REACT_APP_API_URL}/api/diagnostics/`)
+        axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/diagnostics/`)
             .then(response => {
                 let filteredDiagnosticTypes = response.data;
                 if (search) {
@@ -42,9 +43,10 @@ const GetTested = () => {
                         <Link to={`/booking/diagnostics/${type.diagnostic_id}`}
                               key={index}
                               className="get-tested__link"
-                                onClick={() => {
-                                    notificationOccurred('success')
-                                }}
+                              onClick={async () => {
+                                  await storage.setItem("selectedDiagnostic", JSON.stringify(type))
+                                  notificationOccurred('success')
+                              }}
                         >
                             <SpecializationCard
                                 className="specialization-card"

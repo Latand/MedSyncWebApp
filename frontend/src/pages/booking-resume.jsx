@@ -29,7 +29,7 @@ const BoxWrap = ({title, children}) => (<div className="box__wrap">
 </div>);
 
 
-const Resume = () => {
+const DoctorResume = () => {
     const [userData, setUserData] = useState(null);
     const [doctorData, setDoctorData] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -178,4 +178,4 @@ const Resume = () => {
     </>);
 };
 
-export default Resume;
+export default DoctorResume;

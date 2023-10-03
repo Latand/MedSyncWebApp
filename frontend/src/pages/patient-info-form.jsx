@@ -7,7 +7,7 @@ import {
     useInitData,
     useShowPopup
 } from "@vkruglikov/react-telegram-web-app";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LargeButton from "../components/LargeButton.jsx";
 
 
@@ -21,8 +21,9 @@ const PatientInformation = () => {
     });
 
     const storage = useCloudStorage()
-    let navigate = useNavigate()
+    const navigate = useNavigate()
     const showPopup = useShowPopup()
+    const {itemType }= useParams()
     const [initDataUnsafe, initData] = useInitData()
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
 
@@ -67,7 +68,7 @@ const PatientInformation = () => {
         await storage.setItem('user_data', JSON.stringify(formData));
         e.preventDefault();
         notificationOccurred("success")
-        navigate('/booking/confirmation')
+        navigate(`/booking/confirmation/${itemType}`)
     };
 
 
