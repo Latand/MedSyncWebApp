@@ -2,9 +2,7 @@
   @include padding;
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include displayFlex(center, center, column);
   }
 
   &__img {
@@ -25,23 +23,18 @@
   &__subtitle {
     text-align: center;
     font-size: 16px;
-    font-weight: $font-weight-regular;
     line-height: 119%;
   }
 
   &__status {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    @include displayFlex(center, center, row);
+
     gap: 10px;
     margin-top: 7px;
     margin-bottom: 10px;
 
     &__text {
-      color: $tg-theme-text ;
       font-size: 14px;
-      font-weight: $font-weight-regular;
       line-height: 119%;
     }
 
@@ -52,9 +45,8 @@
   }
 
   &__button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include displayFlex(center, center, row);
+
     text-decoration: none;
     background: $tg-theme-button;
     box-shadow: $tg-theme-secondary-bg;
@@ -78,8 +70,8 @@
   }
 
   &__section {
-    display: flex;
-    flex-direction: column;
+    @include displayFlex(start, start, column);
+
     gap: 8px;
 
     &__title {
@@ -89,42 +81,14 @@
     }
 
     &__text {
-      color: $tg-theme-text;
       font-size: 13px;
-      font-weight: $font-weight-regular;
       line-height: 119%;
     }
   }
 }
 
-.experience {
-  position: relative;
-
-  &::after{
-    content: "";
-    position: absolute;
-    margin-bottom: -12px;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: $tg-theme-text;
-    opacity: 0.3;
-  }
-}
-
 .services {
-  position: relative;
-
-  &::after{
-    content: "";
-    position: absolute;
-    margin-bottom: -12px;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: $tg-theme-text;
-    opacity: 0.3;
-  }
+ @include lineAfter;
 
   &__list {
     padding: 0;
@@ -132,32 +96,9 @@
   }
 }
 
-.certificates {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    margin-bottom: -12px;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: $tg-theme-text;
-    opacity: 0.3;
-  }
+.certificates,
+.working-time,
+.experience {
+  @include lineAfter;
 }
 
-.working-time {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    margin-bottom: -12px;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: $tg-theme-text;
-    opacity: 0.3;
-  }
-}
