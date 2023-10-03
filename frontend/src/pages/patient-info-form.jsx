@@ -2,13 +2,13 @@ import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import {
     BackButton,
+    MainButton,
     useCloudStorage,
     useHapticFeedback,
     useInitData,
     useShowPopup
 } from "@vkruglikov/react-telegram-web-app";
 import {useNavigate, useParams} from "react-router-dom";
-import LargeButton from "../components/LargeButton.jsx";
 
 
 const PatientInformation = () => {
@@ -23,52 +23,56 @@ const PatientInformation = () => {
     const storage = useCloudStorage()
     const navigate = useNavigate()
     const showPopup = useShowPopup()
-    const {itemType }= useParams()
+    const {itemType} = useParams()
     const [initDataUnsafe, initData] = useInitData()
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
+    const [isFormValid, setIsFormValid] = useState(false)
 
-    const fetchData = async () => {
-        const savedUserData = await storage.getItem('user_data');
-        // from JSON to Object
-        const savedUserDataObject = savedUserData ? JSON.parse(savedUserData) : null;
+    const checkIfFormValid = () => {
+        setIsFormValid(
+            !!(formData.userName && formData.userSurname && formData.userPhone && formData.userEmail)
+        );
+    }
 
-        const savedEmail = savedUserDataObject ? savedUserDataObject.userEmail : null;
-        const savedName = savedUserDataObject ? savedUserDataObject.userName : (initDataUnsafe ? initDataUnsafe.user?.first_name : null);
-        const savedSurname = savedUserDataObject ? savedUserDataObject.userSurname : (initDataUnsafe ? initDataUnsafe.user?.last_name : null);
-        const savedPhone = savedUserDataObject ? savedUserDataObject.userPhone : null
-        // Telegram Data may be not available if ran from Inline mode or KeyboardButton
-
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            userName: savedName || null,
-            userSurname: savedSurname || null,
-            userEmail: savedEmail || null,
-            userPhone: savedPhone || null
-        }));
-    };
     const handleChange = (event) => {
+        const {id, value} = event.target;
         setFormData(prevFormData => ({
             ...prevFormData,
-            [event.target.id]: event.target.value
+            [id]: value
         }));
     };
+
     useEffect(() => {
-        fetchData();
+        storage.getItem('user_data').then((data) => {
+            const savedUserDataObject = data ? JSON.parse(data) : null;
+            const savedEmail = savedUserDataObject ? savedUserDataObject.userEmail : null;
+            const savedName = savedUserDataObject ? savedUserDataObject.userName : (initDataUnsafe ? initDataUnsafe.user?.first_name : null);
+            const savedSurname = savedUserDataObject ? savedUserDataObject.userSurname : (initDataUnsafe ? initDataUnsafe.user?.last_name : null);
+            const savedPhone = savedUserDataObject ? savedUserDataObject.userPhone : null
+            // Telegram Data may be not available if ran from Inline mode or KeyboardButton
+
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                userName: savedName || '',
+                userSurname: savedSurname || '',
+                userEmail: savedEmail || '',
+                userPhone: savedPhone || ''
+            }));
+            setIsFormValid(
+                !!(savedName && savedSurname && savedPhone && savedEmail)
+            );
+        });
     }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!formData.userName || !formData.userSurname || !formData.userPhone || !formData.userEmail) {
-            console.log('Form data submitted: ', formData)
-            notificationOccurred("error")
-            await showPopup({message: 'Please fill all the fields'});
-            return;
-        }
+    useEffect(() => {
+        checkIfFormValid()
+    }, [formData])
 
+    const handleSubmit = async () => {
         console.log('Form data submitted: ', formData);
         await storage.setItem('user_data', JSON.stringify(formData));
-        notificationOccurred("success")
         navigate(`/booking/confirmation/${itemType}`)
+        notificationOccurred("success")
     };
 
 
@@ -78,7 +82,6 @@ const PatientInformation = () => {
             <div className="patient-information">
                 <Header className="patient-information"
                         title="Patient Information"/>
-
                 <div className="patient-information__form">
                     {initDataUnsafe && (
                         <form
@@ -99,6 +102,7 @@ const PatientInformation = () => {
                                     autoComplete="off"
                                     value={formData.userName}
                                     onChange={handleChange}
+                                    maxLength={64}
                                 />
                             </label>
 
@@ -113,6 +117,7 @@ const PatientInformation = () => {
                                     autoComplete="off"
                                     value={formData.userSurname}
                                     onChange={handleChange}
+                                    maxLength={64}
                                 />
                             </label>
 
@@ -128,6 +133,7 @@ const PatientInformation = () => {
                                     autoComplete="off"
                                     value={formData.userPhone}
                                     onChange={handleChange}
+                                    maxLength={16}
                                 />
                             </label>
 
@@ -141,6 +147,7 @@ const PatientInformation = () => {
                                     required
                                     value={formData.userEmail}
                                     autoComplete="off"
+                                    maxLength={64}
                                     onChange={handleChange}
                                 />
                             </label>
@@ -151,13 +158,15 @@ const PatientInformation = () => {
                                     id="userMessage"
                                     name="user_message"
                                     onChange={handleChange}
+                                    maxLength={1024}
                                 ></textarea>
                             </label>
-                            <LargeButton
-                                title="Next"
-                                handleSubmit={handleSubmit}
-                                typeButton="form"
-                            />
+                            {isFormValid &&
+                                <MainButton
+                                    title="Next"
+                                    onClick={handleSubmit}
+                                />
+                            }
                         </form>)}
                 </div>
             </div>

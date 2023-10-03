@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import LargeButton from "../components/LargeButton.jsx";
 import {
-    BackButton,
+    BackButton, MainButton,
     useCloudStorage,
     useHapticFeedback,
     useInitData,
@@ -79,9 +79,7 @@ const FullSummary = () => {
     }, []);
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log('diag', diagnosticData)
+    const handleSubmit = async () => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/${itemType}/book_slot`, {
                 doctor_id: doctorData?.doctor_id,
@@ -138,7 +136,7 @@ const FullSummary = () => {
                         {diagnosticData && <ResumeBlock title="Your Diagnostic">
                             <div className="resume__doctor">
                                 <img className="resume__doctor__image" src={diagnosticData.photo_url}
-                                        alt="Diagnostic"/>
+                                     alt="Diagnostic"/>
                                 <div className="resume__doctor__info">
                                     <div className="resume__block__title">{diagnosticData.type_name}</div>
                                     <div className="resume__block__text">{diagnosticData.description}</div>
@@ -149,11 +147,12 @@ const FullSummary = () => {
                         </ResumeBlock>
                         }
                     </div>)}
-                <LargeButton
-                    handleSubmit={handleSubmit}
-                    title="Confirm"
-                    typeButton="resume"
-                />
+                {userData &&
+                    <MainButton
+                        onClick={handleSubmit}
+                        text="Confirm"
+                    />
+                }
             </div>
 
         </>
