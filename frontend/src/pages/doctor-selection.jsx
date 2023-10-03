@@ -39,6 +39,7 @@ const DoctorSelection = () => {
     };
 
     useEffect(() => {
+        notificationOccurred("success");
         fetchAllDoctors();
         fetchSpecialties()
         storage.getItem("selectedDoctor").then((value) => {
@@ -48,13 +49,13 @@ const DoctorSelection = () => {
             }
         );
 
-    }, [storage]);
+    }, []);
 
     useEffect(() => {
         let filteredDoctors = allDoctors;
-
         if (specialty) {
             filteredDoctors = filteredDoctors.filter(doctor => doctor.specialty_id === specialty);
+            selectionChanged();
         }
 
         if (search) {
@@ -66,9 +67,9 @@ const DoctorSelection = () => {
         }
 
         setDisplayedDoctors(filteredDoctors);
-        selectionChanged();
+        window.Telegram.WebApp.enableClosingConfirmation();
 
-    }, [specialty, search, allDoctors, selectionChanged]);
+    }, [specialty, search, allDoctors]);
 
 
     return (<>
@@ -90,13 +91,18 @@ const DoctorSelection = () => {
                     avg_rating={doctor.avg_rating ? doctor.avg_rating : 0}
                     reviews={doctor.reviews ? doctor.reviews : 0}
                     doctorImage={doctor.photo_url}
-                    onClick={() => {
+                    onClick={async () => {
                         if (selectedDoctor?.doctor_id === doctor.doctor_id) {
+                            selectionChanged();
                             setSelectedDoctor(null);
+                            await storage.removeItem("selectedDoctor");
+                            return;
+                        } else if (selectedDoctor) {
+                            selectionChanged();
                         } else {
-                            setSelectedDoctor(doctor);
+                            notificationOccurred("success");
                         }
-                        impactOccurred("light");
+                        setSelectedDoctor(doctor);
                     }}
                 />))}
             </main>}
@@ -105,7 +111,7 @@ const DoctorSelection = () => {
             textColor="#FFF"
             text={`Book with ${selectedDoctor.full_name}`}
             onClick={async () => {
-                selectionChanged();
+                notificationOccurred("success");
                 await storage.setItem("selectedDoctor", JSON.stringify(selectedDoctor));
                 navigate(`/doctor/${selectedDoctor.doctor_id}`);
             }}

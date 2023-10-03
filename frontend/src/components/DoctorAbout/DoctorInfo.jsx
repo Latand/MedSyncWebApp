@@ -1,9 +1,11 @@
-
 import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
 import {Link} from "react-router-dom";
+import {useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 
-const DoctorInfo = ({name, doctor_id, specialty, status, imageSrc, avg_rating, reviews}) => (
-    <div className="about__content">
+const DoctorInfo = ({name, doctor_id, specialty, status, imageSrc, avg_rating, reviews}) => {
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
+
+    return (<div className="about__content">
         <img
             className="about__img"
             src={imageSrc}
@@ -20,8 +22,12 @@ const DoctorInfo = ({name, doctor_id, specialty, status, imageSrc, avg_rating, r
                 alt={status}
             />
         </div>
-        <Link className="button about__button" to={`/booking/appointment/${doctor_id}`}>Book Appointment</Link>
-    </div>
-);
+        <Link className="button about__button" to={`/booking/appointment/${doctor_id}`}
+              onClick={() => {
+                  notificationOccurred("success");
+              }}
+        >Book Appointment</Link>
+    </div>)
+};
 
 export default DoctorInfo;

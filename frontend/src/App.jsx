@@ -16,7 +16,6 @@ const App = () => {
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             // Alternatively to what can be set with react-telegram-web-app, you can directly set the following properties:
-            window.Telegram.WebApp.isClosingConfirmationEnabled = true;
             window.Telegram.WebApp.expand();
         }
     }, []);
