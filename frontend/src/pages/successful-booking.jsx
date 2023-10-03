@@ -1,7 +1,7 @@
-
-import logo from '../assets/images/landing-page/medsync-logo.svg'; // Adjust the import path as necessary
+import logo from '../assets/images/landing-page/medsync-logo.svg';
 
 function RegistrationConfirmation() {
+    window.Telegram.WebApp.disableClosingConfirmation();
     return (
         <div className="registration-confirmation">
             <img

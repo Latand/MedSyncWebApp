@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
-import {BackButton, useCloudStorage, useInitData, useShowPopup} from "@vkruglikov/react-telegram-web-app";
-import {useNavigate} from "react-router-dom";
+import {
+    BackButton,
+    useCloudStorage,
+    useHapticFeedback,
+    useInitData,
+    useShowPopup
+} from "@vkruglikov/react-telegram-web-app";
+import {useNavigate, useParams} from "react-router-dom";
 import LargeButton from "../components/LargeButton.jsx";
 
 
@@ -14,10 +20,13 @@ const PatientInformation = () => {
         userMessage: ''
     });
 
-    const storage = useCloudStorage();
-    let navigate = useNavigate();
-    const showPopup = useShowPopup();
-    const [initDataUnsafe, initData] = useInitData();
+    const storage = useCloudStorage()
+    const navigate = useNavigate()
+    const showPopup = useShowPopup()
+    const {itemType }= useParams()
+    const [initDataUnsafe, initData] = useInitData()
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
+
     const fetchData = async () => {
         const savedUserData = await storage.getItem('user_data');
         // from JSON to Object
@@ -50,6 +59,7 @@ const PatientInformation = () => {
     const handleSubmit = async (e) => {
         if (!formData.userName || !formData.userSurname || !formData.userPhone || !formData.userEmail) {
             console.log('Form data submitted: ', formData)
+            notificationOccurred("error")
             await showPopup({message: 'Please fill all the fields'});
             return;
         }
@@ -57,7 +67,8 @@ const PatientInformation = () => {
         console.log('Form data submitted: ', formData);
         await storage.setItem('user_data', JSON.stringify(formData));
         e.preventDefault();
-        navigate('/booking/confirmation')
+        notificationOccurred("success")
+        navigate(`/booking/confirmation/${itemType}`)
     };
 
 

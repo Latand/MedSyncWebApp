@@ -12,7 +12,7 @@
 
   &__icon {
     @include displayFlex(center, center, row);
-  
+
     &__img {
       width: 15px;
       height: 12px;
@@ -21,6 +21,7 @@
       &--about {
         width: 24px;
         height: 24px;
+        border-radius: 12px;
       }
     }
   }

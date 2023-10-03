@@ -1,6 +1,6 @@
 .patient-information {
   @include padding;
-
+    height: 1000px;
   &__header {
     position: relative;
     margin-bottom: 40px;
@@ -38,7 +38,7 @@
 
     &__input {
       font-family: "Josefin Sans", "Open Sans", sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       color: $tg-theme-text;
       height: 45px;
       border-radius: 20px;
@@ -51,7 +51,7 @@
     &__textarea {
       font-family: "Josefin Sans", sans-serif;
       color: $tg-theme-text;
-      font-size: 15px;
+      font-size: 16px;
       height: 120px;
       border-radius: 20px;
       border: none;

@@ -1,7 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import LargeButton from "../components/LargeButton.jsx";
-import {BackButton, useCloudStorage, useInitData, useShowPopup} from "@vkruglikov/react-telegram-web-app";
+import {
+    BackButton,
+    useCloudStorage,
+    useHapticFeedback,
+    useInitData,
+    useShowPopup
+} from "@vkruglikov/react-telegram-web-app";
 import {useNavigate} from "react-router-dom";
 
 import boxIcon from '../assets/images/resume/Vector.svg';
@@ -23,7 +29,7 @@ const BoxWrap = ({title, children}) => (<div className="box__wrap">
 </div>);
 
 
-const Resume = () => {
+const DoctorResume = () => {
     const [userData, setUserData] = useState(null);
     const [doctorData, setDoctorData] = useState(null);
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -31,8 +37,10 @@ const Resume = () => {
     const [hoursArray, setHoursArray] = useState([]);
     const storage = useCloudStorage();
     const showPopup = useShowPopup();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const webApp = window.Telegram?.WebApp;
+    const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
+
     const [InitDataUnsafe, InitData] = useInitData();
 
     useEffect(() => {
@@ -43,6 +51,7 @@ const Resume = () => {
                 let selectedTimeSlot = JSON.parse(await storage.getItem('selectedTimeSlot'))
                 // from JSON to Object
                 if (!selectedTimeSlot || !savedDoctor || !savedUserData) {
+                    notificationOccurred('error')
                     await showPopup({message: 'Sorry, there is missing data! Start again!'});
                     navigate('/see_a_doctor');
                     return;
@@ -70,10 +79,9 @@ const Resume = () => {
 
         };
 
-        fetchData();  // Call fetchData inside useEffect
-    }, [storage, showPopup, navigate]);  // Add dependencies to useEffect
+        fetchData();
+    }, [storage, showPopup, navigate]);
     const handleSubmit = async (e) => {
-        // Your logic goes here
         e.preventDefault();
         try {
             const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/book_slot`, {
@@ -91,6 +99,7 @@ const Resume = () => {
             console.log(response.data);
             let bookings = JSON.parse(await storage.getItem('bookings') || '[]')
             bookings.push(response.data.booking_id);
+            notificationOccurred('success')
             await storage.setItem('bookings', JSON.stringify(bookings))
             await showPopup({message: 'Your appointment has been confirmed!'});
             await webApp.sendData(JSON.stringify({
@@ -98,16 +107,10 @@ const Resume = () => {
             }));
             navigate('/successful_booking');
         } catch (err) {
-
-            console.log(err)
-            if (err.response && err.response.data.detail === "User does not exist") {
-                // Display alert and redirect to the bot
-                await window.Telegram.WebApp.showAlert('You are not registered. Please interact with the bot first.');
-                await window.Telegram.WebApp.openTelegramLink('https://t.me/medsyncbot');
-            } else {
-                await showPopup({message: 'Sorry, something went wrong!'})
-                console.error(err);
-            }
+            notificationOccurred('error')
+            await showPopup({message: 'Sorry, something went wrong!'})
+            console.error(err);
+            // }
 
         }
     };
@@ -175,4 +178,4 @@ const Resume = () => {
     </>);
 };
 
-export default Resume;
+export default DoctorResume;

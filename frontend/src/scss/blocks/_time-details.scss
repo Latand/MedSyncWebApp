@@ -176,10 +176,11 @@
       text-align: center;
       padding: 15px 0;
       width: 100px;
+      color: $tg-theme-text;
 
       &--active {
         background: $tg-theme-button;
-        color: $tg-theme-bg;
+        color: $tg-theme-button-text;
         box-shadow: $color-box-shadow;
       }
     }
