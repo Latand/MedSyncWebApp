@@ -1,3 +1,7 @@
+---
+title: MedSync WebApp Documentation
+---
+
 # MedSync WebApp Documentation
 
 ## Introduction
@@ -5,8 +9,8 @@
 Welcome to the MedSync WebApp documentation. This app serves as an efficient bridge between patients and healthcare
 professionals, providing streamlined access to medical services via the Telegram platform.
 
-This MedSync WebApp is a conceptual example application and not an actual service. All images and text content presented
-are generated using AI and do not represent real entities or services.
+!!! warning
+    The MedSync WebApp is for demonstration purposes only and not intended for actual medical services.
 
 [Link to Bot in Telegram](https://t.me/MedSyncbot)
 
@@ -16,47 +20,94 @@ are generated using AI and do not represent real entities or services.
 - An intuitive interface to search, select, and interact with healthcare experts, diagnostic types, and clinics
 - Integration with Telegram for seamless user experience.
 
-## Showcase
+!!! example "Showcase"
 
-For a quick start:
+    You can try out the MedSync WebApp:
 
-1. Initiate the [MedSync bot on Telegram](https://t.me/MedSyncbot).
-2. Follow the prompts to navigate through the available services.
+    - Initiate the [MedSync bot on Telegram](https://t.me/MedSyncbot).
+    - Otherwise, you can see the [Userflow page](userflow.md) for a quick overview of the MedSync WebApp.
 
 ## System Requirements and Setup
 
-Before getting started with the MedSync WebApp, ensure you have the appropriate system setup:
+!!! note
+    This guide focuses on setting up on Windows/MacOS/Linux.
 
-### Software and OS:
+#### Software and OS:
 
-- **Docker & Docker-Compose**: Required to containerize and orchestrate the application services. Compatible with
-  Windows, MacOS, and Linux. For MacOS and Windows users, it's recommended to have Docker Desktop installed.
+- **Docker & Docker-Compose (1)**
+    { .annotate }
 
-### Hosting and Domain:
+    1.  Required to containerize and orchestrate the application services. Compatible with
+   Windows, MacOS, and Linux. 
 
-- **Server with Domain Ownership**: If you're deploying this project live, you'll need a server and an owned domain. For
-  securing your domain, an SSL certificate is mandatory. You can obtain one, for instance, using Let's Encrypt's
-  Certbot.
+#### Hosting and Domain:
 
-### Local Testing:
+- **Server with Domain Ownership and SSL-Certificate (1)**
+    { .annotate }
+
+    1.  If you're deploying this project live, you'll need a server and an owned domain. For
+    securing your domain, an SSL certificate is mandatory. You can obtain one, for instance, using Let's Encrypt's
+    Certbot.
+
+#### Local Testing (Optional):
 
 - **Ngrok**: If you opt to run the project locally and still want external access, you can use Ngrok. This will require
   creating an account with Ngrok, setting up a static domain (free tier), and noting down the domain for later use.
-  Detailed instructions for Ngrok setup can be found on a dedicated page.
+  Detailed instructions for Ngrok setup can be found on [a dedicated page](ngrok.md).
 
 ### Project Composition:
+
+```mermaid
+stateDiagram-v2
+    state fork_docker_init <<fork>>
+        [*] --> fork_docker_init : Docker Compose Initiated
+
+    fork_docker_init --> Frontend
+    fork_docker_init --> Backend
+    fork_docker_init --> Documentation
+    fork_docker_init --> Ngrok
+
+    state Frontend
+    Frontend : React JS application
+
+    state Backend
+    Backend --> Bot
+    Backend --> Database
+    Backend --> Caching
+    Backend --> API
+
+    state Bot
+    Bot : Bot built on Aiogram
+
+    state Database
+    Database : PostgreSQL
+
+    state Caching
+    Caching : Redis (for bot caching)
+
+    state API
+    API : REST API built on FastAPI
+
+    state Optional Documentation 
+    Documentation
+
+    state 
+    Ngrok : Optional Ngrok
+
+```
 
 Once the Docker processes are initiated, it will orchestrate the entire project setup:
 
 - **Frontend**: A React JS application.
 - **Backend**: Comprises multiple components:
-    - **Bot**: Built on the Aiogram framework.
-    - **Database**: PostgreSQL for structured data storage.
-    - **Caching**: Redis is utilized for caching purposes within the bot.
-    - **API**: Developed using FastAPI with SQLAlchemy for ORM, and Alembic for database migrations.
+    - **Bot**: Built on the [aiogram framework](https://docs.aiogram.dev/en/latest/).
+    - **Database**: [PostgreSQL](https://www.postgresql.org/) for structured data storage.
+    - **Caching**: [Redis](https://redis.io/) is utilized for caching purposes within the bot.
+    - **REST API**: Developed using [FastAPI](https://fastapi.tiangolo.com/) with [SQLAlchemy](https://www.sqlalchemy.org/) for ORM,
+  and [Alembic](https://alembic.sqlalchemy.org/en/latest/) for database migrations.
 - **Documentation Image (Optional)**: While there's an image dedicated for documentation, it is commented out by default
-  in the Docker configuration.
-- **Ngrok (Optional)**: There's also an Ngrok configuration, but it's commented out by default.
+  in the Docker configuration. Build with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
+- **Ngrok (Optional)**: There's also a [Ngrok](https://ngrok.com/) configuration, but it's commented out by default.
 
 ---
 
@@ -64,9 +115,9 @@ Once the Docker processes are initiated, it will orchestrate the entire project 
 
 ### Configuration
 
-Setting up the MedSync Bot requires configuring certain environment variables and adjusting specific settings to match
-your intended deployment environment. Properly setting these configurations ensures seamless integration and
-functionality of the bot.
+!!! info
+    Setting up the MedSync Bot requires configuring certain environment variables and adjusting specific settings to match
+    your intended deployment environment.
 
 **[Configuration Guidelines](configuration.md)**: This section provides a detailed walkthrough on how to adjust the
 essential configurations for the MedSync Bot. Ensure you've set these up before deploying.
@@ -89,19 +140,26 @@ It's advisable to review and complete the dependency initialization before proce
 
 ## Quick Overview
 
+!!! question
+    Wondering what functionalities MedSync offers? Here's a brief outline to get you started.
+
 MedSync offers a series of functionalities aimed at enhancing patient-doctor interaction. Here's a brief outline:
 
 - **Doctor Selection**: Search and choose from a list of medical experts based on specialization.
 - **Appointment Booking**: Pick a convenient date and time slot.
 - **Medical Tests**: Browse through various medical tests, learn about them, and book as needed.
-- **Theme Adaptability**: The web app interface dynamically adapts to your current Telegram theme colors, ensuring a
-  cohesive visual experience.
+- **Theme Adaptability**: The web app interface dynamically adapts to your current Telegram theme colors, ensuring a cohesive visual experience.
+!!! example 
+    If you have set a dark theme on Telegram, the MedSync WebApp interface will adapt to show dark mode elements, aligning with your preferred visual settings.
+
+---
 
 ## Acknowledgements
 
-This project is a submission for a Telegram contest. We've taken inspiration and borrowed code blocks under the MIT
-license from the [aiogram-3-guide](https://github.com/MasterGroosha/aiogram-3-guide) repository. A big thank you to the
-original authors and contributors.
+This project is a submission for a [Telegram contest](https://t.me/contest/327). 
+
+In order to create this documentation we've taken inspiration and borrowed some code blocks under the MIT
+license from the [aiogram-3-guide](https://github.com/MasterGroosha/aiogram-3-guide) repository.
 
 ## License & Attribution
 
@@ -110,5 +168,7 @@ full attribution can be found [here](#).
 
 ## Contributors
 
-MedSync's success is attributed to its dedicated team of developers, designers, and healthcare consultants. A detailed
-list of contributors can be found [here](#).
+MedSync's success is attributed to its dedicated team of developers, a UX/UI designer, and AI agents.
+
+
+

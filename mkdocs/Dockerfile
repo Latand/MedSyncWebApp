@@ -12,3 +12,4 @@ COPY . .
 
 # Command to run mkdocs server on container startup
 CMD ["mkdocs", "serve", "--dev-addr=0.0.0.0:8000"]
+#CMD ["mkdocs", "build"]

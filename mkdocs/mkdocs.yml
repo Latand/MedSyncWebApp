@@ -17,26 +17,28 @@ copyright: Copyright &copy; 2023 Kostiantyn
 # Configuration
 theme:
   name: material
-  custom_dir: overrides
+  custom_dir: docs/overrides
   language: en
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: teal
+      primary: deep purple
       toggle:
         icon: material/brightness-4
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: teal
+      primary: deep purple
       toggle:
         icon: material/brightness-7
         name: Switch to light mode
   font:
-    text: Josefin Sans
+    text: Open Sans
     code: Jetbrains Mono
-  icon:
-    logo: material/cloud_queue
+
+  features:
+    - content.code.copy
+    - content.code.select
 
 # Extras
 extra:
@@ -51,8 +53,22 @@ extra:
 # Extensions
 markdown_extensions:
   - admonition
-  - pymdownx.highlight
-  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
   - meta
   - attr_list
   - toc:

@@ -109,7 +109,8 @@ services:
     ports:
       - "3780:8000"
     volumes:
-      - ./docs:/usr/src/mkdocs
+      - ./mkdocs:/usr/src/mkdocs
+      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
     networks:
       - tg_bot
 
