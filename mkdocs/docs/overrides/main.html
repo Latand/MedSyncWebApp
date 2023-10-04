@@ -1,38 +1,72 @@
 {% extends "base.html" %}
 
 {% block extrahead %}
-  {% set title = config.site_name %}
-  {% if page and page.meta and page.meta.title %}
-    {% set title = title ~ " - " ~ page.meta.title %}
-  {% elif page and page.title and not page.is_homepage %}
-    {% set title = title ~ " - " ~ page.title %}
-  {% endif %}
+{% set title = config.site_name %}
+{% if page and page.meta and page.meta.title %}
+{% set title = title ~ " - " ~ page.meta.title %}
+{% elif page and page.title and not page.is_homepage %}
+{% set title = title ~ " - " ~ page.title %}
+{% endif %}
 
-  {% set url_description = config.site_description %}
-  {% if page and page.meta and page.meta.description %}
-    {% set url_description = page.meta.description %}
-  {% endif %}
+{% set url_description = config.site_description %}
+{% if page and page.meta and page.meta.description %}
+{% set url_description = page.meta.description %}
+{% endif %}
 
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="{{ config.site_name }}" />
-  <meta property="og:description" content="{{ url_description }}" />
-  <meta property="og:url" content="{{ page.canonical_url }}" />
-  <meta property="og:image" content="{{ config.site_url }}images/social.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="{{ config.site_name }}"/>
+<meta property="og:description" content="{{ url_description }}"/>
+<meta property="og:url" content="{{ page.canonical_url }}"/>
+<meta property="og:image" content="{{ config.site_url }}images/social.png"/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:width" content="512"/>
+<meta property="og:image:height" content="512"/>
 
-    <style>
+
+<style>
     img {
         display: block;
         margin-left: auto;
         margin-right: auto;
+        max-height: 350px;
+        position: relative;
+        cursor: pointer;
     }
-  </style>
+
+    .enlarged {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 50%;
+        max-height: 50%;
+        z-index: 1000;
+    }
+
+    .md-typeset code:not(.focus-visible) {
+        color: #b3756a;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let images = document.querySelectorAll('img');
+
+        images.forEach(img => {
+            img.addEventListener('click', function () {
+                if (img.classList.contains('enlarged')) {
+                    img.classList.remove('enlarged');
+                } else {
+                    img.classList.add('enlarged');
+                }
+            });
+        });
+    });
+</script>>
 
 {% endblock %}
 
 
 {% block site_meta %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}

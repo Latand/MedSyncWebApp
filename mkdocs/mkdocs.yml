@@ -77,8 +77,8 @@ markdown_extensions:
 nav:
   - 'Introduction': index.md
   - 'UserFlow': userflow.md
-  - 'Configuration': configuration.md
   - 'Dependency Initialization Guidelines': dependencies-initialization.md
+  - 'Configuration': configuration.md
 
 #  - 'Frontend Development': frontend.md
 #  - 'Backend Development': backend.md
