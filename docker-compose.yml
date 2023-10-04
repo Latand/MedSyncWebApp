@@ -103,13 +103,13 @@ services:
 
   mkdocs:
     build:
-      context: ./docs
+      context: mkdocs
       dockerfile: Dockerfile
     container_name: "mkdocs_container"
     ports:
       - "3780:8000"
     volumes:
-      - ./mkdocs:/usr/src/mkdocs
+      - ./docs:/usr/src/mkdocs
     networks:
       - tg_bot
 

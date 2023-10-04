@@ -2,7 +2,7 @@
 site_name: MedSync Telegram Mini App Documentation
 site_description: Comprehensive guide on setting up and understanding the MedSync Telegram Mini App using FastAPI, React.js, Docker, and more.
 site_author: Kostiantyn
-site_url: docs.medsync.botfather.dev
+site_url: https://docs.medsync.botfather.dev
 docs_dir: docs
 site_dir: public_docs
 
@@ -17,7 +17,7 @@ copyright: Copyright &copy; 2023 Kostiantyn
 # Configuration
 theme:
   name: material
-  custom_dir: docs_src/overrides
+  custom_dir: overrides
   language: en
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -72,5 +72,3 @@ plugins:
       lang:
         - en
 
-# Custom
-nav_name: "Table of Contents"
