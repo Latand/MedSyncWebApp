@@ -1,0 +1,2 @@
+mkdocs-material~=9.4
+mkdocs-video~=1.5

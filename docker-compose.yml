@@ -20,10 +20,10 @@ services:
     stop_signal: SIGINT
     build:
       context: ./backend
-    working_dir: "/usr/src/app/${BOT_NAME}"
+    working_dir: "/usr/src/app/medsync_bot"
     volumes:
-      - ./backend:/usr/src/app/${BOT_NAME}
-      - ./frontend/src/assets/results:/usr/src/app/${BOT_NAME}/assets/results
+      - ./backend:/usr/src/app/medsync_bot
+      - ./frontend/src/assets/results:/usr/src/app/medsync_bot/assets/results
     command: python3 -m bot
     restart: always
     env_file:
@@ -101,6 +101,17 @@ services:
     networks:
       - tg_bot
 
+  mkdocs:
+    build:
+      context: ./docs
+      dockerfile: Dockerfile
+    container_name: "mkdocs_container"
+    ports:
+      - "3780:8000"
+    volumes:
+      - ./mkdocs:/usr/src/mkdocs
+    networks:
+      - tg_bot
 
 #  ngrok:
 #    image: ngrok/ngrok:latest

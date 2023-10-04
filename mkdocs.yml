@@ -1,0 +1,76 @@
+# Project information
+site_name: MedSync Telegram Mini App Documentation
+site_description: Comprehensive guide on setting up and understanding the MedSync Telegram Mini App using FastAPI, React.js, Docker, and more.
+site_author: Kostiantyn
+site_url: docs.medsync.botfather.dev
+docs_dir: docs
+site_dir: public_docs
+
+# Repository
+repo_name: Latand/MedSyncWebApp
+repo_url: https://github.com/Latand/MedSyncWebApp/
+edit_uri: ""
+
+# Copyright
+copyright: Copyright &copy; 2023 Kostiantyn
+
+# Configuration
+theme:
+  name: material
+  custom_dir: docs_src/overrides
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  font:
+    text: Josefin Sans
+    code: Jetbrains Mono
+  icon:
+    logo: material/cloud_queue
+
+# Extras
+extra:
+  social:
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/bot_devs_novice
+      name: "Join Our Telegram Chat"
+    - icon: fontawesome/brands/github
+      link: https://github.com/Latand/MedSyncWebApp/
+      name: GitHub Repository
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - meta
+  - attr_list
+  - toc:
+      permalink: true
+
+nav:
+  - 'Introduction': index.md
+  - 'UserFlow': userflow.md
+  - 'Configuration': configuration.md
+  - 'Dependency Initialization Guidelines': dependencies-initialization.md
+
+#  - 'Frontend Development': frontend.md
+#  - 'Backend Development': backend.md
+
+plugins:
+  - search:
+      lang:
+        - en
+
+# Custom
+nav_name: "Table of Contents"
