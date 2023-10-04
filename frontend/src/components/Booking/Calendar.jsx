@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {eachDayOfInterval, endOfMonth, format, getDay, startOfMonth} from 'date-fns';
-import monthIcon from '../../assets/images/time-details/month-icon.svg';
 import Day from "./Day.jsx";
+import MonthIcon from "./MonthIcon.jsx";
 
 
 const Calendar = ({onDateChange, availableDays}) => {
@@ -52,18 +52,14 @@ const Calendar = ({onDateChange, availableDays}) => {
                         <button className="month-selector__button month-selector__button--prev"
                                 onClick={onPrevMonth}></button>
                         <div className="month-selector__wrap">
-                            <img
-                                src={monthIcon}
-                                alt="Calendar Icon"
-                                className="month-selector__icon"
-                            />
+                            <MonthIcon name="month-selector__icon"/>
                             <div className="month-selector__text">{format(selectedMonth, 'MMMM')}</div>
                         </div>
 
-                        
                         <button className="month-selector__button month-selector__button--next"
-                                onClick={onNextMonth}></button>
-                        
+                                onClick={onNextMonth}
+                        ></button>
+
                     </div>
                     <ul className="weekdays-selector">
                         {weekdays.map((day, index) => (

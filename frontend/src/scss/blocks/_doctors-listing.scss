@@ -60,7 +60,7 @@
     cursor: pointer;
 
     .card__review__img {
-      filter: invert(1);
+      fill: $tg-theme-text;
     }
 
     &--active {

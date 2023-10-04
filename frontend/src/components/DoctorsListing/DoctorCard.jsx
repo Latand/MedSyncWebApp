@@ -1,9 +1,11 @@
-
 import ellipseOnline from '../../assets/images/doctors-listing/ellipse-online.svg';
 import favorite from '../../assets/images/doctors-listing/favorite.svg';
+import {StarIcon} from "./StarIcon.jsx";
 
-const DoctorCard = ({ name, doctorImage, title, address, reviews, avg_rating, price,
-                     onClick, className}) => (
+const DoctorCard = ({
+                        name, doctorImage, title, address, reviews, avg_rating, price,
+                        onClick, className
+                    }) => (
     <section className={className} onClick={onClick}>
         <div className="card__image">
             <img
@@ -19,12 +21,7 @@ const DoctorCard = ({ name, doctorImage, title, address, reviews, avg_rating, pr
             <p className="card__subtitle">{title}</p>
 
             <div className="card__review">
-                <img
-                    className="card__review__img"
-                    src={favorite}
-                    alt="Star"
-                />
-
+                <StarIcon/>
                 <p className="card__review__text">{avg_rating.toFixed(2)} ({reviews} reviews)</p>
             </div>
 

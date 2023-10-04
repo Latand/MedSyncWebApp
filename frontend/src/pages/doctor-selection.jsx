@@ -106,18 +106,20 @@ const DoctorSelection = () => {
                 <Nav specialties={specialties} onSpecialtyClick={setSpecialty} selectedSpecialty={specialty}/>
             }
             {displayedDoctors && <main className="main">
-                {displayedDoctors.map(doctor => (<DoctorCard
-                    className={selectedDoctor && selectedDoctor.doctor_id === doctor.doctor_id ? 'card card--active' : 'card'}
-                    key={doctor.doctor_id}
-                    name={doctor.full_name}
-                    title={doctor.specialty_name}
-                    address={doctor.address}
-                    price={doctor.price}
-                    avg_rating={doctor.avg_rating ? doctor.avg_rating : 0}
-                    reviews={doctor.reviews ? doctor.reviews : 0}
-                    doctorImage={doctor.photo_url}
-                    onClick={() => handleDoctorClick(doctor)}
-                />))}
+                {displayedDoctors.map(doctor => (
+                    <DoctorCard
+                        className={selectedDoctor && selectedDoctor.doctor_id === doctor.doctor_id ? 'card card--active' : 'card'}
+                        key={doctor.doctor_id}
+                        name={doctor.full_name}
+                        title={doctor.specialty_name}
+                        address={doctor.address}
+                        price={doctor.price}
+                        avg_rating={doctor.avg_rating ? doctor.avg_rating : 0}
+                        reviews={doctor.reviews ? doctor.reviews : 0}
+                        doctorImage={doctor.photo_url}
+                        onClick={() => handleDoctorClick(doctor)}
+                    />)
+                )}
             </main>}
         </div>
         {selectedDoctor && <MainButton

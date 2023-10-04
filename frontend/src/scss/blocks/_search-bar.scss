@@ -26,7 +26,9 @@
     &__img {
       width: 14px;
       height: 14px;
-      filter: invert(1);
+
+      stroke: $tg-theme-text;
+      fill: none;
     }
   }
 }

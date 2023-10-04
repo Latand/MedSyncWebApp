@@ -1,5 +1,7 @@
-import timeIcon from "../../assets/images/time-details/time-icon.svg";
-import {isSameDay} from 'date-fns'; // Importing 'isToday' and 'format' from 'date-fns'
+// import timeIcon from "../../assets/images/time-details/time-icon.svg";
+import {isSameDay} from 'date-fns';
+import TimeIcon from "./TimeIcon.jsx";
+import React from "react"; // Importing 'isToday' and 'format' from 'date-fns'
 
 const TimeSlot = ({availableSlots, selectedDate, selectedTimeSlot, setSelectedTimeSlot}) => {
 
@@ -11,10 +13,8 @@ const TimeSlot = ({availableSlots, selectedDate, selectedTimeSlot, setSelectedTi
     return (
         <div className="time-container">
             <div className="time-selector">
-                <img
-                    src={timeIcon}
-                    alt="Time Icon"
-                    className="time-selector__icon"
+                <TimeIcon
+                name="time-selector__icon"
                 />
                 <div className="time-selector__text">Choose the Hour</div>
             </div>

@@ -31,7 +31,10 @@
     &__icon {
       width: 12px;
       height: 12px;
-      filter: invert(1);
+      stroke: $tg-theme-text;
+      path {
+        fill: $tg-theme-text;
+      }
     }
 
     &__text {
@@ -136,7 +139,7 @@
     &__icon {
       width: 12px;
       height: 12px;
-      filter: invert(1);
+      fill: $tg-theme-text;
     }
 
     &__text {

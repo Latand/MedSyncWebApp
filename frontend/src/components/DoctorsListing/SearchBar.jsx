@@ -1,5 +1,4 @@
-
-import searchIcon from '../../assets/images/doctors-listing/search.svg';
+import SearchIcon from "../SearchIcon.jsx";
 
 const SearchBar = ({search, setSearch}) => (
     <div className="search-bar">
@@ -11,7 +10,7 @@ const SearchBar = ({search, setSearch}) => (
             onChange={(e) => setSearch(e.target.value)}
         />
         <div className="search-bar__icon">
-            <img className="search-bar__icon__img" src={searchIcon} alt="Search"/>
+            <SearchIcon/>
         </div>
     </div>
 );
