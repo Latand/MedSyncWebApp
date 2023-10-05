@@ -6,7 +6,22 @@ title: Configuration Setup
 
 Before spinning up your instance of the MedSync WebApp & Bot, you need to set up a few configuration files.
 
-## 1. Ngrok Configuration
+## 1. Preliminary Steps
+
+1. Clone the Project Repository
+
+    ```bash
+    git clone https://github.com/Latand/MedSyncWebApp.git
+    ```
+
+2. Navigate into the Project Directory
+
+    ```bash
+    cd MedSyncWebApp
+    ```
+
+
+## 2. Ngrok Configuration
 
 !!! warning "OPTIONAL"
     If you're using your own purchased domain, you can skip this section.
@@ -17,7 +32,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
 1. Rename the file `ngrok.yml.dist` to `ngrok.yml`.
 
 2. In `ngrok.yml`, update the content as:
-    ```yml hl_lines="2 9 15"
+    ```yaml hl_lines="2 9 15"
     version: 2
     authtoken: <your-ngrok-token>
     tunnels:
@@ -44,39 +59,76 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
         - The domains must be different.
         - ❗️❗️ You might have to pay for the ngrok subscription to get 2 static domains.
 
-## 2. Bot & Database Configuration
+## 3. Bot & Database Configuration
 
 1. Rename the file `.env.dist` to `.env`.
-
-2. Inside `.env`, modify the following:
-
-    ```env
-    BOT_TOKEN=123456:Your-TokEn_ExaMple
-    ADMINS=123456,654321
-    POSTGRES_USER=someusername
-    POSTGRES_PASSWORD=postgres_pass12345
-    REDIS_PASSWORD=someredispass
-    DOMAIN_NAME=example.com
+    
+    ```bash
+    mv .env.dist .env
     ```
 
-3. Update the `BOT_TOKEN` with your Telegram bot token. 
-4. Replace `ADMINS` with the Telegram IDs you wish to assign admin rights to. The bot will send a message
-  to these users every time it starts.
-5. Configure the PostgreSQL credentials (`POSTGRES_USER` and `POSTGRES_PASSWORD`). 
-6. Update `REDIS_PASSWORD` to prevent unauthorized access to the Redis database.
-7. Modify the `DOMAIN_NAME` with your domain (either the ==Ngrok FRONTEND domain== or your ==owned domain==).
+2. Adjust the content in `.env`:
+    Open with nano/vim:
+    ```bash
+    nano .env
+    ```
 
-## 3. Frontend Configuration
+3. Inside `.env`, modify the following:
+
+    ```dotenv hl_lines="4 5 9 10 18 23"
+    BOT_CONTAINER_NAME=medsync_bot
+    BOT_IMAGE_NAME=medsync_bot
+    BOT_NAME=medsync_bot
+    BOT_TOKEN=123456:Your-TokEn_ExaMple
+    ADMINS=123456789,987654321
+    USE_REDIS=True
+
+    PG_CONTAINER_NAME=pg_database
+    POSTGRES_USER=someusername
+    POSTGRES_PASSWORD=postgres_pass12345
+    POSTGRES_DB=bot
+    DB_HOST=pg_database
+
+    WEBHOOK_CONTAINER_NAME=webhook
+    WEBHOOK_EXPOSE=8001
+    WEBHOOK_APP_NAME=webhook
+
+    DOMAIN_NAME=example.com
+
+    REDIS_HOST=redis_cache
+    REDIS_PORT=6388
+    REDIS_DB=1
+    REDIS_PASSWORD=someredispass
+    REDIS_CONTAINER_NAME=redis_bot
+    ```
+
+4. Update the `BOT_TOKEN` with your Telegram bot token. 
+5. Replace `ADMINS` with the Telegram IDs you wish to assign admin rights to. The bot will send a message
+  to these users every time it starts.
+6. Configure the PostgreSQL credentials (`POSTGRES_USER` and `POSTGRES_PASSWORD`). 
+7. Update `REDIS_PASSWORD` to prevent unauthorized access to the Redis database.
+8. Modify the `DOMAIN_NAME` with your domain (either the ==Ngrok FRONTEND domain== or your ==owned domain==).
+
+## 4. Frontend Configuration
 
 1. Navigate to the frontend directory and rename the file `.env.dist` to `.env`.
+    
+    ```bash
+    cd frontend
+    mv .env.dist .env
+    ```
 
 2. Adjust the content in `.env`:
-
-    ```env
+    Open with nano/vim:
+    ```bash
+    nano .env
+    ```
+    You should see:
+    ```dotenv
     VITE_REACT_APP_API_URL=https://your-domain.com
     ```
 
-3. Replace `https://your-domain.com` with your BACKENDdomain's URL.
+3. Replace `https://your-domain.com` with your BACKEND domain's URL.
 
 !!! warning "Warning - Ngrok"
     If you're using Ngrok, you need to update the `VITE_REACT_APP_API_URL` with the Ngrok BACKEND DOMAIN.

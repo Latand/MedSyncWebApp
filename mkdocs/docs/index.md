@@ -16,8 +16,7 @@ professionals, providing streamlined access to medical services via the Telegram
 
 **Key Features:**
 
-- Swift booking of appointments with medical specialists or diagnostics tests like MRI.
-- An intuitive interface to search, select, and interact with healthcare experts, diagnostic types, and clinics
+- An intuitive interface to search, select, and book appointments healthcare experts, diagnostic types, and clinics
 - Integration with Telegram for seamless user experience.
 
 !!! example "Showcase"
@@ -52,7 +51,7 @@ professionals, providing streamlined access to medical services via the Telegram
 #### Local Testing (Optional):
 
 - **Ngrok**: If you opt to run the project locally and still want external access, you can use Ngrok. This will require
-  creating an account with Ngrok, setting up a static domain (free tier), and noting down the domain for later use.
+  creating an account with Ngrok, setting up 2 static domains (paid option), and noting down the domains for later use.
   Detailed instructions for Ngrok setup can be found on [a dedicated page](ngrok.md).
 
 ### Project Composition:

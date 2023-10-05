@@ -75,11 +75,13 @@ markdown_extensions:
       permalink: true
 
 nav:
-  - 'Introduction': index.md
+  - 'Overview': index.md
   - 'UserFlow': userflow.md
-  - 'Dependency Initialization Guidelines': dependencies-initialization.md
-  - 'Configuration': configuration.md
-  - 'Running the App': running.md
+  - 'Setting Up & Running the App':
+    - '1. Dependency Initialization Guidelines': dependencies-initialization.md
+    - '2. Configuration': configuration.md
+    - '3. Launching the App': running.md
+
 #  - 'Frontend Development': frontend.md
 #  - 'Backend Development': backend.md
 

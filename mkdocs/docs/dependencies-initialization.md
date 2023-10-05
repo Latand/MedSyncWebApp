@@ -100,9 +100,12 @@ allows for defining and running multi-container Docker applications.
       ```
 
 #### **Install Docker-Compose**
+!!! warning
+    Replace `2.22.0` with the latest version of Docker-Compose.
+
 1. Download the Docker-Compose binary:
       ```
-      sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      sudo curl -L "https://github.com/docker/compose/releases/download/v2.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       ```
 2. Apply executable permissions to the binary:
       ```
@@ -225,33 +228,34 @@ Choose a registrar based on your preference, budget, and the features they offer
       cd /etc/nginx/sites-available/
       ```
 
-   2. Create a new configuration file for your domain (replace `your_domain` with your actual domain name):
-         ```
-         sudo nano your_domain
-         ```
+2. Create a new configuration file for your domain (replace `your_domain` with your actual domain name):
+      ```
+      sudo nano your_domain
+      ```
 
-      3. In the editor, add the following basic configuration, adjusting `your_domain` as appropriate:
+3. In the editor, add the following basic configuration, adjusting `your_domain` as appropriate:
+        ```nginx hl_lines="2"
+        server {
+          server_name your_domain;
+      
+             # FRONTEND
+             location / {
+                 proxy_pass http://localhost:3778;
+                 proxy_set_header Host $host;
+                 proxy_set_header X-Real-IP $remote_addr;
+                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             }
 
-            server {
-                    server_name your_domain;
-          
-                    # FRONTEND
-                    location / {
-                        proxy_pass http://localhost:3778;
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    }
+             # BACKEND
+             location /api/ {
+                 proxy_pass http://localhost:3779;
+                 proxy_set_header Host $host;
+                 proxy_set_header X-Real-IP $remote_addr;
+                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             }
+         }
+        ```
 
-                    # BACKEND
-                    location /api/ {
-                        proxy_pass http://localhost:3779;
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                    }
-                }
-               
 
 - Save and exit.
 
@@ -296,7 +300,7 @@ Choose a registrar based on your preference, budget, and the features they offer
 
 2. Request a certificate for your domain:
       ```
-      sudo certbot --nginx -d your_domain -d www.your_domain
+      sudo certbot --nginx -d your_domain -d 
       ```
 
     Follow the on-screen instructions. When prompted about redirecting HTTP traffic to HTTPS, it's recommended to choose
