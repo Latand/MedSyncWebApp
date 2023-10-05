@@ -79,7 +79,7 @@ nav:
   - 'UserFlow': userflow.md
   - 'Dependency Initialization Guidelines': dependencies-initialization.md
   - 'Configuration': configuration.md
-
+  - 'Running the App': running.md
 #  - 'Frontend Development': frontend.md
 #  - 'Backend Development': backend.md
 

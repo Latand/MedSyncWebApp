@@ -1,9 +1,12 @@
+import json
+
 import sqlalchemy.exc
 from fastapi import Depends, HTTPException
 from starlette.requests import Request
 
 from infrastructure.database.repo.requests import RequestsRepo
-from infrastructure.webhook.utils import get_repo
+from infrastructure.webhook.utils import get_repo, validate_telegram_data, \
+    parse_init_data
 from .diagnostics import diagnostics_router
 from .doctors import doctor_router
 
@@ -33,13 +36,24 @@ async def book_slot_endpoint(
 @doctor_router.post("/book_slot")
 async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     data = await request.json()
+
+    init_data = data.get("initData")
+    if init_data and not validate_telegram_data(init_data):
+        raise HTTPException(status_code=400, detail="Invalid initData")
     return await book_slot_endpoint(data, "doctor", repo)
 
 
 @diagnostics_router.post("/book_slot")
 async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     data = await request.json()
+
+    init_data = data.get("initData")
+    if init_data and not validate_telegram_data(init_data):
+        raise HTTPException(status_code=400, detail="Invalid initData")
+
     result = await book_slot_endpoint(data, "diagnostic", repo)
     # This is just for test purposes, we will create a diagnostic result here straightaway
-    await repo.results.create_result(result["booking_id"], diagnostic_id=data["diagnostic_id"])
+    await repo.results.create_result(
+        result["booking_id"], diagnostic_id=data["diagnostic_id"]
+    )
     return result
