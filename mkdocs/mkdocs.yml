@@ -56,6 +56,7 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
+      use_pygments: true
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
@@ -81,9 +82,12 @@ nav:
     - '1. Dependency Initialization Guidelines': dependencies-initialization.md
     - '2. Configuration': configuration.md
     - '3. Launching the App': running.md
-
-#  - 'Frontend Development': frontend.md
-#  - 'Backend Development': backend.md
+  - 'Project Architecture':
+    - 'Frontend Development': frontend.md
+    - 'Backend Development': backend.md
+    - 'Database': database.md
+    - 'Docker': docker.md
+  - 'Telegram WebApp Integration': telegram.md
 
 plugins:
   - search:

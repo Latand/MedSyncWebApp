@@ -1,5 +1,4 @@
 import arrowRight from "../assets/images/landing-page/arrow-right.svg";
-import React from "react";
 
 const LargeButton = ({handleSubmit, title, typeButton}) => {
     return (

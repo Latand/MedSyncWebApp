@@ -32,7 +32,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
 1. Rename the file `ngrok.yml.dist` to `ngrok.yml`.
 
 2. In `ngrok.yml`, update the content as:
-    ```yaml hl_lines="2 9 15"
+    ```yaml hl_lines="2 9 15" title="ngrok.yml"
     version: 2
     authtoken: <your-ngrok-token>
     tunnels:
@@ -75,7 +75,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
 
 3. Inside `.env`, modify the following:
 
-    ```dotenv hl_lines="4 5 9 10 18 23"
+    ```dotenv hl_lines="4 5 9 10 18 23" title=".env"
     BOT_CONTAINER_NAME=medsync_bot
     BOT_IMAGE_NAME=medsync_bot
     BOT_NAME=medsync_bot
@@ -124,7 +124,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     nano .env
     ```
     You should see:
-    ```dotenv
+    ```dotenv title=".env"
     VITE_REACT_APP_API_URL=https://your-domain.com
     ```
 

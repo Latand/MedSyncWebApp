@@ -3,16 +3,15 @@ version: "3"
 services:
   app:
     container_name: "medsync-app"
-    image: node:18
-    working_dir: /home/node/app
+    build:
+        context: ./frontend
+        dockerfile: Dockerfile
+    working_dir: "/home/node/app"
     volumes:
-      - ./frontend:/home/node/app
-    command: sh -c 'npm install; npm run dev --host'
+      - /var/app/medsync/:/home/node/app/dist
+#    command: sh -c 'npm install; npm run dev --host // Uncomment if you want to run dev server
+    command: sh -c 'npm run build'
     stop_signal: SIGINT
-    ports:
-      - "3778:5173"
-    networks:
-      - tg_bot
 
   bot:
     image: "${BOT_IMAGE_NAME}"
@@ -22,10 +21,12 @@ services:
       context: ./backend
     working_dir: "/usr/src/app/medsync_bot"
     volumes:
-      - ./backend:/usr/src/app/medsync_bot
-      - ./frontend/src/assets/results:/usr/src/app/medsync_bot/assets/results
+      - ./backend:/usr/src/app/medsync_bot  # Volume for bot code
+      - /var/app/medsync:/usr/src/app/public # Volume for static files, that are shared between bot and frontend
     command: python3 -m bot
     restart: always
+    depends_on:
+      - app
     env_file:
       - ".env"
     networks:
@@ -63,11 +64,11 @@ services:
     build:
       context: ./backend
       dockerfile: infrastructure/webhook/Dockerfile
-    working_dir: "/usr/src/app/${WEBHOOK_APP_NAME}"
+    working_dir: "/usr/src/app/api"
     ports:
       - "3779:8000"
     volumes:
-      - ./backend:/usr/src/app/${WEBHOOK_APP_NAME}
+      - ./backend:/usr/src/app/api
     command:
       [
         "uvicorn",

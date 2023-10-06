@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import TopBar from "../components/DoctorAbout/TopBar.jsx";
 import DoctorInfo from "../components/DoctorAbout/DoctorInfo.jsx";
@@ -6,8 +5,8 @@ import Section from "../components/DoctorAbout/Section.jsx";
 import ServicesList from "../components/DoctorAbout/ServicesList.jsx";
 import axios from "axios";
 import {BackButton} from "@vkruglikov/react-telegram-web-app";
-import workingHours from "../components/Resume/WorkingHours.jsx";
 import WorkingHours from "../components/Resume/WorkingHours.jsx";
+import {useEffect, useState} from "react";
 
 const About = () => {
     const {doctor_id} = useParams();

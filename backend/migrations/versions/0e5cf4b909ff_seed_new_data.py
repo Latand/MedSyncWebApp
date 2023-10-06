@@ -161,7 +161,7 @@ def upgrade() -> None:
                     else fake.name_female(),
                     specialty_id=random.choice(speciality_ids),
                     price=float("{:.2f}".format(random.uniform(50.0, 200.0))),
-                    photo_url=f"/src/assets/images/doctors-listing/profiles/{photo_id}.png",
+                    photo_url=f"/images/doctors-listing/profiles/{photo_id}.png",
                 ),
             )
 

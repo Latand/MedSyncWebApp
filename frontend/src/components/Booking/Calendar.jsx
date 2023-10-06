@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {eachDayOfInterval, endOfMonth, format, getDay, startOfMonth} from 'date-fns';
 import Day from "./Day.jsx";
 import MonthIcon from "./MonthIcon.jsx";

@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
-import {WebAppProvider} from '@vkruglikov/react-telegram-web-app';
 import LandingPage from "./pages/landing-page.jsx";
 import GetTested from "./pages/get-tested.jsx";
 import DoctorSelection from "./pages/doctor-selection.jsx";
@@ -22,11 +21,6 @@ const App = () => {
     }, []);
 
     return (
-        <WebAppProvider
-            options={{
-                smoothButtonsTransition: true,
-            }}
-        >
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<LandingPage/>}/>
@@ -51,7 +45,6 @@ const App = () => {
                     <Route path="/successful_booking" element={<RegistrationConfirmation/>}/>
                 </Routes>
             </BrowserRouter>
-        </WebAppProvider>
     );
 };
 

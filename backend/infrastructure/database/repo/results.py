@@ -39,18 +39,18 @@ class ResultsRepo(BaseRepo):
 
     async def create_result(self, booking_id: int, diagnostic_id: int):
         default_paths_mapping = {
-            1: "assets/results/mri.pdf",
-            2: "assets/results/ct.pdf",
-            3: "assets/results/x-ray.pdf",
-            4: "assets/results/ultrasound.pdf",
-            5: "assets/results/pet.pdf",
-            6: "assets/results/blood-test.pdf",
-            7: "assets/results/urine.pdf",
-            8: "assets/results/biopsy.pdf",
-            9: "assets/results/ecg.pdf",
-            10: "assets/results/bone-density.pdf",
-            11: "assets/results/endoscopy.pdf",
-            12: "assets/results/colonoscopy.pdf",
+            1: "results/mri.pdf",
+            2: "results/ct.pdf",
+            3: "results/x-ray.pdf",
+            4: "results/ultrasound.pdf",
+            5: "results/pet.pdf",
+            6: "results/blood-test.pdf",
+            7: "results/urine.pdf",
+            8: "results/biopsy.pdf",
+            9: "results/ecg.pdf",
+            10: "results/bone-density.pdf",
+            11: "results/endoscopy.pdf",
+            12: "results/colonoscopy.pdf",
         }
 
         await self.session.execute(

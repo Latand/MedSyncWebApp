@@ -36,6 +36,8 @@ def downgrade() -> None:
                existing_type=sa.TIMESTAMP(timezone=True),
                type_=postgresql.TIMESTAMP(),
                existing_nullable=False)
+    conn = op.get_bind()
+    conn.execute(sa.text("TRUNCATE bookings RESTART IDENTITY CASCADE"))
     op.alter_column('bookings', 'user_id',
                existing_type=sa.BIGINT(),
                nullable=False)

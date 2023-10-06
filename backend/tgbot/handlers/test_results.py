@@ -1,4 +1,7 @@
+import logging
 import operator
+import os
+from pathlib import Path
 from typing import Any
 
 from aiogram import Router, F, types
@@ -13,6 +16,7 @@ from tgbot.handlers.start import start_from_dialog_menu
 
 test_results_router = Router()
 
+PUBLIC_DIR_PATH = "/usr/src/app/public"
 
 class MyResult(StatesGroup):
     show_list = State()
@@ -43,7 +47,9 @@ async def show_result(
     if result.DiagnosticResult.file_id:
         file = result.DiagnosticResult.file_id
     else:
-        file = FSInputFile(result.DiagnosticResult.file_path)
+        full_path = os.path.join(PUBLIC_DIR_PATH, result.DiagnosticResult.file_path)
+        logging.info(f"full_path: {full_path}")
+        file = FSInputFile(full_path)
     msg = await callback_query.message.answer_document(file, caption=caption)
 
     if not result.DiagnosticResult.file_id:

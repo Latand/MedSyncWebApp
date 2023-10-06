@@ -62,10 +62,10 @@ allows for defining and running multi-container Docker applications.
 3. **Verify Installation**:
 
     - Open the terminal and run:
-      ```
-      docker --version
-      docker-compose --version
-        ```
+    ```bash
+     docker --version
+     docker-compose --version
+    ```
     - Ensure that both commands return their respective versions, indicating a successful installation.
     ```bash
     Docker version 24.0.2, build cb74dfc
@@ -173,8 +173,7 @@ Choose a registrar based on your preference, budget, and the features they offer
     - **TTL**: This is the time-to-live, indicating how long the DNS resolver should cache the query. You can
       usually leave this at the default setting.
 ![img.png](images/dns.png)
-
-4. **Propagation**:
+- **Propagation**:
 
     - After setting the A-record, there's a propagation time. This is the time it takes for DNS changes to be updated
       across the internet. Depending on various factors, this can take anywhere from a few minutes to 48 hours.

@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
@@ -6,12 +5,12 @@ import DoctorCard from "../components/DoctorsListing/DoctorCard.jsx";
 import Header from "../components/DoctorsListing/Header.jsx";
 import SearchBar from "../components/DoctorsListing/SearchBar.jsx";
 import Nav from "../components/DoctorsListing/Nav.jsx";
+import {useEffect, useState} from "react";
 
 
 const DoctorSelection = () => {
-    let navigate = useNavigate()
-    let storage = useCloudStorage();
-
+    const navigate = useNavigate()
+    const storage = useCloudStorage();
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback();
     const [specialties, setSpecialties] = useState([]);
     const [search, setSearch] = useState("");
