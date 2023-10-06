@@ -236,13 +236,12 @@ Choose a registrar based on your preference, budget, and the features they offer
         ```nginx hl_lines="2"
         server {
           server_name your_domain;
+          root /var/app/medsync/;
+          index index.html;
       
              # FRONTEND
              location / {
-                 proxy_pass http://localhost:3778;
-                 proxy_set_header Host $host;
-                 proxy_set_header X-Real-IP $remote_addr;
-                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                 try_files $uri $uri/ /index.html;
              }
 
              # BACKEND
@@ -258,11 +257,19 @@ Choose a registrar based on your preference, budget, and the features they offer
 
 - Save and exit.
 
-!!! tip "Explanation of the Configuration"
+!!! tip "Explanation of config"
 
-    - `proxy_pass http://localhost:3778;`
+    - `root /var/app/medsync/;`
+
+        This line tells NGINX where to look for the files to serve. 
+        In this case, we're telling NGINX to look for the files in the `/var/app/medsync/` directory. 
+        This is the directory where our frontend application will be running. (refer to `docker-compose.yml` file, the volume for `dist` directory).
+
+    - `location / {...}`
+
+        This block configures how to respond to requests that start with `/`. This is the url where our frontend application will be running.
+        The frontend application is a static website, so we need to tell NGINX to serve the `index.html` file when a request is made to `/`.
         
-        This line tells NGINX to pass requests coming to the root (`/`) of your domain to a local service running on port `3778`. This is the frontend application _(refer to `docker-compose.yml` file)._
 
     - `location /api/ {...}`
 
