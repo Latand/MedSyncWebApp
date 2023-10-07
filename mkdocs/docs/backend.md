@@ -1,8 +1,8 @@
 ---
-title: Backend Development Setup
+title: Bot and REST API Setup
 ---
 
-# Backend Development Setup
+# Bot and REST API Setup
 
 
 ## 1. Introduction
@@ -166,11 +166,10 @@ A major feature of the MedSync bot is its ability to easily paginate through boo
 
 ### 2. Organizing the API: Routers and Endpoints
 
-#### Main Structure: Routers
+!!! info
+    Just as the bot service has routers to handle different bot commands, the REST API service employs routers to manage different HTTP endpoints. This allows the API to be modular, scalable, and organized.
 
-Just as the bot service has routers to handle different bot commands, the REST API service employs routers to manage different HTTP endpoints. This allows the API to be modular, scalable, and organized.
-
-Each router in FastAPI can have a prefix. For instance, if the router is meant to handle doctor-related requests, you might use a prefix like `/api/doctors`.
+    Each router in FastAPI can have a prefix. For instance, if the router is meant to handle doctor-related requests, you might use a prefix like `/api/doctors`.
 
 #### Dependencies and Utilities
 
@@ -208,7 +207,7 @@ After setting up the base and utilities, routes (or endpoints) for the API are d
 
 In this snippet:
 
-- The route is defined under the `doctor_router`, which has a prefix of `/doctors`.
+- The route `/{doctor_id}` is defined under the `doctor_router`, which has a prefix of `/doctors`, that is then combined with the api prefix to form the final route: `/api/doctors/{doctor_id}`.
   
 - The `get_doctor` function is an async function that fetches details of a specific doctor using their `doctor_id`.
   

@@ -84,7 +84,7 @@ nav:
     - '3. Launching the App': running.md
   - 'Project Architecture':
     - 'Frontend Development': frontend.md
-    - 'Backend Development': backend.md
+    - 'Bot and REST API Setup': backend.md
     - 'Database': database.md
     - 'Docker': docker.md
   - 'Other':
