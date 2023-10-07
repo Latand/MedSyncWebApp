@@ -1,8 +1,7 @@
 import hashlib
 import hmac
 import time
-from operator import itemgetter
-from urllib.parse import unquote, parse_qs, parse_qsl
+from urllib.parse import unquote, parse_qsl
 
 from infrastructure.database.repo.requests import RequestsRepo
 from infrastructure.database.setup import create_session_pool, create_engine

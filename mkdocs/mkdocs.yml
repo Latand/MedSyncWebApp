@@ -87,7 +87,9 @@ nav:
     - 'Backend Development': backend.md
     - 'Database': database.md
     - 'Docker': docker.md
-  - 'Telegram WebApp Integration': telegram.md
+  - 'Other':
+      - 'Ngrok': ngrok.md
+      - 'Telegram WebApp Integration': telegram.md
 
 plugins:
   - search:

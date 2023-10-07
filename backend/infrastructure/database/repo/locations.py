@@ -7,4 +7,4 @@ from infrastructure.database.repo.base import BaseRepo
 class LocationsRepo(BaseRepo):
     async def get_location(self, location_id: int) -> Location:
         query = select(Location).where(Location.location_id== location_id)
-        return (await self.session.scalars(query)).first()
+        return (await self.session.execute(query)).mappings().first()

@@ -1,12 +1,9 @@
-import json
-
 import sqlalchemy.exc
 from fastapi import Depends, HTTPException
 from starlette.requests import Request
 
 from infrastructure.database.repo.requests import RequestsRepo
-from infrastructure.webhook.utils import get_repo, validate_telegram_data, \
-    parse_init_data
+from infrastructure.webhook.utils import get_repo, validate_telegram_data
 from .diagnostics import diagnostics_router
 from .doctors import doctor_router
 

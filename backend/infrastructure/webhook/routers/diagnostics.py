@@ -1,11 +1,6 @@
-from typing import List
-
 from fastapi import Depends, APIRouter, HTTPException
 
 from infrastructure.database.repo.requests import RequestsRepo
-from infrastructure.webhook.models import (
-    DiagnosticLocation, Diagnostic
-)
 from infrastructure.webhook.utils import get_repo
 
 diagnostics_router = APIRouter(prefix="/diagnostics")

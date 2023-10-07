@@ -46,8 +46,8 @@ class DoctorRepo(BaseRepo):
             .order_by(Specialty.specialty_name)
             .group_by(Specialty.specialty_id)
         )
-        result = await self.session.scalars(stmt)
-        return result.all()
+        result = await self.session.execute(stmt)
+        return result.mappings().all()
 
     async def book_slot(self, payload: dict):
         insert_stmt = (

@@ -21,7 +21,7 @@ This section guides you through the process of signing up on Ngrok and acquiring
 
 ## Acquiring Ngrok Domains
 
-1. Navigate to the =="Cloud Edge"== --> =="Domains""== section in your Ngrok dashboard.
+1. Navigate to the =="Cloud Edge"== --> =="Domains"== section in your Ngrok dashboard.
 2. Click on =="New domain"==.
 3. You will be assigned newly created domain of something like `albacore-awake-commonly.ngrok-free.app`. This would be your **FRONTEND** domain.
 4. Repeat to get another domain. This would be your **BACKEND** domain.
