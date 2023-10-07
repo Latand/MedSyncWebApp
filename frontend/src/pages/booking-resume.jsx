@@ -134,10 +134,10 @@ const FullSummary = () => {
                         </ResumeBlock>
                         }
                         {diagnosticData && <ResumeBlock title="Your Diagnostic">
-                            <div className="resume__doctor">
-                                <img className="resume__doctor__image" src={diagnosticData.photo_url}
+                            <div className="resume__diagnostics">
+                                <img className="resume__diagnostics__image" src={diagnosticData.photo_url}
                                      alt="Diagnostic"/>
-                                <div className="resume__doctor__info">
+                                <div className="resume__diagnostics__info">
                                     <div className="resume__block__title">{diagnosticData.type_name}</div>
                                     <div className="resume__block__text">{diagnosticData.description}</div>
                                     <div className="resume__block__text">Price: ${diagnosticData.price.toFixed(0)}</div>

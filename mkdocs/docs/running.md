@@ -47,6 +47,12 @@ the database according to the defined models.
 ./backend/scripts/alembic/run_migrations.sh
 ```
 
+**Or, if it doesn't work, run the commands manually:**
+
+```bash
+docker exec medsync_bot alembic upgrade head
+```
+
 !!! success
     At this point, the application should be running, and the database should be properly set up with the applied migrations. 
 

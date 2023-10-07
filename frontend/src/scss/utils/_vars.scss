@@ -2,34 +2,13 @@ $font-weight-regular: 400;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-$color-gradient: linear-gradient(108deg, rgba(255, 255, 255, 0.9) 12.69%, rgba(255, 255, 255, 0.9) 86.2%);
-$color-gradient-hover: linear-gradient(108deg, rgba(255, 255, 255, 0.8) 12.69%, rgba(255, 255, 255, 0.8) 86.2%);
-$color-box-shadow: var(--tg-theme-secondary-bg-color);
-
-$color-gradient-sections: var(--tg--theme-bg-color);
-
-$color-border: #BFBFBF;
-$color-box-shadow-form: rgba(184, 139, 206, 0.20);
-
 $tg-theme-bg : var(--tg-theme-bg-color);
-$tg-theme-button-text: var(--tg-theme-button-text-color);
-
-$tg-theme-text: var(--tg-theme-text-color, black);
-$tg-theme-hint: var(--tg-theme-hint-color);
-$tg-theme-link: var(--tg-theme-link-color);
-$tg-theme-button: var(--tg-theme-button-color);
-
 $tg-theme-secondary-bg: var(--tg-theme-secondary-bg-color);
 
-$color-search-input: var(--tg-theme-secondary-bg-color);
+$tg-theme-text: var(--tg-theme-text-color);
+$tg-theme-hint: var(--tg-theme-hint-color);
 
+$tg-theme-button: var(--tg-theme-button-color);
+$tg-theme-button-text: var(--tg-theme-button-text-color);
 
-$color-border-white: white;
-$color-background-FF3A27: #FF3A27;
-$color-background-FF9788: #FF9788;
-$color-background-77ACDE: #77ACDE;
-$color-border-E2E2E2: #E2E2E2;
-$color-border-E2E2E2: #E2E2E2;
-$color-background-BAE9F7: #BAE9F7;
-
-
+$color-box-shadow: var(--tg-theme-secondary-bg-color);

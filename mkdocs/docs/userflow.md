@@ -8,8 +8,10 @@ title: User Flow
 
 ## Home Screen
 
-Upon launching the MedSync app, users are presented with a home screen that gives them two primary options: consulting a
+- To view the bot flow, please refer to the [Telegram Bot Flow](#telegram-bot-flow) section.
+- Upon launching the MedSync app, users are presented with a home screen that gives them two primary options: consulting a
 doctor or opting for medical tests.
+
 
 !!! Tip
     **Interface Colors**: The WebApp interface adopts the color scheme from the user's Telegram theme, providing a
@@ -99,14 +101,14 @@ The bot presents users with five primary inline-buttons:
    - Allows users to schedule a consultation with a doctor through the WebApp.
 ### 3. **Get Tested** 
    - Provides users the ability to schedule medical tests at affiliated clinics via the WebApp.
-### 4. **My Bookings**:
+### 4. **My Bookings**
    - Upon selecting this feature, the doctors/diagnostics names are presented with a chronological list
    - The interface supports pagination, allowing users to navigate through their appointment history. 
    - An "Exit" option is also available, ensuring easy navigation back to the main menu.
 
 ![img.png](images/img_11.png)
 
-### 5. **My Results**:
+### 5. **My Results**
    - Choosing "My Results" enables users to swiftly access a list of their diagnostic outcomes. 
    - Each entry provides details about the test type and its corresponding date. 
    - Further exploring presents the complete diagnostic report.

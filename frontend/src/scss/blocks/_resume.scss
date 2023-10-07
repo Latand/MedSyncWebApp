@@ -98,7 +98,8 @@
     }
   }
 
-  &__doctor {
+  &__doctor,
+  &__diagnostics {
     @include displayFlex(start, center, row);
     gap: 7px;
     margin-left: 15px;

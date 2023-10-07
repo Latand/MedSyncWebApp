@@ -17,18 +17,18 @@ branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
 diagnostics_photo_mapping = {
-    1: "images/get-tested/mri.png",
-    2: "images/get-tested/ct.png",
-    3: "images/get-tested/x-ray.png",
-    4: "images/get-tested/ultrasound.png",
-    5: "images/get-tested/pet.png",
-    6: "images/get-tested/blood-test.png",
-    7: "images/get-tested/urine.png",
-    8: "images/get-tested/biopsy.png",
-    9: "images/get-tested/ecg.png",
-    10: "images/get-tested/bone-density.png",
-    11: "images/get-tested/endoscopy.png",
-    12: "images/get-tested/colonoscopy.png",
+    1: "/images/get-tested/mri.png",
+    2: "/images/get-tested/ct.png",
+    3: "/images/get-tested/x-ray.png",
+    4: "/images/get-tested/ultrasound.png",
+    5: "/images/get-tested/pet.png",
+    6: "/images/get-tested/blood-test.png",
+    7: "/images/get-tested/urine.png",
+    8: "/images/get-tested/biopsy.png",
+    9: "/images/get-tested/ecg.png",
+    10: "/images/get-tested/bone-density.png",
+    11: "/images/get-tested/endoscopy.png",
+    12: "/images/get-tested/colonoscopy.png",
 }
 
 

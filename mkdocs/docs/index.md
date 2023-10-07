@@ -6,8 +6,8 @@ title: MedSync WebApp Documentation
 
 ## Introduction
 
-Welcome to the MedSync WebApp documentation. This app serves as an efficient bridge between patients and healthcare
-professionals, providing streamlined access to medical services via the Telegram platform.
+Welcome to the MedSync WebApp documentation. This core idea of the app is to create a bridge between patients and healthcare
+professionals, providing easy booking system for medical services via the Telegram platform.
 
 !!! warning
     The MedSync WebApp is for demonstration purposes only and not intended for actual medical services.
@@ -24,7 +24,7 @@ professionals, providing streamlined access to medical services via the Telegram
     You can try out the MedSync WebApp:
 
     - Initiate the [MedSync bot on Telegram](https://t.me/MedSyncbot).
-    - Otherwise, you can see the [Userflow page](userflow.md) for a quick overview of the MedSync WebApp.
+    - Otherwise, you can see the [Userflow page](userflow.md) for a quick overview of the MedSync WebApp in screenshots.
 
 ## System Requirements and Setup
 
@@ -33,11 +33,16 @@ professionals, providing streamlined access to medical services via the Telegram
 
 #### Software and OS:
 
+- **Windows/MacOS/Linux**
+
+    While the project can be tested on either of these operating systems, it's recommended to deploy on a Linux server.
+
 - **Docker & Docker-Compose (1)**
     { .annotate }
 
-    1.  Required to containerize and orchestrate the application services. Compatible with
-   Windows, MacOS, and Linux. 
+    1. Compatible with Windows, MacOS, and Linux. 
+
+    Required to containerize and orchestrate the application services. 
 
 #### Hosting and Domain:
 
@@ -50,9 +55,14 @@ professionals, providing streamlined access to medical services via the Telegram
 
 #### Local Testing (Optional):
 
-- **Ngrok**: If you opt to run the project locally and still want external access, you can use Ngrok. This will require
-  creating an account with Ngrok, setting up 2 static domains (paid option), and noting down the domains for later use.
-  Detailed instructions for Ngrok setup can be found on [a dedicated page](ngrok.md).
+- **Ngrok**: If you opt to run the project locally, you can use Ngrok for easy access to the domain and SSL certificate. 
+- This will require creating an account with Ngrok, setting up 2 static domains **(❗️❗️paid option)**, and noting down the domains for later use.
+  Detailed instructions for Ngrok setup can be found on [a dedicated page](ngrok.md). 
+
+!!! danger
+    At some stage, financial investment will be required, be it for server and domain or for 
+    utilizing tunneling services like Ngrok. 
+    If you can obtain a static IP that you can expose to the internet, you can avoid the need for Ngrok, but you'll expose your IP to the WebApp users.
 
 ### Project Composition:
 
@@ -135,6 +145,13 @@ preventing potential issues during the setup and running of the MedSync WebApp.
 
 It's advisable to review and complete the dependency initialization before proceeding further into the setup.
 
+### Launching the Project
+
+Once you've completed the configuration and dependency initialization, you can then proceed with launching the project.
+We will be using Docker Compose to orchestrate the entire project setup.
+
+Then we'll run a special command to create the required tables in the database and populate them with initial data.
+
 ---
 
 ## Quick Overview
@@ -162,8 +179,7 @@ license from the [aiogram-3-guide](https://github.com/MasterGroosha/aiogram-3-gu
 
 ## License & Attribution
 
-MedSync operates under the [MIT License](#). We've utilized various third-party libraries to enhance functionality, and
-full attribution can be found [here](#).
+MedSync operates under the [MIT License](https://github.com/Latand/MedSyncWebApp/blob/main/LICENSE). We've utilized various third-party libraries to enhance functionality.
 
 ## Contributors
 

@@ -50,17 +50,18 @@ const DoctorSelection = () => {
 
     const handleDoctorClick = async (doctor) => {
         if (selectedDoctor?.doctor_id === doctor.doctor_id) {
-            selectionChanged();
             setSelectedDoctor(null);
+            selectionChanged();
             await storage.removeItem("selectedDoctor");
             return;
         } else if (selectedDoctor) {
+            setSelectedDoctor(doctor);
             selectionChanged();
         } else {
+            setSelectedDoctor(doctor);
             notificationOccurred("success");
         }
         await fetchLocationInfo(doctor.location_id);
-        setSelectedDoctor(doctor);
     };
 
     useEffect(() => {

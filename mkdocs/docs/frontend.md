@@ -6,20 +6,36 @@ title: Frontend Development Setup with React.js & Vite
 
 
 ## 1. Creating a New Web Application from Scratch
-!!! abstract 
-      This section provides an overview of the frontend setup process for the similar new web application from scratch. 
-      The frontend of MedSync is developed using React.js, Vite, and includes an integration with Telegram for a seamless user
-      experience.
+
+
+!!! abstract "Overview"
+    This section offers insights into the frontend setup process of constructing a new web application similar to MedSync from the ground up. The MedSync frontend has been developed using React.js and Vite, emphasizing a smooth integration with Telegram for an enhanced user experience.
+
+!!! warning "Prerequisites"
+    A foundational understanding of React.js is essential to proceed with this guide. If React.js seems unfamiliar, consider delving into this [comprehensive tutorial](https://www.youtube.com/watch?v=-DTUdOJv8w8&list=PL0X6fGhFFNTe_vJIlAQQo0IEgPgk9er3g) or exploring other tutorials that suit your learning style.
+
+!!! info "Purpose of the Guide"
+    - This guide has been meticulously crafted for developers who are eager to create a new web application, 
+    focusing predominantly on integration with Telegram via React. 
+
+    - Note that this isn't an exhaustive step-by-step tutorial for setting up MedSync WebApp. 
+    Instead, it serves as a foundational blueprint, drawing from its core principles and syntax. 
+
+    - Upon the completion of your bespoke application, seamlessly integrate it by positioning your files within the 'frontend' directory.
+
 
 ---
 
 ### 1. Setting up a New React App with Vite
 
 Vite offers a faster and more efficient development experience than traditional React setup methods. If you're
-unfamiliar with creating React apps using Vite, consider following
-this [comprehensive tutorial](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+unfamiliar with creating React apps using Vite, consider reading [the Vite docs](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
 
 #### Installation and Setup
+
+- **Install Node.js**
+
+    **Node.js**: It's essential to have Node.js installed as it provides the runtime for executing JavaScript code server-side. You can download it from [Node.js official website](https://nodejs.org/).
 
 - **Initialize the Project**
 
@@ -66,28 +82,22 @@ Here is how your project structure might look like:
    ```
 
 !!! example
-      Here's the ==**final**== structure of our MedSync project, with newly added components and directories highlighted for clarity:
+      Here's the simplified **final** structure of our MedSync project, with newly added components and directories highlighted for clarity:
 
-      ```hl_lines="4-6 8-10 12-15 17-19 21-23 25-30 32-34" 
+      ```hl_lines="3 4 7 9-11 13 15-17 19-24 26"
       medsync-webapp
+      ├── public/
+      |   |-- images/  (images of the doctors and diagnostic tests)
+      |   |-- results/ (test result PDFs)
       |-- src/
       |   |-- assets/
-      |   |   |-- images/
-      |   |   |   |-- about/
-      |   |   |   |-- ... (other image directories) 
-      |   |   |   |
-      |   |   |-- results/
-      |   |   |   |-- biopsy.pdf
-      |   |   |   |-- ... (other test result PDFs)
+      |   |   |-- images/ (icons and images used in the app)
       |   |
       |   |-- components/
       |   |   |-- Booking/
-      |   |   |-- DoctorAbout/
       |   |   |-- .. (other component directories) 
       |   |
-      |   |-- hooks/
-      |   |   |-- useSlots.js
-      |   |   |-- useWorkingHours.js
+      |   |-- hooks/ (custom React hooks)
       |   |
       |   |-- pages/
       |   |   |-- appointment-booking.jsx
@@ -98,11 +108,9 @@ Here is how your project structure might look like:
       |   |   |   |-- _about.scss
       |   |   |   |-- ... (other block SCSS files)
       |   |   |-- utils/
-      |   |       |-- main.scss
+      |   |   |-- main.scss
       |   |
-      |   |-- utils/
-      |   |   |-- slotUtils.js
-      |   |   |-- summaryData.js
+      |   |-- utils/ (helper functions)
       |   |
       |   |-- App.css
       |   |-- App.jsx
@@ -119,7 +127,25 @@ Here is how your project structure might look like:
 
 ---
 
-### 3. Adjust HTML Template
+### 3. Installing Dependencies
+
+To ensure a smooth integration with Telegram, we've utilized the following dependencies:
+
+- `@vkruglikov/react-telegram-web-app`: A custom React library tailored for integrating with the Telegram WebApp features.
+- `axios`: A promise-based HTTP client for making requests to APIs in both the browser and Node.js environments.
+- `date-fns`: A modern JavaScript utility library for manipulating dates without extending the native `Date` prototype.
+- `moment`: A comprehensive JavaScript date library for parsing, validating, manipulating, and formatting dates.
+- `react-router-dom`: The DOM bindings for `react-router`, enabling web app routing and navigation functionality in React applications.
+- `sass`: A powerful CSS extension language that allows for variables, nested rules, and other features to write more maintainable and extendable CSS.
+
+You can install these dependencies using the following command:
+
+```bash
+npm install @vkruglikov/react-telegram-web-app axios date-fns moment react-router-dom sass
+```
+
+---
+### 4. Adjust HTML Template
 
 Ensure that the JavaScript file for Telegram (`https://telegram.org/js/telegram-web-app.js`) is included in the HTML
 template. This script is necessary for the web app to interact with Telegram.
@@ -144,15 +170,15 @@ So your `index.html` file should look like this:
 
 ---
 
-### 3. Routing and Page Management
+### 5. Routing and Page Management
 
-!!! abstract
+!!! abstract  "Understanding App.jsx Component"
       This section delves into the added functionalities in the [`App.jsx` component](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/App.jsx) of the application, explaining the purpose and usage of the code.
 
 When developing a web application, especially one that serves a variety of user interactions and multiple functionalities, 
 it's essential to organize the application structure using a **routing mechanism**. 
 
-!!! info
+!!! info "Web Routing"
       Routing in a web app is like a map that decides which page to show based on the website's address; for example, going to `/home` might show the main page, `/about` the about page, and `/contact` the contact page.
 
 For MedSync, we've utilized `React Router`, a powerful routing library for React applications. This library allows for declarative routing, ensuring that the user interface is synchronized with the URL.
@@ -220,7 +246,7 @@ export default App;
 For a more in-depth look into the code and to understand the structure and logic more comprehensively, refer to the [provided code link](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/App.jsx).
 
 
-### 4. Component Management and Advanced Functionalities
+### 6. Component Management and Advanced Functionalities
 
 !!! abstract
       This section delves into the added functionalities in the [`DoctorSelection` component](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/pages/doctor-selection.jsx) of the application, explaining the purpose and usage of the code.
@@ -309,7 +335,8 @@ export default DoctorSelection;
     - The `useState` hook allows us to introduce state to our function components. In simple terms, `useState` lets us save, track, and modify data within our component.
     
     !!! example
-          In `DoctorSelection`, we use it to manage data like specialties (`setSpecialties`), search terms (`setSearch`), the list of all doctors (`setAllDoctors`), etc.
+          In `DoctorSelection`, we use it to manage data like specialties (`setSpecialties`), search terms (`setSearch`), 
+          the list of all doctors (`setAllDoctors`), etc. The data is obtained from the backend and stored in the respective variables.
       
 2. **Fetching Data from Backend**:
     - Axios is utilized to fetch data. It’s an HTTP client that communicates with the backend(1) to retrieve specialties, doctors, and location info.
@@ -330,32 +357,53 @@ export default DoctorSelection;
 
 ---
 
-### 5. Dynamic Theming with SCSS Variables
+### 7. Dynamic Theming with SCSS Variables
 
-Dynamic theming allows a web application to adjust its appearance according to user preferences or system settings, leading to improved user experience and interface consistency. MedSync leverages this by integrating Telegram theme parameters to adjust the interface based on the Telegram user's current theme. 
+!!! abstract 
+    Dynamic theming allows a web application to adjust its appearance according to user preferences or system settings, leading to improved user experience and interface consistency. 
+
+    MedSync leverages this by integrating **[Telegram theme parameters](https://core.telegram.org/bots/webapps#themeparams)** to adjust the interface based on the Telegram user's current theme. 
 
 #### Understanding the Theme Parameters:
 
-From the provided image, the Telegram Mini Apps can fetch the user's theme settings. These settings, formatted in CSS custom properties (`var(--property-name)`), can be directly accessed and applied within our SCSS. 
+The Telegram Mini Apps can fetch the user's theme settings. These settings, formatted in CSS custom properties (`var(--property-name)`), can be directly accessed and applied within our SCSS. 
 
-For instance, `var(--tg-theme-bg-color)` fetches the background color from the Telegram theme settings. This becomes a powerful tool for maintaining consistent user experience across platforms.
+For instance, `var(--tg-theme-bg-color)` fetches the background color from the Telegram theme settings.
+
+---
 
 #### Utilizing SCSS for Dynamic Styling:
 
-The `_vars.scss` file centralizes all the color and style variables, providing easy access and modification capabilities. Here's a breakdown:
+In our project we have a `_vars.scss` file, that centralizes all the color and style variables, providing easy access and modification capabilities.
 
-1. **Font Weights**:
-    - Set the different weights for text content.
-  
-2. **Gradients & Shadows**:
-    - Define the general gradients and shadows used throughout the application.
+To integrate the Telegram theme parameters, we've used the following syntax:
 
-3. **Telegram Theme Integration**:
-    - Integrate with Telegram theme colors to fetch real-time theme data and apply it dynamically.
-    - For instance, `$tg-theme-text: var(--tg-theme-text-color, black);` sets the text color based on the Telegram theme, but defaults to black if not available.
+```scss title="src/scss/_vars.scss" 
+    
+$tg-theme-bg : var(--tg-theme-bg-color);
+$tg-theme-secondary-bg: var(--tg-theme-secondary-bg-color);
 
-4. **Additional Colors**:
-    - Define other static colors which are not based on Telegram's theme but are essential for the app.
+$tg-theme-text: var(--tg-theme-text-color);
+$tg-theme-hint: var(--tg-theme-hint-color);
+
+$tg-theme-button: var(--tg-theme-button-color);
+$tg-theme-button-text: var(--tg-theme-button-text-color);
+
+$color-box-shadow: var(--tg-theme-secondary-bg-color);
+```
+
+!!! example
+    For instance, `$tg-theme-text: var(--tg-theme-text-color);` sets the text color based on the Telegram theme, but defaults to black if not available.
+
+
+!!! tip "How to Apply theme colors"
+    - The `--tg-theme-bg-color` and `--tg-theme-secondary-bg-color` are the **background colors** and contrast with the `--tg-theme-text-color`, which is the **text color**.
+    - The `--tg-theme-secondary-bg-color` can be used for **borders** and **dividers**.
+    - The `--tg-theme-hint-color` can be used for **hint text** and **icons**.
+    - The `--tg-theme-button-color` and `--tg-theme-button-text-color` also contrasting and are used **for buttons**.
+    - The `--tg-theme-link-color` can be used for **links**.
+
+    Use this link to read more about [Telegram theme parameters](https://core.telegram.org/bots/webapps#themeparams).
 
 #### Practical Application: An Example
 
@@ -364,7 +412,7 @@ The `.search-bar` class showcases how these variables are applied in practice:
 - The input field’s border and background colors use the `$tg-theme-secondary-bg` variable, effectively adapting to the Telegram theme.
 - The text color for the input and the search icon adapt based on the `$tg-theme-text` variable.
   
-```scss
+```scss title="src/scss/blocks/_search-bar.scss" hl_lines="3-5 9"
 .search-bar {
   &__input {
     border: 1px solid $tg-theme-secondary-bg;
@@ -378,10 +426,6 @@ The `.search-bar` class showcases how these variables are applied in practice:
   }
 }
 ```
-
-By using such dynamic SCSS variables in combination with Telegram's theme parameters, MedSync ensures a visually cohesive experience for users irrespective of their chosen Telegram theme.
-
-
 
 ## Additional Notes
 

@@ -43,7 +43,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
         proto: http
         hostname: your-ngrok-hostname.ngrok-free.app
    
-      # backend
+      # backend (if you want other users to be able to use your bot)
       second:
         addr: app:8000
         proto: http
@@ -57,7 +57,9 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
 
     !!! warning
         - The domains must be different.
-        - ❗️❗️ You might have to pay for the ngrok subscription to get 2 static domains.
+        - 💰 You might have to pay for the ngrok subscription to get 2 static domains.
+        - 🆓 ==If you want just to test the project FOR FREE==, you can use only one domain for the **frontend**, and use `localhost` for the **backend**,
+          then you'll need to remove the `second` tunnel from the `ngrok.yml` file.
 
 ## 3. Bot & Database Configuration
 
@@ -93,7 +95,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     WEBHOOK_EXPOSE=8001
     WEBHOOK_APP_NAME=webhook
 
-    DOMAIN_NAME=example.com
+    DOMAIN_NAME=https://example.com
 
     REDIS_HOST=redis_cache
     REDIS_PORT=6388
@@ -124,7 +126,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     nano .env
     ```
     You should see:
-    ```dotenv title=".env"
+    ```dotenv title="frontend/.env"
     VITE_REACT_APP_API_URL=https://your-domain.com
     ```
 
@@ -132,7 +134,11 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
 
 !!! warning "Warning - Ngrok"
     If you're using Ngrok, you need to update the `VITE_REACT_APP_API_URL` with the Ngrok BACKEND DOMAIN.
+
     
-    Otherwise, this will be your same owned domain.
+    Otherwise, this have to be your same [owned purchased domain](https://docs.medsync.botfather.dev/dependencies-initialization/#acquiring-a-domain).
     In the latter case, the **nginx will proxy the requests to the backend using the same domain**.
 
+
+!!! tip "Local Testing" 
+    You can write `VITE_REACT_APP_API_URL=http://localhost:3779` if you're testing the project locally.
