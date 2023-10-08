@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from sqlalchemy.dialects.postgresql import TIMESTAMP
 from sqlalchemy.ext.declarative import declared_attr
