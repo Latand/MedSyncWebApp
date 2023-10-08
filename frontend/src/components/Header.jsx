@@ -1,6 +1,5 @@
 import aboutIcon from '../assets/images/about/about-icon.svg';
 
-
 const Header = ({title, className}) => {
     return (
         <header className={`${className}__header`}>

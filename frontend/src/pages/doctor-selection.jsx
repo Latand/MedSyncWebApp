@@ -2,10 +2,10 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import DoctorCard from "../components/DoctorsListing/DoctorCard.jsx";
-import Header from "../components/DoctorsListing/Header.jsx";
 import SearchBar from "../components/DoctorsListing/SearchBar.jsx";
 import Nav from "../components/DoctorsListing/Nav.jsx";
 import {useEffect, useState} from "react";
+import Header from "../components/Header.jsx";
 
 
 const DoctorSelection = () => {
@@ -100,7 +100,7 @@ const DoctorSelection = () => {
     return (<>
         <BackButton onClick={() => navigate("/")}/>
         <div className="doctor-selection">
-            <Header/>
+            <Header title="Select a Doctor" className="header doctor-selection"/>
             <SearchBar search={search} setSearch={setSearch}/>
             {specialties &&
                 <Nav specialties={specialties} onSpecialtyClick={setSpecialty} selectedSpecialty={specialty}/>
