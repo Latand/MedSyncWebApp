@@ -2,7 +2,7 @@
 FROM python:3.11-slim
 
 # Install mkdocs and other necessary plugins
-RUN pip install mkdocs-material~=9.4 mkdocs-video~=1.5
+RUN pip install mkdocs-material~=9.4 mkdocs-video~=1.5 mkdocs-plantuml plantuml
 
 # Setting up working directory
 WORKDIR /usr/src/mkdocs
