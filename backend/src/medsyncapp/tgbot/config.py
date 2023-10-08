@@ -86,7 +86,7 @@ class TgBot:
         token = env.str("BOT_TOKEN")
         admin_ids = list(map(int, env.list("ADMINS")))
         use_redis = env.bool("USE_REDIS")
-        web_app_domain = env.str("DOMAIN_NAME")
+        web_app_domain = env.str("FRONTEND_URL")
         return TgBot(
             token=token,
             admin_ids=admin_ids,

@@ -9,8 +9,8 @@ package-dir = { "" = "src" }
 name = "MedSyncWebApp"
 version = "0.0.1"
 
-description = "Wishlist with clean architecture"
-requires-python = ">=3.8"
+description = "MedSyncWebApp - Mini web app in Telegram"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",

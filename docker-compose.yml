@@ -2,15 +2,19 @@ version: "3"
 
 services:
   app:
-    container_name: "medsync-app"
     build:
         context: ./frontend
         dockerfile: Dockerfile
     working_dir: "/home/node/app"
     volumes:
       - /var/app/medsync/:/home/node/app/dist
-#    command: sh -c 'npm install; npm run dev --host // Uncomment if you want to run dev server
-    command: sh -c 'npm run build'
+
+    # Uncomment this if you are running in development
+#    command: ["npm", "run", "dev", "--host"]
+
+    # Comment this if you are running in production
+    command: ["npm", "run", "build"]
+
     stop_signal: SIGINT
 
   bot:
@@ -25,10 +29,9 @@ services:
     restart: always
     depends_on:
       - app
+
     env_file:
       - ".env"
-    networks:
-      - tg_bot
 
     logging:
       driver: "json-file"
@@ -51,8 +54,6 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-    networks:
-      - tg_bot
 
   webhook:
     image: "medsyncapp_web"
@@ -67,8 +68,6 @@ services:
     restart: always
     env_file:
       - ".env"
-    networks:
-      - tg_bot
     logging:
       driver: "json-file"
       options:
@@ -83,9 +82,7 @@ services:
     env_file:
       - ".env"
     volumes:
-      - ./cache:/data
-    networks:
-      - tg_bot
+      - cache:/data
 
   mkdocs:
     build:
@@ -97,8 +94,6 @@ services:
     volumes:
       - ./mkdocs:/usr/src/mkdocs
       - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
-    networks:
-      - tg_bot
 
 #  ngrok:
 #    image: ngrok/ngrok:latest
@@ -109,12 +104,8 @@ services:
 #      - ./ngrok.yml:/etc/ngrok.yml
 #    expose:
 #      - 443
-#    networks:
-#      - tg_bot
 
-networks:
-  tg_bot:
-    driver: bridge
 
 volumes:
   pgdata: { }
+  cache: { }
