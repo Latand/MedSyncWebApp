@@ -1,24 +1,23 @@
 # MedSync Telegram Mini App
 
-MedSync is a comprehensive Telegram Mini App designed for users to seamlessly interact with a medical platform, schedule appointments and diagnostics, and more, all within the confines of Telegram. 
+Welcome to the MedSync WebApp documentation. This core idea of the app is to create a bridge between patients and healthcare
+professionals, providing easy booking system for medical services via the Telegram platform.
 
 ## Documentation
 
 For a detailed guide on the project, its structure, and how to use or contribute, please visit our documentation at [docs.medsync.botfather.dev](https://docs.medsync.botfather.dev).
 
-## Attribution
+## Acknowledgements
 
-Parts of the documentation's code are attributed to the [aiogram-3-guide](https://github.com/MasterGroosha/aiogram-3-guide) repository. We are grateful to the original authors for providing their work under the MIT license, allowing us to utilize and adapt certain blocks of code for our documentation.
+This project is a submission for a [Telegram contest](https://t.me/contest/327). 
 
-## License
+In order to create this documentation we've taken inspiration and borrowed some code blocks under the MIT
+license from the [aiogram-3-guide](https://github.com/MasterGroosha/aiogram-3-guide) repository.
 
-This project is released under the MIT License. For more details, please refer to the `LICENSE` file in the repository.
+## License & Attribution
 
-## Contributing
+MedSync operates under the [MIT License](https://github.com/Latand/MedSyncWebApp/blob/main/LICENSE). We've utilized various third-party libraries to enhance functionality.
 
-If you find any bugs, have suggestions, or want to improve the app in any way, feel free to create an issue or submit a pull request. We appreciate all contributions!
+## Contributors
 
-
----
-
-You can adapt and expand upon this template to better suit the intricacies and specifics of your project.
+MedSync's success is attributed to its dedicated team of developers, a UX/UI designer, and AI agents.
