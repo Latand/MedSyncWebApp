@@ -3,6 +3,8 @@
 Welcome to the MedSync WebApp documentation. This core idea of the app is to create a bridge between patients and healthcare
 professionals, providing easy booking system for medical services via the Telegram platform.
 
+[Link to Bot in Telegram](https://t.me/MedSyncbot)
+
 ## Documentation
 
 For a detailed guide on the project, its structure, and how to use or contribute, please visit our documentation at [docs.medsync.botfather.dev](https://docs.medsync.botfather.dev).
