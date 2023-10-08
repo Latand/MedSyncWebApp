@@ -17,6 +17,9 @@ title: Understanding the Database Structure and Operations
 
 ## Database Diagram: Tables and Relations
 
+![Database Diagram](db-diagram.png)
+
+
 ### User, Bookings, and Diagnostic Results
 
 ```mermaid

@@ -81,8 +81,8 @@ nav:
   - 'Setting Up & Running the App':
     - '1. Configuration': configuration.md
     - '2. Dependency Initialization Guidelines': dependencies-initialization.md
-    - '3. Local Deployment': development-environment.md
-    - '3. Live Deployment': production-environment.md
+    - '3.1 Local Deployment': development-environment.md
+    - '3.2 Live Deployment': production-environment.md
     - '4. Launching the App': running.md
   - 'Project Architecture':
     - 'Frontend Development': frontend.md
@@ -92,9 +92,9 @@ nav:
   - 'Other':
       - 'Ngrok': ngrok.md
       - 'Telegram WebApp Integration': telegram.md
+      - 'Obtaining a Domain Name': owned-domain.md
 
 plugins:
-  - plantuml-colocator
   - search:
       lang:
         - en

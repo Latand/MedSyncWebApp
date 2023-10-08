@@ -22,8 +22,8 @@ title: Bot and REST API Setup
 
 ### 1. Telegram Bot Service
 
-- **Location**: `./backend/tgbot`
-- **Entry Point**: `backend/bot.py`
+- **Location**: `./backend/src/medsyncapp/tgbot`
+- **Entry Point**: `backend/src/medsyncapp/tgbot/bot.py`
 - **Key Libraries**:
     - `aiogram`: For crafting Telegram bot functionalities.
     - `environs`: Environment variable parsing from `.env` files.
@@ -41,7 +41,7 @@ title: Bot and REST API Setup
 
 ### 2. Webhook Service (REST API)
 
-- **Location**: `./backend/infrastructure/webhook`
+- **Location**: `./backend/src/medsyncapp/webhook`
 - **Key Libraries**:
     - `uvicorn`: ASGI server for running FastAPI applications.
     - `fastapi`: Building efficient APIs.
@@ -53,8 +53,8 @@ title: Bot and REST API Setup
 
 - **Location**: Automatically managed by Docker.
 - **Details**: This service manages our primary database storage. Our data models and ORM are crafted using SQLAlchemy.
-    - **Models & Repositories**: `./backend/infrastructure/database`
-    - **Migrations**: Handled using Alembic, located at `./backend/migrations`.
+    - **Models & Repositories**: `./backend/src/medsyncapp/infrastructure/database`
+    - **Migrations**: Handled using Alembic, located at `./backend/src/medsyncapp/migrations`.
 
 ### 4. Redis Service
 
@@ -99,13 +99,13 @@ The `bot.py` file is where the magic begins:
 
 #### Structuring the Bot: Routers and Handlers
 
-The bot's handlers are organized using routers. Routers are stored in `./tgbot/handlers`, with each module usually initializing a new router. 
+The bot's handlers are organized using routers. Routers are stored in `...tgbot/handlers`, with each module usually initializing a new router. 
 
 !!! example "Start Handlers"
 
     When a user interacts with the bot using the `/start` command, a welcoming message along with the main menu options is presented. Here's a glimpse into the code:
 
-    ```python title="tgbot/handlers/start.py" hl_lines="7 10 15"
+    ```python title="...tgbot/handlers/start.py" hl_lines="7 10 15"
     from aiogram import types, Router
     from aiogram.filters import CommandStart
 
@@ -124,7 +124,7 @@ The bot's handlers are organized using routers. Routers are stored in `./tgbot/h
         )
     ```
 
-    ```python title="tgbot/keyboards/inline.py" hl_lines="6"
+    ```python title="...tgbot/keyboards/inline.py" hl_lines="6"
     from aiogram.types import WebAppInfo
     from aiogram.utils.keyboard import InlineKeyboardBuilder
 
@@ -138,7 +138,7 @@ The bot's handlers are organized using routers. Routers are stored in `./tgbot/h
 
 This code snippet represents the creation of the main start handler and main menu keyboard. 
 
-As seen, the `WebAppInfo` utility provides an interactive button leading users directly to the specified web app domain. This domain value is fetched from the `.env` file (`DOMAIN` variable).
+As seen, the `WebAppInfo` utility provides an interactive button leading users directly to the specified web app domain. This domain value is fetched from the `.env` file (`FRONTEND_URL` variable).
 
 #### Navigating with Aiogram-dialog
 
@@ -146,7 +146,7 @@ A major feature of the MedSync bot is its ability to easily paginate through boo
 
 - **Official Documentation**: For an in-depth understanding of `aiogram-dialog`, refer to its [official documentation](https://github.com/Tishka17/aiogram_dialog).
 
-- **Usage in MedSync**: The `aiogram-dialog` framework is predominantly used in the `tgbot/handlers/test_results.py` and `tgbot/handlers/bookings.py` files.
+- **Usage in MedSync**: The `aiogram-dialog` framework is predominantly used in the `...tgbot/handlers/test_results.py` and `...tgbot/handlers/bookings.py` files.
 
 ---
 
@@ -159,7 +159,7 @@ A major feature of the MedSync bot is its ability to easily paginate through boo
 
 #### WebServer Initialization
 
-#### Entry Point: `infrastructure/webhook/app.py`
+#### Entry Point: `./backend/src/medsyncapp/webhook/app.py`
 - When the Docker container starts, it runs the Uvicorn command that uses the `app.py` file as the entry point to initialize the web server.
 
 - Uvicorn is an [ASGI server implementation](https://www.uvicorn.org/), ideally suited for frameworks like FastAPI.
@@ -173,9 +173,9 @@ A major feature of the MedSync bot is its ability to easily paginate through boo
 
 #### Dependencies and Utilities
 
-The `infrastructure/webhook/utils.py` file contains various utility functions and dependencies required by the API routers. This can include:
+The `...webhook/utils.py` file contains various utility functions and dependencies required by the API routers. This can include:
 
-- **Configuration**: Using the same old config.py as in the bot service, the API can access the same environment variables.
+- **Configuration**: Using the same old `config.py` as in the bot service, the API can access the same environment variables.
   
 - **Database Sessions**: Setting up sessions pool and requests repository to interact with the database that will be passed to each endpoint.
   

@@ -27,8 +27,6 @@ services:
       - ./backend/src:/src/  # Volume for bot code
       - /var/app/medsync:/src/public # Volume for static files, that are shared between bot and frontend
     restart: always
-    depends_on:
-      - app
 
     env_file:
       - ".env"
