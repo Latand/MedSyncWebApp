@@ -45,19 +45,16 @@ const ClinicSelection = () => {
     }, [search]);
 
     const handleNext = async () => {
-        console.log('selectedClinic', selectedClinic)
         await storage.setItem('selectedLocation', JSON.stringify(selectedClinic));
         navigate(`/booking/clinic`);
     }
 
     const handleChooseClinic = async (clinic) => {
         const isSameClinicSelected = clinic.location_id === selectedClinic?.location_id;
-        console.log('clinic', clinic)
 
         if (isSameClinicSelected) {
             setSelectedClinic(null);
             selectionChanged();
-            console.log('clinic removed')
         } else {
             if (selectedClinic) {
                 selectionChanged();
@@ -65,7 +62,6 @@ const ClinicSelection = () => {
                 notificationOccurred('success');
             }
             setSelectedClinic(clinic);
-            console.log('clinic set, ', clinic)
         }
     }
 

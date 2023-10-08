@@ -41,7 +41,7 @@ class DoctorRepo(BaseRepo):
 
     async def get_specialties(self) -> list[Specialty]:
         stmt = (
-            select(Specialty)
+            select(Specialty.specialty_id, Specialty.specialty_name)
             .join(Doctor)
             .order_by(Specialty.specialty_name)
             .group_by(Specialty.specialty_id)
