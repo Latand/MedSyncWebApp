@@ -38,7 +38,6 @@ const FullSummary = () => {
     const fetchDiagnosticData = async () => {
         const diagnostic = JSON.parse(await storage.getItem('selectedDiagnostic'))
         setDiagnosticData(diagnostic);
-        console.log('diagnostic', diagnostic)
         return diagnostic;
     }
 
@@ -66,7 +65,6 @@ const FullSummary = () => {
                         storage, showPopup, navigate
                     ).then(
                         data => {
-                            console.log('data', data)
                             setUserData(data.userData)
                             setSelectedTimeSlot(data.selectedTimeSlot)
                             setWorkingHours(data.hoursArray)

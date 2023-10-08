@@ -1,7 +1,6 @@
 import logging
 import operator
 import os
-from pathlib import Path
 from typing import Any
 
 from aiogram import Router, F, types
@@ -16,7 +15,7 @@ from medsyncapp.tgbot.handlers.start import start_from_dialog_menu
 
 test_results_router = Router()
 
-PUBLIC_DIR_PATH = "/usr/src/app/public"
+PUBLIC_DIR_PATH = "/src/public"
 
 class MyResult(StatesGroup):
     show_list = State()

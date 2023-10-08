@@ -69,7 +69,6 @@ const PatientInformation = () => {
     }, [formData])
 
     const handleSubmit = async () => {
-        console.log('Form data submitted: ', formData);
         await storage.setItem('user_data', JSON.stringify(formData));
         navigate(`/booking/confirmation/${itemType}`)
         notificationOccurred("success")

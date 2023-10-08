@@ -1,6 +1,3 @@
-
-
-
 const Nav = ({specialties, selectedSpecialty, onSpecialtyClick}) => {
     const handleClick = (specialty_id) => {
         if (specialty_id === selectedSpecialty) {

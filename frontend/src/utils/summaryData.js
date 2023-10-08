@@ -14,7 +14,6 @@ const fetchUserDataAndLocationInfo = async (
             return;
         }
         try {
-            console.log('locationInfo', locationInfo)
             const workingHours = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/working_hours/${locationInfo.location_id}`)
             // make date object from string inside selectedTimeSlot
             selectedTimeSlot = new Date(selectedTimeSlot);

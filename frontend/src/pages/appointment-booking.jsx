@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app";
 import {useWorkingHours} from "../hooks/useWorkingHours.js";
@@ -22,11 +22,15 @@ const SlotSelection = ({storageKey, itemType}) => {
             setParsedItem(JSON.parse(storedItem));
         });
         storage.getItem('selectedLocation').then((storedLocation) => {
-            setSelectedLocation(JSON.parse(storedLocation));
+            if (storedLocation) {
+                setSelectedLocation(JSON.parse(storedLocation));
+            }
         })
+
     }, [storage]);
 
     const workingHours = useWorkingHours(selectedLocation?.location_id);
+
     const {slots, availableDays} = useSlots(
         itemType === 'doctors' ? selectedItem?.doctor_id : selectedItem?.diagnostic_id,
         selectedLocation?.location_id,
