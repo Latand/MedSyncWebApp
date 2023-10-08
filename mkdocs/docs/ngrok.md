@@ -24,11 +24,9 @@ This section guides you through the process of signing up on Ngrok and acquiring
 1. Navigate to the =="Cloud Edge"== --> =="Domains"== section in your Ngrok dashboard.
 2. Click on =="New domain"==.
 3. You will be assigned newly created domain of something like `albacore-awake-commonly.ngrok-free.app`. This would be your **FRONTEND** domain.
-4. Repeat to get another domain. This would be your **BACKEND** domain.
 
 !!! warning
     - The free tier of Ngrok allows for random domains on every tunnel creation or one static domain. 
-    - However, to have multiple consistent static domains, you need a paid subscription.
 
 !!! success
-    You are good to go! Return back [to the next section](https://docs.medsync.botfather.dev/configuration/) to continue the setup process.
+    You are good to go! Return back [to the next section](https://docs.medsync.botfather.dev/configuration/#3-bot-database-configuration) to continue the setup process.

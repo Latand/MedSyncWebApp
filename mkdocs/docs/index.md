@@ -26,131 +26,79 @@ professionals, providing easy booking system for medical services via the Telegr
     - Initiate the [MedSync bot on Telegram](https://t.me/MedSyncbot).
     - Otherwise, you can see the [Userflow page](userflow.md) for a quick overview of the MedSync WebApp in screenshots.
 
+---
+
 ## System Requirements and Setup
 
 !!! note
     This guide focuses on setting up on Windows/MacOS/Linux.
 
-#### Software and OS:
+### Prerequisites:
 
-- **Windows/MacOS/Linux**
+- **Operating Systems**: 
+    - Windows/MacOS/Linux: The project can be tested on any of these platforms, but it's recommended to deploy on a Linux server.
 
-    While the project can be tested on either of these operating systems, it's recommended to deploy on a Linux server.
+- **Required Software**: 
+    - **Docker & Docker-Compose**: Required to containerize and orchestrate the application services. Compatible with Windows, MacOS, and Linux.
 
-- **Docker & Docker-Compose (1)**
-    { .annotate }
-
-    1. Compatible with Windows, MacOS, and Linux. 
-
-    Required to containerize and orchestrate the application services. 
-
-#### Hosting and Domain:
-
-- **Server with Domain Ownership and SSL-Certificate (1)**
-    { .annotate }
-
-    1.  If you're deploying this project live, you'll need a server and an owned domain. For
-    securing your domain, an SSL certificate is mandatory. You can obtain one, for instance, using Let's Encrypt's
-    Certbot.
-
-#### Local Testing (Optional):
-
-- **Ngrok**: If you opt to run the project locally, you can use Ngrok for easy access to the domain and SSL certificate. 
-- This will require creating an account with Ngrok, setting up 2 static domains **(❗️❗️paid option)**, and noting down the domains for later use.
-  Detailed instructions for Ngrok setup can be found on [a dedicated page](ngrok.md). 
+- **Nginx (Optional)**: 
+    - Required for live deployment. It's used as a reverse proxy to route requests to the appropriate services (frontend and backend).
 
 !!! danger
-    At some stage, financial investment will be required, be it for server and domain or for 
-    utilizing tunneling services like Ngrok. 
-    If you can obtain a static IP that you can expose to the internet, you can avoid the need for Ngrok, but you'll expose your IP to the WebApp users.
+    Some stages of the setup might require financial investment (i.e. server, domain or ngrok). Ensure you're aware of any costs before proceeding.
+
+### Deployment:
+
+#### 1. Live Deployment (Production):
+
+- A **server with domain ownership and an SSL certificate**(1).
+    { .annotate }
+
+    1.  You can obtain one, for instance, using Let's Encrypt's Certbot.
+
+- **Nginx:** a web server that can be used as a reverse proxy. It's used to route requests to the appropriate
+    services (our frontend and backend) 
+
+For detailed steps on live deployment, please refer to the [Production Deployment Guide](production_deployment.md).
+
+#### 2. Local Deployment (Development):
+
+- You can test the project on your **local machine**.
+- Use **Ngrok** for domain access and SSL certificate during local testing.
+- This will require creating an account with Ngrok, setting up 1 static domain and noting down the domain for later use.
+- If you can obtain a static IP, you can use it, but then you'll expose your personal IP to the WebApp users.
+ 
+For detailed steps on local deployment, please refer to the [Development Deployment Guide](development_deployment.md).
+
+---
 
 ### Project Composition:
 
-```mermaid
-stateDiagram-v2
-    state fork_docker_init <<fork>>
-        [*] --> fork_docker_init : Docker Compose Initiated
+![Project Composition](project.puml)
 
-    fork_docker_init --> Frontend
-    fork_docker_init --> Backend
-    fork_docker_init --> Documentation
-    fork_docker_init --> Ngrok
-
-    state Frontend
-    Frontend : React JS application
-
-    state Backend
-    Backend --> Bot
-    Backend --> Database
-    Backend --> Caching
-    Backend --> API
-
-    state Bot
-    Bot : Bot built on Aiogram
-
-    state Database
-    Database : PostgreSQL
-
-    state Caching
-    Caching : Redis (for bot caching)
-
-    state API
-    API : REST API built on FastAPI
-
-    state Optional Documentation 
-    Documentation
-
-    state 
-    Ngrok : Optional Ngrok
-
-```
-
-Once the Docker processes are initiated, it will orchestrate the entire project setup:
+The project is composed these components:
 
 - **Frontend**: A React JS application.
 - **Backend**: Comprises multiple components:
     - **Bot**: Built on the [aiogram framework](https://docs.aiogram.dev/en/latest/).
     - **Database**: [PostgreSQL](https://www.postgresql.org/) for structured data storage.
-    - **Caching**: [Redis](https://redis.io/) is utilized for caching purposes within the bot.
+    - **Redis Caching**: [Redis](https://redis.io/) is utilized for caching purposes within the bot.
     - **REST API**: Developed using [FastAPI](https://fastapi.tiangolo.com/) with [SQLAlchemy](https://www.sqlalchemy.org/) for ORM,
   and [Alembic](https://alembic.sqlalchemy.org/en/latest/) for database migrations.
-- **Documentation Image (Optional)**: While there's an image dedicated for documentation, it is commented out by default
-  in the Docker configuration. Build with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
+- **Nginx (Optional)**: You'll need to set up Nginx if you're deploying the project live.
 - **Ngrok (Optional)**: There's also a [Ngrok](https://ngrok.com/) configuration, but it's commented out by default.
-
+- **Documentation Image (Optional)**: While there's an image dedicated for documentation, it is commented out by default
+  in the Docker configuration. Built with [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/).
 ---
 
 ## Project Setup
 
-### Configuration
+1. **Configuration**: Clone the repo and adjust the necessary environment variables and settings to match your deployment. [Read more](configuration.md).
 
-!!! info
-    Setting up the MedSync Bot requires configuring certain environment variables and adjusting specific settings to match
-    your intended deployment environment.
+2. **Initializing Dependencies:** Ensure all required software and libraries are set up. [Read more](dependencies-initialization.md).
 
-**[Configuration Guidelines](configuration.md)**: This section provides a detailed walkthrough on how to adjust the
-essential configurations for the MedSync Bot. Ensure you've set these up before deploying.
-
-Once you've followed through with the configuration steps, you can then move forward with the deployment process.
-
-### Initializing Dependencies
-
-Before diving into the core setup, it's pivotal to ensure all dependencies and related tools are in place and configured
-correctly. Initializing dependencies is a foundational step that preempts the rest of the setup process, ensuring that
-everything is in place for the MedSync WebApp to function correctly.
-
-**[Dependency Initialization Guidelines](dependencies-initialization.md)**: This guide details the steps to ensure all
-software, libraries, and tools are correctly installed and initialized. Adhering to these guidelines will aid in
-preventing potential issues during the setup and running of the MedSync WebApp.
-
-It's advisable to review and complete the dependency initialization before proceeding further into the setup.
-
-### Launching the Project
-
-Once you've completed the configuration and dependency initialization, you can then proceed with launching the project.
-We will be using Docker Compose to orchestrate the entire project setup.
-
-Then we'll run a special command to create the required tables in the database and populate them with initial data.
+3. **Launching the Project**: With dependencies set and configurations adjusted, proceed to deploy the project using Docker Compose. 
+    Further steps involve setting up database tables and populating them. [Read more](running.md). 
 
 ---
 

@@ -1,0 +1,31 @@
+@startuml
+
+node Frontend as "ReactJS" {
+}
+
+package Backend {
+  component "REST API"
+  component Bot
+    database PostgreSQL
+    database Redis
+}
+
+package Infrastructure {
+  component Nginx
+
+}
+
+
+Bot -down-> PostgreSQL
+Bot -down-> Redis
+"REST API" -down-> PostgreSQL
+
+Nginx -down-> Frontend
+Nginx -down-> "REST API"
+
+() "Client"
+Client -down-> Nginx
+Client -down-> Bot
+
+
+@enduml

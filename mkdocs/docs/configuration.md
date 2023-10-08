@@ -4,7 +4,7 @@ title: Configuration Setup
 
 # Configuration Setup
 
-Before spinning up your instance of the MedSync WebApp & Bot, you need to set up a few configuration files.
+Before spinning up your instance of the MedSync WebApp & Bot, you need to clone the repository and set up a few configuration files.
 
 ## 1. Preliminary Steps
 
@@ -20,46 +20,12 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     cd MedSyncWebApp
     ```
 
+## 2. Obtain a Domain and SSL Certificate
 
-## 2. Ngrok Configuration
+- If you're running locally, you can use Ngrok setup to obtain a domain and SSL certificate. [Read the Ngrok setup section](ngrok.md).
+- If you're running on a server, you can use a domain you already own. [Read the Acquiring a Domain section](owned-domain.md).
 
-!!! warning "OPTIONAL"
-    If you're using your own purchased domain, you can skip this section.
-    
-    Refer to this [section](ngrok.md) for more details on how to register and acquire domains on Ngrok.
-
-
-1. Rename the file `ngrok.yml.dist` to `ngrok.yml`.
-
-2. In `ngrok.yml`, update the content as:
-    ```yaml hl_lines="2 9 15" title="ngrok.yml"
-    version: 2
-    authtoken: <your-ngrok-token>
-    tunnels:
-   
-      # frontend
-      first:
-        addr: app:5173
-        proto: http
-        hostname: your-ngrok-hostname.ngrok-free.app
-   
-      # backend (if you want other users to be able to use your bot)
-      second:
-        addr: app:8000
-        proto: http
-        hostname: your-second-ngrok-hostname.ngrok-free.app
-    ```
-3. Replace `<your-ngrok-token>` with the token from your Ngrok account.
-
-4. Adjust the `your-ngrok-hostname.ngrok-free.app` and `your-second-ngrok-hostname.ngrok-free.app` with the static domains you set up in Ngrok (refer to the [Ngrok setup section](ngrok.md) for more details).
-
-    You will have two domains, one for the frontend and one for the backend.
-
-    !!! warning
-        - The domains must be different.
-        - 💰 You might have to pay for the ngrok subscription to get 2 static domains.
-        - 🆓 ==If you want just to test the project FOR FREE==, you can use only one domain for the **frontend**, and use `localhost` for the **backend**,
-          then you'll need to remove the `second` tunnel from the `ngrok.yml` file.
+After you have a domain and SSL certificate, note down the domain(s) for the next step.
 
 ## 3. Bot & Database Configuration
 
@@ -69,7 +35,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     mv .env.dist .env
     ```
 
-2. Adjust the content in `.env`:
+2. Open the content in `.env`:
     Open with nano/vim:
     ```bash
     nano .env
@@ -77,31 +43,22 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
 
 3. Inside `.env`, modify the following:
 
-    ```dotenv hl_lines="4 5 9 10 18 23" title=".env"
-    BOT_CONTAINER_NAME=medsync_bot
-    BOT_IMAGE_NAME=medsync_bot
-    BOT_NAME=medsync_bot
+    ```dotenv hl_lines="1 2 5 6 10 15" title=".env"
     BOT_TOKEN=123456:Your-TokEn_ExaMple
     ADMINS=123456789,987654321
     USE_REDIS=True
 
-    PG_CONTAINER_NAME=pg_database
     POSTGRES_USER=someusername
     POSTGRES_PASSWORD=postgres_pass12345
     POSTGRES_DB=bot
     DB_HOST=pg_database
 
-    WEBHOOK_CONTAINER_NAME=webhook
-    WEBHOOK_EXPOSE=8001
-    WEBHOOK_APP_NAME=webhook
-
-    DOMAIN_NAME=https://example.com
+    FRONTEND_URL=https://example.com
 
     REDIS_HOST=redis_cache
     REDIS_PORT=6388
     REDIS_DB=1
     REDIS_PASSWORD=someredispass
-    REDIS_CONTAINER_NAME=redis_bot
     ```
 
 4. Update the `BOT_TOKEN` with your Telegram bot token. 
@@ -109,7 +66,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
   to these users every time it starts.
 6. Configure the PostgreSQL credentials (`POSTGRES_USER` and `POSTGRES_PASSWORD`). 
 7. Update `REDIS_PASSWORD` to prevent unauthorized access to the Redis database.
-8. Modify the `DOMAIN_NAME` with your domain (either the ==Ngrok FRONTEND domain== or your ==owned domain==).
+8. Modify the `FRONTEND_URL` with your domain (either the Ngrok FRONTEND url or your owned domain url).
 
 ## 4. Frontend Configuration
 
@@ -120,7 +77,7 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     mv .env.dist .env
     ```
 
-2. Adjust the content in `.env`:
+2. Open the content in `.env`:
     Open with nano/vim:
     ```bash
     nano .env
@@ -130,15 +87,13 @@ Before spinning up your instance of the MedSync WebApp & Bot, you need to set up
     VITE_REACT_APP_API_URL=https://your-domain.com
     ```
 
-3. Replace `https://your-domain.com` with your BACKEND domain's URL.
+    Replace `https://your-domain.com` with your BACKEND URL.
 
-!!! warning "Warning - Ngrok"
-    If you're using Ngrok, you need to update the `VITE_REACT_APP_API_URL` with the Ngrok BACKEND DOMAIN.
+!!! question "What is Backend URL?"
 
-    
-    Otherwise, this have to be your same [owned purchased domain](https://docs.medsync.botfather.dev/dependencies-initialization/#acquiring-a-domain).
-    In the latter case, the **nginx will proxy the requests to the backend using the same domain**.
+    - If you're **running live**: this have to be your same [owned purchased domain](owned-domain.md). The **nginx will proxy the requests to the backend using the same domain**.
+    - If you're using Ngrok, you need to set the `VITE_REACT_APP_API_URL=http://localhost:3779`, but the app will work only on your local machine.
 
+!!! success "You're good to go!"
 
-!!! tip "Local Testing" 
-    You can write `VITE_REACT_APP_API_URL=http://localhost:3779` if you're testing the project locally.
+    You have successfully configured the project. Proceed to [the next step to initialize the dependencies](dependencies-initialization.md).

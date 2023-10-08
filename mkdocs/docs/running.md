@@ -41,13 +41,7 @@ Once all containers are up and running, you can proceed to the next step.
 With the services running, including the database, proceed to apply the database migrations. This will help structure
 the database according to the defined models.
 
-**Run the Migration Script Directory**
-
-```bash
-./backend/scripts/alembic/run_migrations.sh
-```
-
-**Or, if it doesn't work, run the commands manually:**
+**Run the Migration Script**
 
 ```bash
 docker exec medsync_bot alembic upgrade head
@@ -60,25 +54,28 @@ docker exec medsync_bot alembic upgrade head
 
 
 !!! tip
-    - If you want to stop the application, run:
+    - To **stop** the application without removing any containers, networks, or volumes:
+        ```bash
+        docker-compose stop
+        ```
+    - To **stop and remove** all containers and networks defined in `docker-compose.yml`:
         ```bash
         docker-compose down
         ```
-    - If you want to stop the application and remove all volumes (with database and redis data), run:
+    - To **stop and remove** all containers, networks, and volumes (which will clear data in the database and Redis):
         ```bash
         docker-compose down -v
         ```
-    - If you want to stop the application and remove all volumes and images, run:
+    - To **stop and remove** all containers, networks, volumes, and related images:
         ```bash
-        docker-compose down -v --rmi all
-        ``` 
-    - If you want to check the logs of all services, run:
+        docker-compose down -v --rmi local
+        ```
+    - To **view logs** for all services:
         ```bash
         docker-compose logs -f --tail 100
         ```
-    - If you want to check the logs of a specific service, run:
+    - To **view logs** for a specific service (replace `service-name` with the actual service name):
         ```bash
-        docker-compose service-name logs -f --tail 100
+        docker-compose logs service-name -f --tail 100
         ``` 
-    
     

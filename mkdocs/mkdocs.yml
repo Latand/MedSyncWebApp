@@ -79,9 +79,11 @@ nav:
   - 'Overview': index.md
   - 'UserFlow': userflow.md
   - 'Setting Up & Running the App':
-    - '1. Dependency Initialization Guidelines': dependencies-initialization.md
-    - '2. Configuration': configuration.md
-    - '3. Launching the App': running.md
+    - '1. Configuration': configuration.md
+    - '2. Dependency Initialization Guidelines': dependencies-initialization.md
+    - '3. Local Deployment': development-environment.md
+    - '3. Live Deployment': production-environment.md
+    - '4. Launching the App': running.md
   - 'Project Architecture':
     - 'Frontend Development': frontend.md
     - 'Bot and REST API Setup': backend.md
@@ -89,9 +91,11 @@ nav:
     - 'Docker': docker.md
   - 'Other':
       - 'Ngrok': ngrok.md
+      - 'Ob'
       - 'Telegram WebApp Integration': telegram.md
 
 plugins:
+  - plantuml-colocator
   - search:
       lang:
         - en

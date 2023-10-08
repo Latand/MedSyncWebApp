@@ -1,0 +1,30 @@
+@startuml
+
+package Frontend {
+   component ReactJs
+}
+
+package Backend {
+  component "REST API"
+  component Bot
+    database PostgreSQL
+    database Redis
+}
+
+package Infrastructure {
+  component Ngrok
+}
+
+Bot -down-> PostgreSQL
+Bot -down-> Redis
+"REST API" -down-> PostgreSQL
+
+Ngrok -down-> ReactJs
+Ngrok -down-> "REST API"
+
+() "Client"
+Client -down-> Ngrok
+Client -down-> "REST API"
+Client -down-> Bot
+
+@enduml
