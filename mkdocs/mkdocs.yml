@@ -91,7 +91,6 @@ nav:
     - 'Docker': docker.md
   - 'Other':
       - 'Ngrok': ngrok.md
-      - 'Ob'
       - 'Telegram WebApp Integration': telegram.md
 
 plugins:
