@@ -2,35 +2,36 @@ version: "3"
 
 services:
   app:
-    container_name: "medsync-app"
     build:
         context: ./frontend
         dockerfile: Dockerfile
     working_dir: "/home/node/app"
     volumes:
       - /var/app/medsync/:/home/node/app/dist
-#    command: sh -c 'npm install; npm run dev --host // Uncomment if you want to run dev server
-    command: sh -c 'npm run build'
+
+    # Uncomment this if you are running in development
+#    command: ["npm", "run", "dev", "--host"]
+
+    # Comment this if you are running in production
+    command: ["npm", "run", "build"]
+
     stop_signal: SIGINT
 
   bot:
-    image: "${BOT_IMAGE_NAME}"
-    container_name: "${BOT_CONTAINER_NAME}"
+    image: "medsyncapp_bot"
     stop_signal: SIGINT
     build:
       context: ./backend
-    working_dir: "/usr/src/app/medsync_bot"
+      dockerfile: ./bot.Dockerfile
     volumes:
-      - ./backend:/usr/src/app/medsync_bot  # Volume for bot code
-      - /var/app/medsync:/usr/src/app/public # Volume for static files, that are shared between bot and frontend
-    command: python3 -m bot
+      - ./backend/src:/src/  # Volume for bot code
+      - /var/app/medsync:/src/public # Volume for static files, that are shared between bot and frontend
     restart: always
     depends_on:
       - app
+
     env_file:
       - ".env"
-    networks:
-      - tg_bot
 
     logging:
       driver: "json-file"
@@ -39,7 +40,6 @@ services:
         max-file: "10"
 
   pg_database:
-    container_name: "${PG_CONTAINER_NAME}"
     image: postgres:13-alpine
     ports:
       - "5452:5432" # Change if you like! 5439 is external to container
@@ -54,35 +54,20 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
-    networks:
-      - tg_bot
 
   webhook:
-    image: "webhook"
-    container_name: "${WEBHOOK_CONTAINER_NAME}"
+    image: "medsyncapp_web"
     stop_signal: SIGINT
     build:
       context: ./backend
-      dockerfile: infrastructure/webhook/Dockerfile
-    working_dir: "/usr/src/app/api"
+      dockerfile: ./web.Dockerfile
     ports:
       - "3779:8000"
     volumes:
-      - ./backend:/usr/src/app/api
-    command:
-      [
-        "uvicorn",
-        "infrastructure.webhook.app:app",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "8000"
-      ]
+      - ./backend/src:/src
     restart: always
     env_file:
       - ".env"
-    networks:
-      - tg_bot
     logging:
       driver: "json-file"
       options:
@@ -92,15 +77,12 @@ services:
 
   redis_cache:
     image: redis:6.2-alpine
-    container_name: "${REDIS_CONTAINER_NAME}"
     restart: always
     command: redis-server --port $REDIS_PORT --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
     env_file:
       - ".env"
     volumes:
-      - ./cache:/data
-    networks:
-      - tg_bot
+      - cache:/data
 
   mkdocs:
     build:
@@ -112,8 +94,6 @@ services:
     volumes:
       - ./mkdocs:/usr/src/mkdocs
       - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
-    networks:
-      - tg_bot
 
 #  ngrok:
 #    image: ngrok/ngrok:latest
@@ -124,12 +104,8 @@ services:
 #      - ./ngrok.yml:/etc/ngrok.yml
 #    expose:
 #      - 443
-#    networks:
-#      - tg_bot
 
-networks:
-  tg_bot:
-    driver: bridge
 
 volumes:
   pgdata: { }
+  cache: { }
