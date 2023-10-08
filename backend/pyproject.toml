@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[project]
+name = "MedSyncWebApp"
+version = "0.0.1"
+
+description = "Wishlist with clean architecture"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "sqlalchemy~=2.0",
+    "asyncpg",
+    "alembic~=1.0",
+    "environs~=9.0",
+    "betterlogging~=0.2",
+]
+[project.optional-dependencies]
+bot = [
+    "aiogram~=3.0",
+    "redis~=5.0",
+    "aiogram-dialog~=2.0",
+    "faker",
+]
+web = [
+    "uvicorn~=0.23",
+    "fastapi~=0.102",
+    "python-dateutil",
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/Latand/MedSyncWebApp/"
+"Bug Tracker" = "https://github.com/Latand/MedSyncWebApp/issues"
