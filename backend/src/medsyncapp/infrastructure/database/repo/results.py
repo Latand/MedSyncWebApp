@@ -1,9 +1,9 @@
 from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
-from infrastructure.database.models import Booking
-from infrastructure.database.models.diagnostics import DiagnosticResult, Diagnostic
-from infrastructure.database.repo.base import BaseRepo
+from medsyncapp.infrastructure.database.models import Booking
+from medsyncapp.infrastructure.database.models.diagnostics import DiagnosticResult, Diagnostic
+from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class ResultsRepo(BaseRepo):

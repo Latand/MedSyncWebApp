@@ -3,7 +3,7 @@ import json
 from aiogram import Router, F, types
 from aiogram.utils.markdown import hcode, hbold
 
-from infrastructure.database.repo.requests import RequestsRepo
+from medsyncapp.infrastructure.database.repo.requests import RequestsRepo
 
 web_app_router = Router()
 

@@ -4,13 +4,13 @@ from dateutil.parser import parse
 from sqlalchemy import func
 from sqlalchemy import select, insert
 
-from infrastructure.database.models import (
+from medsyncapp.infrastructure.database.models import (
     Diagnostic,
     Booking,
     DiagnosticLocation,
     Location,
 )
-from infrastructure.database.repo.base import BaseRepo
+from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class DiagnosticRepo(BaseRepo):

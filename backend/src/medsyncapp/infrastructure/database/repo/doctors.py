@@ -3,14 +3,14 @@ import datetime
 from dateutil.parser import parse
 from sqlalchemy import select, insert, func
 
-from infrastructure.database.models import (
+from medsyncapp.infrastructure.database.models import (
     Doctor,
     Booking,
     DoctorRating,
     Location,
 )
-from infrastructure.database.models.doctors import Specialty
-from infrastructure.database.repo.base import BaseRepo
+from medsyncapp.infrastructure.database.models.doctors import Specialty
+from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class DoctorRepo(BaseRepo):

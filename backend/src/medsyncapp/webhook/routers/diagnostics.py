@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter, HTTPException
 
-from infrastructure.database.repo.requests import RequestsRepo
-from infrastructure.webhook.utils import get_repo
+from medsyncapp.infrastructure.database.repo.requests import RequestsRepo
+from medsyncapp.webhook.utils import get_repo
 
 diagnostics_router = APIRouter(prefix="/diagnostics")
 

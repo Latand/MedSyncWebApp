@@ -3,7 +3,7 @@ import logging
 from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 
-from infrastructure.webhook import routers
+from medsyncapp.webhook import routers
 
 app = FastAPI()
 prefix_router = APIRouter(prefix="/api")

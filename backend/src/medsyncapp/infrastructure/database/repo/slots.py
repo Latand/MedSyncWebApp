@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
-from infrastructure.database.models.slots import WorkingHour
-from infrastructure.database.repo.base import BaseRepo
+from medsyncapp.infrastructure.database.models.slots import WorkingHour
+from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class SlotRepo(BaseRepo):

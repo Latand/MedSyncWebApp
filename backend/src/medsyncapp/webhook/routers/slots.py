@@ -1,7 +1,7 @@
 from fastapi import Depends, APIRouter
 
-from infrastructure.database.repo.requests import RequestsRepo
-from infrastructure.webhook.utils import get_repo
+from medsyncapp.infrastructure.database.repo.requests import RequestsRepo
+from medsyncapp.webhook.utils import get_repo
 
 slots_router = APIRouter(prefix="/slots")
 working_hours_router = APIRouter(prefix="/working_hours")

@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
-from infrastructure.database.models.locations import Location
-from infrastructure.database.repo.base import BaseRepo
+from medsyncapp.infrastructure.database.models.locations import Location
+from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class LocationsRepo(BaseRepo):

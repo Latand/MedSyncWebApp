@@ -2,13 +2,13 @@ from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from infrastructure.database.repo.bookings import BookingsRepo
-from infrastructure.database.repo.diagnostics import DiagnosticRepo
-from infrastructure.database.repo.doctors import DoctorRepo
-from infrastructure.database.repo.locations import LocationsRepo
-from infrastructure.database.repo.results import ResultsRepo
-from infrastructure.database.repo.slots import SlotRepo
-from infrastructure.database.repo.users import UserRepo
+from medsyncapp.infrastructure.database.repo.bookings import BookingsRepo
+from medsyncapp.infrastructure.database.repo.diagnostics import DiagnosticRepo
+from medsyncapp.infrastructure.database.repo.doctors import DoctorRepo
+from medsyncapp.infrastructure.database.repo.locations import LocationsRepo
+from medsyncapp.infrastructure.database.repo.results import ResultsRepo
+from medsyncapp.infrastructure.database.repo.slots import SlotRepo
+from medsyncapp.infrastructure.database.repo.users import UserRepo
 
 
 @dataclass

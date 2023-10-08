@@ -4,8 +4,8 @@ from aiogram import types, Router
 from aiogram.filters import CommandStart
 from aiogram_dialog import DialogManager
 
-from tgbot.config import Config
-from tgbot.keyboards.inline import main_menu
+from medsyncapp.tgbot.config import Config
+from medsyncapp.tgbot.keyboards.inline import main_menu
 
 start_router = Router()
 

@@ -3,9 +3,9 @@ import hmac
 import time
 from urllib.parse import unquote, parse_qsl
 
-from infrastructure.database.repo.requests import RequestsRepo
-from infrastructure.database.setup import create_session_pool, create_engine
-from tgbot.config import load_config, Config
+from medsyncapp.infrastructure.database.repo.requests import RequestsRepo
+from medsyncapp.infrastructure.database.setup import create_session_pool, create_engine
+from medsyncapp.tgbot.config import load_config, Config
 
 config: Config = load_config()
 engine = create_engine(config.db)

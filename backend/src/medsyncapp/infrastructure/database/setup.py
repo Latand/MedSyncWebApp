@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 
-from tgbot.config import DbConfig
+from medsyncapp.tgbot.config import DbConfig
 
 
 def create_engine(db: DbConfig, echo=False):

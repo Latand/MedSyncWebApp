@@ -7,8 +7,8 @@ from aiogram_dialog import Window, Dialog, DialogManager, StartMode, ShowMode
 from aiogram_dialog.widgets.kbd import ScrollingGroup, Select, Cancel, Back
 from aiogram_dialog.widgets.text import Format, Const
 
-from infrastructure.database.repo.requests import RequestsRepo
-from tgbot.handlers.start import start_from_dialog_menu
+from medsyncapp.infrastructure.database.repo.requests import RequestsRepo
+from medsyncapp.tgbot.handlers.start import start_from_dialog_menu
 
 profile_router = Router()
 

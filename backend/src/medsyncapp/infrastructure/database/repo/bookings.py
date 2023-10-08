@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
-from infrastructure.database.models import Booking, Doctor, Diagnostic, Location
-from infrastructure.database.repo.base import BaseRepo
+from medsyncapp.infrastructure.database.models import Booking, Doctor, Diagnostic, Location
+from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class BookingsRepo(BaseRepo):

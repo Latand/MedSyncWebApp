@@ -6,13 +6,13 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.redis import DefaultKeyBuilder, RedisStorage
 from aiogram_dialog import setup_dialogs
 
-from infrastructure.database.setup import create_engine, create_session_pool
-from tgbot.config import load_config
-from tgbot.handlers import routers_list
-from tgbot.handlers.bookings import booking_dialog
-from tgbot.handlers.test_results import test_results_router, test_results_dialog
-from tgbot.middlewares.database import DatabaseMiddleware
-from tgbot.services import broadcaster
+from medsyncapp.infrastructure.database.setup import create_engine, create_session_pool
+from medsyncapp.tgbot.config import load_config
+from medsyncapp.tgbot.handlers import routers_list
+from medsyncapp.tgbot.handlers.bookings import booking_dialog
+from medsyncapp.tgbot.handlers.test_results import test_results_router, test_results_dialog
+from medsyncapp.tgbot.middlewares.database import DatabaseMiddleware
+from medsyncapp.tgbot.services import broadcaster
 
 
 async def on_startup(bot: Bot, admin_ids: list[int]):

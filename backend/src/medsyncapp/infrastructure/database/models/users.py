@@ -1,6 +1,5 @@
 from typing import Optional
 
-from pydantic import BaseModel
 from sqlalchemy import String
 from sqlalchemy import text, BIGINT, Boolean, true
 from sqlalchemy.orm import Mapped
