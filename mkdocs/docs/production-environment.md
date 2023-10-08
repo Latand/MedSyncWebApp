@@ -1,14 +1,24 @@
 ---
-title: Running on the Production Environment
+title: Preparing the Production Environment
 ---
 
-# Running on the Production Environment
+# Preparing the Production Environment
 
-[!Composition](project.puml)
+![Composition](images/project-prod.png)
+
+On the diagram above, you can see the project's composition. In this configuration, you can run the project on your server.
+
+!!! question "How does production mode operate?"
+    - Your browser sends requests to NGINX.
+    - For general site access, NGINX uses static files created by React in `/var/app/medsync/`.
+    - For anything under `/api/`, NGINX forwards the request to our backend on `http://localhost:3779`.
+    - React's production-ready files are made with `npm run build`.
 
 
+The following is the list of actions you need to take to set up the development environment:
 
-## 3. Setting up NGINX 
+
+## 1. Setting up NGINX 
 
 ### **Installing NGINX**
 
@@ -108,7 +118,12 @@ title: Running on the Production Environment
   sudo systemctl reload nginx
   ```
 
-## **4. Setting Up Let's Encrypt**
+## 2. Setting Up Let's Encrypt
+
+!!! info
+    This will install an SSL certificate for your domain, that you wrote in the NGINX configuration file. 
+
+    Make sure you have a domain name and that it's pointing to your server's IP address before proceeding. [Read more](owned-domain.md)
 
 ### Installation
 

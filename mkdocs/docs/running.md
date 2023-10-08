@@ -44,7 +44,7 @@ the database according to the defined models.
 **Run the Migration Script**
 
 ```bash
-docker exec medsync_bot alembic upgrade head
+docker-compose exec bot /venv/bin/python -m alembic upgrade head
 ```
 
 !!! success

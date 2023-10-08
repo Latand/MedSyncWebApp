@@ -9,13 +9,15 @@ title: Frontend Development Setup with React.js & Vite
 
 
 !!! abstract "Overview"
-    This section offers insights into the frontend setup process of constructing a new web application similar to MedSync from the ground up. The MedSync frontend has been developed using React.js and Vite, emphasizing a smooth integration with Telegram for an enhanced user experience.
+    This section offers insights into the frontend setup process of constructing **a new web application similar to MedSync** from the ground up. 
+    The MedSync frontend has been developed using React.js and Vite, emphasizing a smooth integration with Telegram for an enhanced user experience.
 
 !!! warning "Prerequisites"
-    A foundational understanding of React.js is essential to proceed with this guide. If React.js seems unfamiliar, consider delving into this [comprehensive tutorial](https://www.youtube.com/watch?v=-DTUdOJv8w8&list=PL0X6fGhFFNTe_vJIlAQQo0IEgPgk9er3g) or exploring other tutorials that suit your learning style.
+    A foundational understanding of React is essential to proceed with this guide. 
+    If React seems unfamiliar, consider delving into [the official docs](https://react.dev/learn), or this [comprehensive tutorial](https://www.youtube.com/watch?v=-DTUdOJv8w8&list=PL0X6fGhFFNTe_vJIlAQQo0IEgPgk9er3g), or exploring other tutorials that suit your learning style.
 
 !!! info "Purpose of the Guide"
-    - This guide has been meticulously crafted for developers who are eager to create a new web application, 
+    - This guide is specifically for developers who are eager to create **a new web application**, 
     focusing predominantly on integration with Telegram via React. 
 
     - Note that this isn't an exhaustive step-by-step tutorial for setting up MedSync WebApp. 
@@ -233,7 +235,7 @@ export default App;
     These define the different paths in the application and which component or page to render for each path. 
       
     !!! example
-              For instance, the root path (`/`) renders the `LandingPage` component, and the `/see_a_doctor` path renders the `DoctorSelection` component. These routes ensure users can navigate through the different sections of the MedSync application.
+        For instance, the root path (`/`) renders the `LandingPage` component, and the `/see_a_doctor` path renders the `DoctorSelection` component. These routes ensure users can navigate through the different sections of the MedSync application.
 
 5. **Parameterized Routing**
 

@@ -45,11 +45,11 @@ professionals, providing easy booking system for medical services via the Telegr
     - Required for live deployment. It's used as a reverse proxy to route requests to the appropriate services (frontend and backend).
 
 !!! danger
-    Some stages of the setup might require financial investment (i.e. server, domain or ngrok). Ensure you're aware of any costs before proceeding.
+    Some stages of the setup might require financial investment (i.e. server, domain). Ensure you're aware of any costs before proceeding.
 
-### Deployment:
+### Deployment Requirements:
 
-#### 1. Live Deployment (Production):
+#### Live Deployment (Production):
 
 - A **server with domain ownership and an SSL certificate**(1).
     { .annotate }
@@ -59,22 +59,22 @@ professionals, providing easy booking system for medical services via the Telegr
 - **Nginx:** a web server that can be used as a reverse proxy. It's used to route requests to the appropriate
     services (our frontend and backend) 
 
-For detailed steps on live deployment, please refer to the [Production Deployment Guide](production_deployment.md).
+For detailed steps on live deployment, please refer to the [Production Deployment Guide](production-environment.md).
 
-#### 2. Local Deployment (Development):
+#### Local Deployment (Development):
 
 - You can test the project on your **local machine**.
 - Use **Ngrok** for domain access and SSL certificate during local testing.
 - This will require creating an account with Ngrok, setting up 1 static domain and noting down the domain for later use.
 - If you can obtain a static IP, you can use it, but then you'll expose your personal IP to the WebApp users.
  
-For detailed steps on local deployment, please refer to the [Development Deployment Guide](development_deployment.md).
+For detailed steps on local deployment, please refer to the [Development Deployment Guide](development-environment.md).
 
 ---
 
 ### Project Composition:
 
-![Project Composition](project.puml)
+![Project Composition](images/project-prod.png)
 
 The project is composed these components:
 
@@ -96,9 +96,9 @@ The project is composed these components:
 1. **Configuration**: Clone the repo and adjust the necessary environment variables and settings to match your deployment. [Read more](configuration.md).
 
 2. **Initializing Dependencies:** Ensure all required software and libraries are set up. [Read more](dependencies-initialization.md).
-
-3. **Launching the Project**: With dependencies set and configurations adjusted, proceed to deploy the project using Docker Compose. 
-    Further steps involve setting up database tables and populating them. [Read more](running.md). 
+3. **Development vs Production**: Depending on your deployment, you'll need to adjust the project configuration. [Development Mode Guide](development-environment.md), [Production Mode Guide](production-environment.md).
+4. **Launching the Project**: With dependencies set and configurations adjusted, proceed to deploy the project using Docker Compose. 
+    Further steps involve setting up database tables and populating them. [Read more](running.md).
 
 ---
 
