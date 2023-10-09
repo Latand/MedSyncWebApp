@@ -1,6 +1,6 @@
 # MedSync Telegram Mini App
 
-Welcome to the MedSync WebApp documentation. The core idea of the app is to create a bridge between patients and healthcare
+Welcome to the MedSync WebApp. The core idea of the app is to create a bridge between patients and healthcare
 professionals, providing an easy booking system for medical services via the Telegram platform.
 
 You can find the bot Here: [Bot in Telegram](https://t.me/MedSyncbot)
