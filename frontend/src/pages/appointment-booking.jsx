@@ -9,7 +9,7 @@ import Header from "../components/Header.jsx";
 
 
 const SlotSelection = ({storageKey, itemType}) => {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [selectedItem, setParsedItem] = useState(null);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);

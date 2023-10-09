@@ -1,11 +1,8 @@
 ---
-title: Frontend Development Setup with React.js & Vite
+title: Frontend Development Setup with React & Vite
 ---
 
-# Frontend Development Setup with React.js & Vite
-
-
-## 1. Creating a New Web Application from Scratch
+# Creating a New Web Frontend Application from Scratch with React and Vite
 
 
 !!! abstract "Overview"
@@ -28,12 +25,12 @@ title: Frontend Development Setup with React.js & Vite
 
 ---
 
-### 1. Setting up a New React App with Vite
+## 1. Setting up a New React App with Vite
 
 Vite offers a faster and more efficient development experience than traditional React setup methods. If you're
 unfamiliar with creating React apps using Vite, consider reading [the Vite docs](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
 
-#### Installation and Setup
+### Installation and Setup
 
 - **Install Node.js**
 
@@ -59,7 +56,7 @@ unfamiliar with creating React apps using Vite, consider reading [the Vite docs]
     npm install
     ```
 
-### 2. Project Structure
+## 2. Project Structure
 
 Here is how your project structure might look like:
 
@@ -129,7 +126,7 @@ Here is how your project structure might look like:
 
 ---
 
-### 3. Installing Dependencies
+## 3. Installing Dependencies
 
 To ensure a smooth integration with Telegram, we've utilized the following dependencies:
 
@@ -147,7 +144,7 @@ npm install @vkruglikov/react-telegram-web-app axios date-fns moment react-route
 ```
 
 ---
-### 4. Adjust HTML Template
+## 4. Adjust HTML Template
 
 Ensure that the JavaScript file for Telegram (`https://telegram.org/js/telegram-web-app.js`) is included in the HTML
 template. This script is necessary for the web app to interact with Telegram.
@@ -172,7 +169,7 @@ So your `index.html` file should look like this:
 
 ---
 
-### 5. Routing and Page Management
+## 5. Routing and Page Management
 
 !!! abstract  "Understanding App.jsx Component"
       This section delves into the added functionalities in the [`App.jsx` component](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/App.jsx) of the application, explaining the purpose and usage of the code.
@@ -184,6 +181,9 @@ it's essential to organize the application structure using a **routing mechanism
       Routing in a web app is like a map that decides which page to show based on the website's address; for example, going to `/home` might show the main page, `/about` the about page, and `/contact` the contact page.
 
 For MedSync, we've utilized `React Router`, a powerful routing library for React applications. This library allows for declarative routing, ensuring that the user interface is synchronized with the URL.
+
+!!! example 
+    See full code in [App.jsx](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/App.jsx)
 
 ```js title="src/App.jsx" hl_lines="12 17 19"
 import {useEffect} from 'react';
@@ -245,13 +245,13 @@ export default App;
 
     Some routes, like those for `SlotSelection`, utilize props to pass data down to the component, making it more dynamic and reusable.
 
-For a more in-depth look into the code and to understand the structure and logic more comprehensively, refer to the [provided code link](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/App.jsx).
 
+## 6. Component Management and Advanced Functionalities
 
-### 6. Component Management and Advanced Functionalities
+This section delves into the added functionalities in the `DoctorSelection` component of the application, explaining the purpose and usage of the code.
 
-!!! abstract
-      This section delves into the added functionalities in the [`DoctorSelection` component](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/pages/doctor-selection.jsx) of the application, explaining the purpose and usage of the code.
+!!! example
+    See full code in [doctor-selection.jsx](https://github.com/Latand/MedSyncWebApp/blob/main/frontend/src/pages/doctor-selection.jsx)
 
 ```js title="src/pages/doctor-selection.jsx" hl_lines="20 22-30 64 67"
 import axios from 'axios';
@@ -348,86 +348,36 @@ export default DoctorSelection;
         In our case, the backend is a FastAPI server that handles requests from the frontend and responds with the requested data.
 
 3. **Telegram-specific Features**:
-    - The `BackButton` and `MainButton` are specific components designed for the Telegram WebApp interface, ensuring that users can navigate within the app seamlessly when accessed through Telegram.
-    - `useHapticFeedback` provides tactile feedback (vibrations) to enhance user experience on mobile devices.
-    - The Telegram back button is controlled by the `BackButton` component, which, when clicked, navigates the user back to the homepage.
+
+    **You can read the whole page about how we integrated Telegram-specific features [here](telegram.md).**
+
+    - The `BackButton` and `MainButton` are specific native components designed for the Telegram WebApp interface. [Read more here](telegram.md#4-navigation-with-telegrams-buttons)
+    - `useHapticFeedback` provides tactile feedback (vibrations) to enhance user experience on mobile devices. [Read more here](telegram.md#haptic-feedback-in-medsync)
+    - The Telegram back button is controlled by the `BackButton` component, which, when clicked, navigates to previous page.
     - The Telegram main button, typically present at the bottom of the screen, is controlled by the `MainButton` component. In our context, it's used to proceed with a selected doctor.
-    - `useCloudStorage` is a hook that allows us to store data in the Telegram cloud storage. This is useful for persisting data across sessions, ensuring that the user's selected doctor is remembered even if they close the app.
+    - `useCloudStorage` is a hook that allows us to store data in the Telegram cloud storage. This is useful for persisting data across sessions, 
+       ensuring that the user's selected doctor is remembered even if they close the app. [Read more here](telegram.md#3-cloudstorage)
 
 4. **Filtering and Display Logic**:
     - Based on the user’s search terms and selected specialties, the list of doctors displayed is dynamically filtered. This ensures that users see relevant doctor listings tailored to their requirements.
 
 ---
 
-### 7. Dynamic Theming with SCSS Variables
+## Leveraging Dynamic Theming in Your Application
 
-!!! abstract 
-    Dynamic theming allows a web application to adjust its appearance according to user preferences or system settings, leading to improved user experience and interface consistency. 
+To achieve a consistent visual experience between your web application and Telegram, understanding and implementing 
+the [principles from the **Dynamic Theming with SCSS Variables** section](telegram.md#1-dynamic-theming-with-scss-variables) is vital. 
 
-    MedSync leverages this by integrating **[Telegram theme parameters](https://core.telegram.org/bots/webapps#themeparams)** to adjust the interface based on the Telegram user's current theme. 
-
-#### Understanding the Theme Parameters:
-
-The Telegram Mini Apps can fetch the user's theme settings. These settings, formatted in CSS custom properties (`var(--property-name)`), can be directly accessed and applied within our SCSS. 
-
-For instance, `var(--tg-theme-bg-color)` fetches the background color from the Telegram theme settings.
-
----
-
-#### Utilizing SCSS for Dynamic Styling:
-
-In our project we have a `_vars.scss` file, that centralizes all the color and style variables, providing easy access and modification capabilities.
-
-To integrate the Telegram theme parameters, we've used the following syntax:
-
-```scss title="src/scss/_vars.scss" 
-    
-$tg-theme-bg : var(--tg-theme-bg-color);
-$tg-theme-secondary-bg: var(--tg-theme-secondary-bg-color);
-
-$tg-theme-text: var(--tg-theme-text-color);
-$tg-theme-hint: var(--tg-theme-hint-color);
-
-$tg-theme-button: var(--tg-theme-button-color);
-$tg-theme-button-text: var(--tg-theme-button-text-color);
-
-$color-box-shadow: var(--tg-theme-secondary-bg-color);
-```
-
-!!! example
-    For instance, `$tg-theme-text: var(--tg-theme-text-color);` sets the text color based on the Telegram theme, but defaults to black if not available.
-
-
-!!! tip "How to Apply theme colors"
+!!! tip "Quick Guide on Utilizing Theme Colors"
     - The `--tg-theme-bg-color` and `--tg-theme-secondary-bg-color` are the **background colors** and contrast with the `--tg-theme-text-color`, which is the **text color**.
     - The `--tg-theme-secondary-bg-color` can be used for **borders** and **dividers**.
     - The `--tg-theme-hint-color` can be used for **hint text** and **icons**.
     - The `--tg-theme-button-color` and `--tg-theme-button-text-color` also contrasting and are used **for buttons**.
     - The `--tg-theme-link-color` can be used for **links**.
 
-    Use this link to read more about [Telegram theme parameters](https://core.telegram.org/bots/webapps#themeparams).
+    For an expanded explanation and additional variables, explore the [Telegram theme parameters documentation](https://core.telegram.org/bots/webapps#themeparams).
 
-#### Practical Application: An Example
-
-The `.search-bar` class showcases how these variables are applied in practice:
-
-- The input field’s border and background colors use the `$tg-theme-secondary-bg` variable, effectively adapting to the Telegram theme.
-- The text color for the input and the search icon adapt based on the `$tg-theme-text` variable.
-  
-```scss title="src/scss/blocks/_search-bar.scss" hl_lines="3-5 9"
-.search-bar {
-  &__input {
-    border: 1px solid $tg-theme-secondary-bg;
-    background: $tg-theme-secondary-bg;
-    color: $tg-theme-text;
-  }
-  &__icon {
-    &__img {
-      stroke: $tg-theme-text;
-    }
-  }
-}
-```
+---
 
 ## Additional Notes
 

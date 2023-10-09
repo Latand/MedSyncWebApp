@@ -6,8 +6,8 @@ title: MedSync WebApp Documentation
 
 ## Introduction
 
-Welcome to the MedSync WebApp documentation. This core idea of the app is to create a bridge between patients and healthcare
-professionals, providing easy booking system for medical services via the Telegram platform.
+Welcome to the MedSync WebApp documentation. The core idea of the app is to create a bridge between patients and healthcare
+professionals, providing an easy booking system for medical services via the Telegram platform.
 
 !!! warning
     The MedSync WebApp is for demonstration purposes only and not intended for actual medical services.

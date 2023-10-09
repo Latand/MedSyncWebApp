@@ -92,10 +92,7 @@ const FullSummary = () => {
                 user_message: userData.userMessage,
                 userInitData: InitData,
             });
-            let bookings = JSON.parse(await storage.getItem('bookings') || '[]')
-            bookings.push(response.data.booking_id);
             notificationOccurred('success')
-            await storage.setItem('bookings', JSON.stringify(bookings))
             await showPopup({message: 'Your appointment has been confirmed!'});
             await webApp.sendData(JSON.stringify({
                 'action': 'booking_confirmed', 'booking_id': response.data.booking_id
