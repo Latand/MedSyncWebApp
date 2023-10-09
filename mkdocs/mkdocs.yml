@@ -91,9 +91,8 @@ nav:
     - 'Docker': docker.md
   - 'Other':
       - 'Ngrok': ngrok.md
-      - 'Telegram WebApp Integration': telegram.md
       - 'Obtaining a Domain Name': owned-domain.md
-
+  - 'Telegram WebApp Integration Features': telegram.md
 plugins:
   - search:
       lang:

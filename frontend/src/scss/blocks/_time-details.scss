@@ -31,9 +31,9 @@
     &__icon {
       width: 12px;
       height: 12px;
-      stroke: $tg-theme-text;
+      stroke: $tg-theme-hint;
       path {
-        fill: $tg-theme-text;
+        fill: $tg-theme-hint;
       }
     }
 
@@ -107,7 +107,7 @@
 
       &--active {
         background: $tg-theme-button;
-        color: $tg-theme-bg;
+        color: $tg-theme-button-text;
       }
       &--unavailable {
         color: $tg-theme-hint;
@@ -139,7 +139,7 @@
     &__icon {
       width: 12px;
       height: 12px;
-      fill: $tg-theme-text;
+      fill: $tg-theme-hint;
     }
 
     &__text {

@@ -27,11 +27,11 @@
       }
 
       &--active {
-        background: $tg-theme-secondary-bg;
-        color: $tg-theme-button;
+        background: $tg-theme-button;
+        color: $tg-theme-button-text;
 
         .specialization-block__subtitle {
-          color: $tg-theme-button;
+          color: $tg-theme-button-text;
         }
       }
     }

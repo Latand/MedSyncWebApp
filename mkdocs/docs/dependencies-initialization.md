@@ -14,6 +14,12 @@ WebApp up and running. These include Docker, Docker-Compose, and the database se
 Docker provides an efficient way to containerize applications and their dependencies. Docker-Compose, on the other hand,
 allows for defining and running multi-container Docker applications. 
 
+!!! question "What is Docker and Docker-Compose?"
+      Docker is a platform for developing, shipping, and running applications using containerization. 
+      Docker-Compose is a tool for defining and running multi-container Docker applications.
+
+      Refer to [this section](docker.md) for more details on Docker and Docker-Compose.
+
 !!! tip
     We are using Docker and Docker-Compose to run all the services required for the MedSync WebApp. 
 

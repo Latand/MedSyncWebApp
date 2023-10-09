@@ -11,9 +11,9 @@ title: Understanding the Database Structure and Operations
 
 ## Why SQLAlchemy and Alembic?
 
-- **SQLAlchemy**: This is an ORM (Object-Relational Mapping) library for Python. It allows you to work with databases using Python objects, abstracting away much of the SQL, making database interactions more intuitive and less error-prone.
+- [**SQLAlchemy**](https://www.sqlalchemy.org/): This is an ORM (Object-Relational Mapping) library for Python. It allows you to work with databases using Python objects, abstracting away much of the SQL, making database interactions more intuitive and less error-prone.
 
-- **Alembic**: Alembic, designed to work with SQLAlchemy, manages database migrations. As your application grows and changes, so too will your database schema. Alembic helps manage these changes, ensuring data integrity.
+- [**Alembic**](https://alembic.sqlalchemy.org/en/latest/front.html): Alembic, designed to work with SQLAlchemy, manages database migrations. As your application grows and changes, so too will your database schema. Alembic helps manage these changes, ensuring data integrity.
 
 ## Database Diagram: Tables and Relations
 
@@ -90,6 +90,8 @@ Main points:
 ## Deep Dive: Doctors Table
 
 The `Doctors` table, as represented in the SQLAlchemy model:
+!!! example
+    See full code in [doctors.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/infrastructure/database/models/doctors.py)
 
 ```python
 from typing import Optional
@@ -116,11 +118,11 @@ class Doctor(Base, TableNameMixin):
 ## Working with the Data: Requests Repository
 
 The `DoctorRepo` class showcases how the data stored in the `doctors` table can be accessed and manipulated using SQLAlchemy's ORM capabilities:
+!!! example
+    See full code in [doctors.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/infrastructure/database/repo/doctors.py)
 
 ```python
-import datetime
-from dateutil.parser import parse
-from sqlalchemy import select, insert, func
+from sqlalchemy import select
 from infrastructure.database.models import (
     Doctor,
     Booking,
@@ -152,3 +154,33 @@ class DoctorRepo(BaseRepo):
 - `DoctorRepo` contains methods that fetch all doctors and their specialties.
   
 - These methods utilize the `select` function from SQLAlchemy to create a SQL SELECT statement.
+
+
+After that, we import and use the `DoctorRepo` as a property of the `RequestsRepo` class:
+
+!!! example
+    See full code in [requests.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/infrastructure/database/repo/requests.py)
+
+```python hl_lines="15-17"
+@dataclass
+class RequestsRepo:
+    """
+    Repository for handling database operations. This class holds all the repositories for the database models.
+
+    You can add more repositories as properties to this class, so they will be easily accessible.
+    """
+
+    session: AsyncSession
+
+    @property
+    def users(self) -> UserRepo:
+        return UserRepo(self.session)
+
+    @property
+    def doctors(self) -> DoctorRepo:
+        return DoctorRepo(self.session)
+
+#     other repos...
+
+
+```

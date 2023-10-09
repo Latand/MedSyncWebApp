@@ -69,7 +69,7 @@ The configuration for this setup is located in the `docker-compose.yml` file in 
 This setup ensures that each service is isolated yet interconnected via Docker networking and volumes.
 
 
-## 3. Setting Up and Utilizing the Telegram Bot Service
+## 3. Telegram Bot Service
 
 ### 1. Introduction
 
@@ -83,6 +83,9 @@ For developers looking to build similar Telegram bots, a [template](https://gith
 ### 2. Diving into the Bot
 
 #### Entry Point: `bot.py`
+
+!!! example
+    See full code in [bot.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/tgbot/bot.py)
 
 The `bot.py` file is where the magic begins:
 
@@ -150,7 +153,7 @@ A major feature of the MedSync bot is its ability to easily paginate through boo
 
 ---
 
-## 4. Building the REST API Service with FastAPI
+## 4. REST API Service
 
 ### 1. Introduction
 
@@ -159,7 +162,12 @@ A major feature of the MedSync bot is its ability to easily paginate through boo
 
 #### WebServer Initialization
 
-#### Entry Point: `./backend/src/medsyncapp/webhook/app.py`
+**Entry Point: `./backend/src/medsyncapp/webhook/app.py`**
+
+!!! example
+    See full code in [app.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/webhook/app.py)
+
+
 - When the Docker container starts, it runs the Uvicorn command that uses the `app.py` file as the entry point to initialize the web server.
 
 - Uvicorn is an [ASGI server implementation](https://www.uvicorn.org/), ideally suited for frameworks like FastAPI.
@@ -204,6 +212,8 @@ After setting up the base and utilities, routes (or endpoints) for the API are d
 
         return result
     ```
+    See full code in [doctors.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/webhook/routers/doctors.py)
+
 
 In this snippet:
 
@@ -214,3 +224,33 @@ In this snippet:
 - If the doctor is not found in the database, a 404 HTTP exception is raised.
   
 - Otherwise, the doctor's details are returned as a JSON response.
+
+
+!!! Example "Routers Prefixes"
+
+    ```python hl_lines="1 5 6 9 16 18"
+    from fastapi import FastAPI, APIRouter
+
+    from medsyncapp.webhook import routers
+
+    app = FastAPI()
+    prefix_router = APIRouter(prefix="/api")
+
+    for router in [
+        routers.doctors.doctor_router,
+        routers.diagnostics.diagnostics_router,
+        routers.slots.slots_router,
+        routers.slots.working_hours_router,
+        routers.locations.locations_router,
+        routers.doctors.specialties_router,
+    ]:
+        prefix_router.include_router(router)
+
+    app.include_router(prefix_router)
+    ```
+    
+    Here we see the `prefix_router` being initialized with the `/api` prefix. 
+
+    Then, each router is included in the `prefix_router` using the `include_router` method. 
+
+    Finally, the `prefix_router` is included in the main `app`.
