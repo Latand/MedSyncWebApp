@@ -85,7 +85,7 @@ booking_dialog = Dialog(
                 on_click=show_booking,
             ),
             id="scroll_bookings",
-            width=2,
+            width=1,
             height=10,
             hide_on_single_page=True,
         ),

@@ -219,6 +219,12 @@ Note, that you're not restricted by the JSON format, it's just a convenient way 
     Keep in mind that there are constraints to using Telegram's CloudStorage. 
     A bot can store up to 1024 items per user, with each key containing 1-128 characters, and values being 0-4096 characters long.
 
+Now, when the user has finished with the form, we can remove the data from the storage:
+
+```javascript
+await storage.removeItem('user_data');
+```
+
 ---
 
 ## 4. Navigation with Telegram's Buttons
@@ -350,3 +356,82 @@ While MedSync has used specific WebApp methods as per its requirements, the Tele
 
 !!! tip
     It's always a good practice to first check the availability of the `window.Telegram.WebApp` object before making any calls to ensure compatibility and avoid potential errors.
+
+---
+
+## 6. Securing User Data: Validating InitData
+
+### Understanding `InitData`
+
+In Telegram's WebApp environment, `InitData` is a secure way of receiving initial data about the user. 
+This data can include the user's ID, their first and last name, and more. 
+
+Most importantly, `InitData` contains a hashed string that can be validated against the information provided, ensuring its genuineness.
+
+### Integrating in MedSync
+
+#### Fetching `InitData` in React
+
+To ensure we're working with the correct `InitData`, we utilize the `useInitData` hook:
+
+```javascript
+import {useInitData} from "@vkruglikov/react-telegram-web-app";
+
+const [InitDataUnsafe, InitData] = useInitData();
+```
+
+When sending data to our backend, we include this `InitData`:
+
+```javascript
+const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/${itemType}/book_slot`, {
+    // ... other data ...
+    userInitData: InitData,
+});
+```
+
+#### Backend Validation:
+
+Once received in our backend, we validate the `InitData` using our bot's token.
+
+```python
+@diagnostics_router.post("/book_slot")
+async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
+    data = await request.json()
+
+    init_data = data.get("initData")
+    if init_data and not validate_telegram_data(init_data):
+        raise HTTPException(status_code=400, detail="Invalid initData")
+    
+    # ... rest of the method ...
+```
+
+The heart of the validation process is the `validate_telegram_data` function:
+
+!!! example
+    See full code in [utils.py](https://github.com/Latand/MedSyncWebApp/blob/main/backend/src/medsyncapp/webhook/utils.py)
+
+```python
+def validate_telegram_data(init_data: str) -> bool:
+    # ... parsing and constructing data-check-string ...
+    
+    # Computing the secret key
+    secret_key = hmac.new(b"WebAppData", config.tg_bot.token.encode(), hashlib.sha256).digest()
+    
+    # Comparing received hash with computed hash
+    computed_hash = hmac.new(secret_key, data_check_string.encode(), hashlib.sha256).hexdigest()
+    
+    # ... additional checks ...
+    
+    return True
+```
+
+This method:
+
+1. Parses the received data.
+2. Constructs a verification string (`data-check-string`).
+3. Computes a hash of this string using our bot token.
+4. Compares the received hash with the computed hash.
+5. Checks if the data is outdated.
+
+!!! warning "Security First!"
+    Always ensure that any data you receive from client-side applications is validated in the backend. Trusting client-side data without validation can lead to severe security vulnerabilities, like exposing bot token.

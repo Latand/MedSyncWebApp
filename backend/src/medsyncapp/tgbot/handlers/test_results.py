@@ -67,7 +67,7 @@ test_results_dialog = Dialog(
                 on_click=show_result,
             ),
             id="scroll_results",
-            width=2,
+            width=1,
             height=10,
             hide_on_single_page=True,
         ),

@@ -15,10 +15,6 @@
     padding: 10px 0 10px 20px;
     outline: none;
     color: $tg-theme-text;
-
-    input::placeholder {
-      color: $tg-theme-hint;
-    }
   }
 
   &__icon {
@@ -35,4 +31,8 @@
       fill: none;
     }
   }
+}
+
+input::placeholder {
+  color: $tg-theme-hint;
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Header from "../components/Header.jsx";
 import {
     BackButton,
@@ -6,7 +6,6 @@ import {
     useCloudStorage,
     useHapticFeedback,
     useInitData,
-    useShowPopup
 } from "@vkruglikov/react-telegram-web-app";
 import {useNavigate, useParams} from "react-router-dom";
 
@@ -22,7 +21,6 @@ const PatientInformation = () => {
 
     const storage = useCloudStorage()
     const navigate = useNavigate()
-    const showPopup = useShowPopup()
     const {itemType} = useParams()
     const [initDataUnsafe, initData] = useInitData()
     const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
