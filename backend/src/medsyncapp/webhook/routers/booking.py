@@ -77,19 +77,22 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     init_data = data.get("userInitData")
     if init_data and not validate_telegram_data(init_data):
         raise HTTPException(status_code=400, detail="Invalid initData")
-
     parsed_data = parse_init_data(init_data)
     result = await book_slot_endpoint(data, "doctor", repo, parsed_data)
 
     if init_data:
-        with suppress():
-            notification = await get_booking_notification_text(
-                repo, result["booking_id"]
-            )
-            await bot.send_message(
-                chat_id=parsed_data["user_id"],
-                text=notification,
-            )
+        user_info = parsed_data.get("user")
+        if user_info:
+            user_id = json.loads(user_info).get("id")
+            with suppress():
+                notification = await get_booking_notification_text(
+                    repo, result["booking_id"]
+                )
+                await bot.send_message(
+                    chat_id=user_id,
+                    text=notification,
+                )
+
     return result
 
 
@@ -109,13 +112,16 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     )
 
     if init_data:
-        with suppress():
-            notification = await get_booking_notification_text(
-                repo, result["booking_id"]
-            )
-            await bot.send_message(
-                chat_id=parsed_data["user_id"],
-                text=notification,
-            )
+        user_info = parsed_data.get("user")
+        if user_info:
+            user_id = json.loads(user_info).get("id")
+            with suppress():
+                notification = await get_booking_notification_text(
+                    repo, result["booking_id"]
+                )
+                await bot.send_message(
+                    chat_id=user_id,
+                    text=notification,
+                )
 
     return result

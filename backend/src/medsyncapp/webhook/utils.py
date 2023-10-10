@@ -51,15 +51,8 @@ def validate_telegram_data(init_data: str) -> bool:
         secret_key, data_check_string.encode(), hashlib.sha256
     ).hexdigest()
 
-    print(f"Received hash: {received_hash}, computed hash: {computed_hash}")
     if computed_hash != received_hash:
         return False
 
-    # Checking for outdated data
-    auth_date = int(parsed_data.get("auth_date", [0])[0])
-    current_time = int(time.time())
-    # Check if the data is older than 24 hours (86400 seconds)
-    if current_time - auth_date > 86400:
-        return False
 
     return True
