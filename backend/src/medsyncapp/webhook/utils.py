@@ -1,5 +1,6 @@
 import hashlib
 import hmac
+import logging
 import time
 from urllib.parse import unquote, parse_qsl
 
@@ -50,6 +51,7 @@ def validate_telegram_data(init_data: str) -> bool:
         secret_key, data_check_string.encode(), hashlib.sha256
     ).hexdigest()
 
+    print(f"Received hash: {received_hash}, computed hash: {computed_hash}")
     if computed_hash != received_hash:
         return False
 

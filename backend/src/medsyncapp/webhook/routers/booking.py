@@ -1,3 +1,4 @@
+import json
 import logging
 from contextlib import suppress
 
@@ -42,9 +43,16 @@ async def book_slot_endpoint(
     payload: dict, item_type: str, repo: RequestsRepo, parsed_data: dict = None
 ):
     book_repo = repo.doctors if item_type == "doctor" else repo.diagnostics
+
+    user_info = parsed_data.get('user')
+    if user_info:
+        user_id = json.loads(user_info).get('id')
+    else:
+        user_id = None
+
     try:
         booking_id = await book_repo.book_slot(
-            payload, user_id=parsed_data.get("user_id")
+            payload, user_id=user_id
         )
     except sqlalchemy.exc.IntegrityError as e:
         await repo.session.rollback()
