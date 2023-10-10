@@ -85,16 +85,16 @@ services:
     volumes:
       - cache:/data
 
-#  mkdocs:
-#    build:
-#      context: mkdocs
-#      dockerfile: Dockerfile
-#    container_name: "mkdocs_container"
+  mkdocs:
+    build:
+      context: mkdocs
+      dockerfile: Dockerfile
+    container_name: "mkdocs_container"
 #    ports:
 #      - "3780:8000"
-#    volumes:
-#      - ./mkdocs:/usr/src/mkdocs
-#      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
+    volumes:
+      - ./mkdocs:/usr/src/mkdocs
+      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
 
 #  ngrok:
 #    image: ngrok/ngrok:latest

@@ -66,13 +66,11 @@ async def book_slot_endpoint(
 async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     data = await request.json()
 
-    init_data = data.get("initData")
+    init_data = data.get("userInitData")
     if init_data and not validate_telegram_data(init_data):
         raise HTTPException(status_code=400, detail="Invalid initData")
 
     parsed_data = parse_init_data(init_data)
-    logging.info(parsed_data)
-    print(parsed_data)
     result = await book_slot_endpoint(data, "doctor", repo, parsed_data)
 
     if init_data:
@@ -91,7 +89,7 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
 async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     data = await request.json()
 
-    init_data = data.get("initData")
+    init_data = data.get("userInitData")
     if init_data and not validate_telegram_data(init_data):
         raise HTTPException(status_code=400, detail="Invalid initData")
 
