@@ -91,6 +91,7 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
                 await bot.send_message(
                     chat_id=user_id,
                     text=notification,
+                    parse_mode="HTML",
                 )
 
     return result
@@ -122,6 +123,7 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
                 await bot.send_message(
                     chat_id=user_id,
                     text=notification,
+                    parse_mode="HTML",
                 )
 
     return result
