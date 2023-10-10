@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react"
+import {useEffect, useState, lazy, Suspense} from "react"
 import {BrowserRouter, Route, Routes} from "react-router-dom"
 
 import LandingPage from "./pages/landing-page.jsx"
@@ -7,13 +7,16 @@ import DoctorSelection from "./pages/doctor-selection.jsx"
 import About from "./pages/doctor-about.jsx"
 import PatientInformation from "./pages/patient-info-form.jsx"
 
-import SlotSelection from "./pages/appointment-booking.jsx"
+// import SlotSelection from "./pages/appointment-booking.jsx"
+const SlotSelection = lazy(() => import("./pages/appointment-booking.jsx"))
 import RegistrationConfirmation from "./pages/successful-booking.jsx"
 import ClinicSelection from "./pages/clinic-selection.jsx"
 import FullSummary from "./pages/booking-resume.jsx"
 import {useHapticFeedback, useShowPopup} from "@vkruglikov/react-telegram-web-app"
 
 const App = () => {
+  // TODO Implement Error Boundary
+  // Todo React
   const showPopup = useShowPopup()
   const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
   const [isInvalidVersion, setIsInvalidVersion] = useState(false)
@@ -61,10 +64,12 @@ const App = () => {
             <Route path="/doctor/:doctor_id" element={<About/>}/>
             <Route
               path="/booking/appointment"
-              element={<SlotSelection
-                storageKey="selectedDoctor"
-                itemType="doctors"
-              />}/>
+              element={<Suspense fallback={<p>Loading...</p>}>
+                <SlotSelection
+                  storageKey="selectedDoctor"
+                  itemType="doctors"
+                />
+              </Suspense>}/>
             <Route path="/booking/diagnostics/:diagnostic_id" element={<ClinicSelection/>}/>
             <Route path="/booking/clinic" element={<SlotSelection
               storageKey="selectedDiagnostic"

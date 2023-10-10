@@ -12,6 +12,7 @@ import {useNavigate, useParams} from "react-router-dom"
 
 
 const PatientInformation = () => {
+  // Todo React hook Form library
   const [formData, setFormData] = useState({
     userName: "",
     userSurname: "",
@@ -25,7 +26,9 @@ const PatientInformation = () => {
   const {itemType} = useParams()
   const [initDataUnsafe, initData] = useInitData()
   const [impactOccurred, notificationOccurred, selectionChanged] = useHapticFeedback()
+  // TODO: implement useMemo for isFormValid so that it is not calculated on every render
   const [isFormValid, setIsFormValid] = useState(false)
+
   const showPopup = useShowPopup()
 
   const checkIfFormValid = () => {
@@ -125,7 +128,7 @@ const PatientInformation = () => {
               className="form"
             >
 
-              <label htmlFor="user_name" className="form__label">
+              <label className="form__label">
                                 Name
                 <input
                   className="form__input"
@@ -140,7 +143,7 @@ const PatientInformation = () => {
                 />
               </label>
 
-              <label htmlFor="user_surname" className="form__label">
+              <label className="form__label">
                                 Surname
                 <input
                   className="form__input"
@@ -156,7 +159,7 @@ const PatientInformation = () => {
               </label>
 
 
-              <label htmlFor="user_phone" className="form__label">
+              <label className="form__label">
                                 Phone number
                 <input
                   className="form__input"
@@ -171,7 +174,7 @@ const PatientInformation = () => {
                 />
               </label>
 
-              <label htmlFor="user_email" className="form__label">
+              <label className="form__label">
                                 Your E-Mail
                 <input
                   className="form__input"
