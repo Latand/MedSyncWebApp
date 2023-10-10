@@ -13,10 +13,10 @@ services:
 #      - ./frontend:/home/node/app
 
 #     Uncomment this if you are running in development
-    command: ["npm", "run", "dev", "--host"]
+#    command: ["npm", "run", "dev", "--host"]
 
 #     Comment this if you are running in production
-#    command: ["npm", "run", "build"]
+    command: ["npm", "run", "build"]
 
     stop_signal: SIGINT
 
