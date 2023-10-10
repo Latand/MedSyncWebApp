@@ -25,6 +25,6 @@ async def bot_echo(message: types.Message, repo: RequestsRepo):
                  f"📋 Booking ID: {hcode(booking_id)}\n"
                     f"{appointment_type_text}"
                  f"📆 Date & Time: {hbold(booking_time)}\n\n"
-                 f"📍 Location: {hbold(booking_info.Location.location_name)}: {hbold(booking_info.Location.address)}\n\n"
+                 f"📍 Location: {hbold(booking_info.Location.name)}: {hbold(booking_info.Location.address)}\n\n"
                  f"Thank you for choosing our service! If you have any questions or need to reschedule, feel free to reach out. 📞"
         )

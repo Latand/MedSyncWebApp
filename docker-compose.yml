@@ -9,11 +9,14 @@ services:
     volumes:
       - /var/app/medsync/:/home/node/app/dist
 
-    # Uncomment this if you are running in development
-#    command: ["npm", "run", "dev", "--host"]
+#     Uncomment this if you are running in development
+#      - ./frontend:/home/node/app
 
-    # Comment this if you are running in production
-    command: ["npm", "run", "build"]
+#     Uncomment this if you are running in development
+    command: ["npm", "run", "dev", "--host"]
+
+#     Comment this if you are running in production
+#    command: ["npm", "run", "build"]
 
     stop_signal: SIGINT
 
@@ -82,26 +85,26 @@ services:
     volumes:
       - cache:/data
 
-  mkdocs:
-    build:
-      context: mkdocs
-      dockerfile: Dockerfile
-    container_name: "mkdocs_container"
-    ports:
-      - "3780:8000"
-    volumes:
-      - ./mkdocs:/usr/src/mkdocs
-      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
-
-#  ngrok:
-#    image: ngrok/ngrok:latest
-#    restart: unless-stopped
-#    environment:
-#      - NGROK_CONFIG=/etc/ngrok.yml
+#  mkdocs:
+#    build:
+#      context: mkdocs
+#      dockerfile: Dockerfile
+#    container_name: "mkdocs_container"
+#    ports:
+#      - "3780:8000"
 #    volumes:
-#      - ./ngrok.yml:/etc/ngrok.yml
-#    expose:
-#      - 443
+#      - ./mkdocs:/usr/src/mkdocs
+#      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    environment:
+      - NGROK_CONFIG=/etc/ngrok.yml
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+    expose:
+      - 443
 
 
 volumes:

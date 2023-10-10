@@ -30,6 +30,7 @@ bot = [
     "faker",
 ]
 web = [
+    "aiogram~=3.0",
     "uvicorn~=0.23",
     "fastapi~=0.102",
     "python-dateutil",

@@ -1,5 +1,5 @@
 
-import aboutIcon from '../../assets/images/about/about-icon.svg';
+import aboutIcon from "../../assets/images/about/about-icon.svg"
 
 const TopBar = ({ title }) => (
   <div className="top-bar">
@@ -12,6 +12,6 @@ const TopBar = ({ title }) => (
       />
     </div>
   </div>
-);
+)
 
-export default TopBar;
+export default TopBar

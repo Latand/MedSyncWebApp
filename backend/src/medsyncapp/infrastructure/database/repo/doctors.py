@@ -49,11 +49,11 @@ class DoctorRepo(BaseRepo):
         result = await self.session.execute(stmt)
         return result.mappings().all()
 
-    async def book_slot(self, payload: dict):
+    async def book_slot(self, payload: dict, user_id=None):
         insert_stmt = (
             insert(Booking)
             .values(
-                user_id=payload.get("user_id"),
+                user_id=user_id,
                 user_full_name=payload.get("user_name", "")
                 + " "
                 + payload.get("user_surname", ""),
