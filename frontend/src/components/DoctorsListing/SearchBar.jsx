@@ -1,18 +1,17 @@
-import SearchIcon from "../SearchIcon.jsx"
+import { forwardRef } from "react";
+import SearchIcon from "../SearchIcon";
 
-const SearchBar = ({search, setSearch}) => (
-  <div className="search-bar">
-    <input
-      className="search-bar__input"
-      type="text"
-      placeholder="Search"
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-    <div className="search-bar__icon">
-      <SearchIcon/>
+export const SearchBar = forwardRef((props, ref) => (
+    <div className="search-bar">
+        <input
+            className="search-bar__input"
+            type="text"
+            placeholder="Search"
+            ref={ref}
+            {...props}
+        />
+        <div className="search-bar__icon">
+            <SearchIcon />
+        </div>
     </div>
-  </div>
-)
-
-export default SearchBar
+));
