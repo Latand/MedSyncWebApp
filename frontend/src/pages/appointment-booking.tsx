@@ -53,7 +53,7 @@ export const SlotSelection: React.FC<SlotSelectionProps> = ({
         itemType
     );
 
-    const handleDateChange = (date: any) => {
+    const handleDateChange = (date: Date) => {
         selectionChanged();
         setSelectedDate(date);
     };

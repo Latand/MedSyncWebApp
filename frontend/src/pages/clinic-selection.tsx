@@ -1,17 +1,17 @@
 import { useEffect, useState, useMemo, useRef } from "react";
-
-import { useDebounce } from "../hooks/useDebounce";
-import { SearchBar } from "../components/DoctorsListing/SearchBar";
-import { Header } from "../components/Header";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+
+import axios from "axios";
+
 import {
     BackButton,
     MainButton,
     useCloudStorage,
     useHapticFeedback
 } from "@vkruglikov/react-telegram-web-app";
-
+import { Header } from "../components/Header";
+import { SearchBar } from "../components/DoctorsListing/SearchBar";
+import { useDebounce } from "../hooks";
 interface SpecializationBlockProps {
     title: string;
     subtitle: string;
