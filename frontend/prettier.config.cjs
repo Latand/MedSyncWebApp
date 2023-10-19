@@ -51,7 +51,7 @@ module.exports = {
     requirePragma: false,
 
     //* Определяет, должны ли точки с запятой быть добавлены в конце выражений.
-    semi: true,
+    semi: false,
 
     //* Указывает, должен ли Prettier размещать каждый атрибут JSX на отдельной строке.
     singleAttributePerLine: true,

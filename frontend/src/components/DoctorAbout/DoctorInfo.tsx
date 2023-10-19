@@ -1,6 +1,6 @@
-import ellipseOnline from "../../assets/images/doctors-listing/ellipse-online.svg";
-import { Link } from "react-router-dom";
-import { useHapticFeedback } from "@vkruglikov/react-telegram-web-app";
+import ellipseOnline from "../../assets/images/doctors-listing/ellipse-online.svg"
+import { Link } from "react-router-dom"
+import { useHapticFeedback } from "@vkruglikov/react-telegram-web-app"
 
 interface DoctorInfoProps {
     name: string;
@@ -10,41 +10,41 @@ interface DoctorInfoProps {
 }
 
 export const DoctorInfo: React.FC<DoctorInfoProps> = ({
-    name,
-    specialty,
-    status,
-    imageSrc
+  name,
+  specialty,
+  status,
+  imageSrc
 }) => {
-    const [impactOccurred, notificationOccurred, selectionChanged] =
-        useHapticFeedback();
+  const [impactOccurred, notificationOccurred, selectionChanged] =
+        useHapticFeedback()
 
-    return (
-        <div className="about__content">
-            <img
-                className="about__img"
-                src={imageSrc}
-                alt="Doctor"
-            />
-            <p className="about__title">{name}</p>
-            <p className="about__subtitle">{specialty}</p>
+  return (
+    <div className="about__content">
+      <img
+        className="about__img"
+        src={imageSrc}
+        alt="Doctor"
+      />
+      <p className="about__title">{name}</p>
+      <p className="about__subtitle">{specialty}</p>
 
-            <div className="about__status">
-                <p className="about__status__text">{status}</p>
-                <img
-                    className="about__status__img"
-                    src={ellipseOnline}
-                    alt={status}
-                />
-            </div>
-            <Link
-                className="button about__button"
-                to={"/booking/appointment"}
-                onClick={() => {
-                    notificationOccurred("success");
-                }}
-            >
+      <div className="about__status">
+        <p className="about__status__text">{status}</p>
+        <img
+          className="about__status__img"
+          src={ellipseOnline}
+          alt={status}
+        />
+      </div>
+      <Link
+        className="button about__button"
+        to={"/booking/appointment"}
+        onClick={() => {
+          notificationOccurred("success")
+        }}
+      >
                 Book Appointment
-            </Link>
-        </div>
-    );
-};
+      </Link>
+    </div>
+  )
+}

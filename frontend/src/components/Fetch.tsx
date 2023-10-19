@@ -1,4 +1,4 @@
-import { useFetch } from "../hooks";
+import { useFetch } from "../hooks"
 
 interface FetchProps<T = unknown> {
     uri: string;
@@ -8,16 +8,16 @@ interface FetchProps<T = unknown> {
 }
 
 export const Fetch = <T = unknown,>({
-    uri,
-    renderSuccess,
-    loadingFallback = <p>Loading...</p>,
-    renderError = error => <pre>{error}</pre>
+  uri,
+  renderSuccess,
+  loadingFallback = <p>Loading...</p>,
+  renderError = error => <pre>{error}</pre>
 }: FetchProps<T>) => {
-    const { status, data, error } = useFetch<T>(uri);
+  const { status, data, error } = useFetch<T>(uri)
 
-    if (status === "idle") return;
-    if (status === "pending") return loadingFallback;
-    if (status === "rejected") return renderError(error.message);
+  if (status === "idle") return
+  if (status === "pending") return loadingFallback
+  if (status === "rejected") return renderError(error.message)
 
-    return renderSuccess(data);
-};
+  return renderSuccess(data)
+}

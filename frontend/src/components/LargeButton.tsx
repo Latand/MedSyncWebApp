@@ -1,4 +1,4 @@
-import arrowRight from "../assets/images/landing-page/arrow-right.svg";
+import arrowRight from "../assets/images/landing-page/arrow-right.svg"
 
 interface LargeButtonProps {
     handleSubmit: React.MouseEventHandler<HTMLAnchorElement>;
@@ -7,22 +7,22 @@ interface LargeButtonProps {
 }
 
 export const LargeButton: React.FC<LargeButtonProps> = ({
-    handleSubmit,
-    title,
-    typeButton
+  handleSubmit,
+  title,
+  typeButton
 }) => {
-    return (
-        <a
-            className={`button ${typeButton}__button`}
-            onClick={handleSubmit}
-        >
-            {title}
-            <span className="arrow">
-                <img
-                    src={arrowRight}
-                    alt="Arrow Right"
-                />
-            </span>
-        </a>
-    );
-};
+  return (
+    <a
+      className={`button ${typeButton}__button`}
+      onClick={handleSubmit}
+    >
+      {title}
+      <span className="arrow">
+        <img
+          src={arrowRight}
+          alt="Arrow Right"
+        />
+      </span>
+    </a>
+  )
+}
