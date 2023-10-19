@@ -10,6 +10,7 @@
 
     &__list {
       @include displayFlex(space-between, center, row);
+      scrollbar-gutter: stable;
 
       list-style: none;
       text-align: center;
@@ -22,6 +23,7 @@
       color: $tg-theme-text;
       text-decoration: none;
       cursor: pointer;
+
     }
 
     &__button {
@@ -32,6 +34,13 @@
       padding: 6px 15px;
       border: 1px solid $tg-theme-secondary-bg;
       border-radius: 19px;
+
+      &--loading {
+        width: 100px;
+        height: 10px;
+        @include loading;
+      }
+
 
       &--active {
         background: $tg-theme-button;
@@ -53,11 +62,17 @@
   .card {
     @include displayFlex(space-between, flex-start, row);
 
+
     gap: 20px;
     background: $tg-theme-secondary-bg;
     border-radius: 12px;
     width: 100%;
     cursor: pointer;
+
+    &--loading {
+      @include loading;
+      margin-bottom: 15px;
+    }
 
     .card__review__img {
       fill: $tg-theme-hint;
@@ -73,6 +88,7 @@
       .card__address,
       .card__price {
         color: $tg-theme-button-text;
+
       }
 
       &:hover {

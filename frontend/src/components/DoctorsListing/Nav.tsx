@@ -41,3 +41,19 @@ export const Nav: React.FC<NavProps> = ({
     </nav>
   )
 }
+
+export const LoadingNav = () => {
+  return (
+    <nav className="nav">
+      <ul className="nav__list">
+        {[...Array(5)].map((_, index) => (
+          <li className="nav__item nav__item--loading"
+            key={index}
+          >
+            <div className="nav__button nav__button--loading"></div>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

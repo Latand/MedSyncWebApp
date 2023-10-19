@@ -62,3 +62,12 @@ export const DoctorCard: React.FC<DoctorCardProps> = ({
     </div>
   </section>
 )
+
+
+export const LoadingDoctorCard: React.FC = () => (
+  <section className="card card--loading">
+    <div className="card__image card__image__img--loading" />
+    <div className="card__info">
+    </div>
+  </section>
+)

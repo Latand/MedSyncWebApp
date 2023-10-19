@@ -32,3 +32,19 @@
     opacity: 0.3;
   }
 }
+
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@mixin loading {
+  background: linear-gradient(90deg, $tg-theme-secondary-bg 25%, $tg-theme-bg 50%, $tg-theme-secondary-bg 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite ease-in-out;
+}

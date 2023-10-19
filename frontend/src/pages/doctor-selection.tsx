@@ -1,21 +1,16 @@
-import { useEffect, useState, useRef } from "react"
+import {useEffect, useRef, useState} from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import {
-  BackButton,
-  MainButton,
-  useCloudStorage,
-  useHapticFeedback
-} from "@vkruglikov/react-telegram-web-app"
-import { DoctorCard } from "../components/DoctorsListing/DoctorCard"
-import { SearchBar } from "../components/DoctorsListing/SearchBar"
-import { Nav } from "../components/DoctorsListing/Nav"
-import { Header } from "../components/Header"
+import {useNavigate} from "react-router-dom"
+import {BackButton, MainButton, useCloudStorage, useHapticFeedback} from "@vkruglikov/react-telegram-web-app"
+import {DoctorCard, LoadingDoctorCard} from "../components/DoctorsListing/DoctorCard"
+import {SearchBar} from "../components/DoctorsListing/SearchBar"
+import {LoadingNav, Nav} from "../components/DoctorsListing/Nav"
+import {Header} from "../components/Header"
 
 export const DoctorSelection = () => {
   const navigate = useNavigate()
   const storage = useCloudStorage()
-  const [impactOccurred, notificationOccurred, selectionChanged] =
+  const [, notificationOccurred, selectionChanged] =
         useHapticFeedback()
   const [specialties, setSpecialties] = useState<any[]>([])
   // const [search, setSearch] = useState("");
@@ -35,7 +30,9 @@ export const DoctorSelection = () => {
         //@ts-ignore
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/specialties/`
       )
+      // setTimeout(() => {
       setSpecialties(response.data)
+      // }, 2000)
     } catch (error) {
       console.error((error as Error).message)
     }
@@ -46,8 +43,10 @@ export const DoctorSelection = () => {
         //@ts-ignore
         `${import.meta.env.VITE_REACT_APP_API_URL}/api/doctors/`
       )
+      // setTimeout(() => {
       setAllDoctors(response.data)
       setDisplayedDoctors(response.data) // Initially display all doctors
+      // }, 1000)
     } catch (error) {
       console.error((error as Error).message)
     }
@@ -88,8 +87,10 @@ export const DoctorSelection = () => {
 
   useEffect(() => {
     notificationOccurred("success")
-    fetchAllDoctors()
-    fetchSpecialties()
+    setTimeout(() => {
+      fetchAllDoctors()
+      fetchSpecialties()
+    }, 1000)
     storage.getItem("selectedDoctor").then(value => {
       if (value) {
         setSelectedDoctor(JSON.parse(value))
@@ -122,20 +123,25 @@ export const DoctorSelection = () => {
 
   return (
     <>
-      <BackButton onClick={() => navigate("/")} />
+      <BackButton onClick={() => navigate("/")}/>
       <div className="doctor-selection">
         <Header
           title="Select a Doctor"
           className="header doctor-selection"
         />
-        <SearchBar ref={searchRef} />
-        {specialties && (
+        <SearchBar ref={searchRef}/>
+        {specialties.length > 0 && (
           <Nav
             specialties={specialties}
             onSpecialtyClick={setSpecialty}
             selectedSpecialty={specialty}
           />
         )}
+        {
+          specialties.length === 0 && (
+            <LoadingNav/>
+          )
+        }
         {displayedDoctors && (
           <main className="main">
             {displayedDoctors.map(doctor => (
@@ -143,7 +149,7 @@ export const DoctorSelection = () => {
                 className={
                   selectedDoctor &&
                                     selectedDoctor.doctor_id ===
-                                        doctor.doctor_id
+                                    doctor.doctor_id
                     ? "card card--active"
                     : "card"
                 }
@@ -162,6 +168,9 @@ export const DoctorSelection = () => {
             ))}
           </main>
         )}
+        {displayedDoctors.length === 0 && Array.from({length: 10}).map((_, index) => (
+          <LoadingDoctorCard key={index}/>
+        ))}
       </div>
       {selectedDoctor && (
         <MainButton
