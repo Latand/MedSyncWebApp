@@ -4,7 +4,7 @@ import logging
 import time
 from urllib.parse import unquote, parse_qsl
 
-from aiogram import Bot
+from aiogram import Bot, types
 
 from medsyncapp.infrastructure.database.repo.requests import RequestsRepo
 from medsyncapp.infrastructure.database.setup import create_session_pool, create_engine
@@ -54,5 +54,10 @@ def validate_telegram_data(init_data: str) -> bool:
     if computed_hash != received_hash:
         return False
 
-
     return True
+
+
+def track_user_booked_text(username: str, user_id: int, first_name: str, last_name: str):
+    user_username = f"@{username}" if username else ""
+    user_mention = f"<a href='tg://user?id={user_id}'>{first_name} {last_name}</a>"
+    return f"{user_mention} {user_username} booked a slot"

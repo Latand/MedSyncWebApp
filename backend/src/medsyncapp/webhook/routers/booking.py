@@ -1,5 +1,4 @@
 import json
-import logging
 from contextlib import suppress
 
 import sqlalchemy.exc
@@ -13,6 +12,8 @@ from medsyncapp.webhook.utils import (
     validate_telegram_data,
     bot,
     parse_init_data,
+    track_user_booked_text,
+    config,
 )
 from .diagnostics import diagnostics_router
 from .doctors import doctor_router
@@ -44,16 +45,14 @@ async def book_slot_endpoint(
 ):
     book_repo = repo.doctors if item_type == "doctor" else repo.diagnostics
 
-    user_info = parsed_data.get('user')
+    user_info = parsed_data.get("user")
     if user_info:
-        user_id = json.loads(user_info).get('id')
+        user_id = json.loads(user_info).get("id")
     else:
         user_id = None
 
     try:
-        booking_id = await book_repo.book_slot(
-            payload, user_id=user_id
-        )
+        booking_id = await book_repo.book_slot(payload, user_id=user_id)
     except sqlalchemy.exc.IntegrityError as e:
         await repo.session.rollback()
         if "bookings_user_id_fkey" in str(e) and payload.get("user_id"):
@@ -63,7 +62,9 @@ async def book_slot_endpoint(
                 + " "
                 + payload.get("user_surname", ""),
             )
-            booking_id = await book_repo.book_slot(payload, user_id=parsed_data.get("user_id"))
+            booking_id = await book_repo.book_slot(
+                payload, user_id=parsed_data.get("user_id")
+            )
         else:
             raise HTTPException(status_code=400, detail="Invalid payload") from e
 
@@ -80,21 +81,62 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     parsed_data = parse_init_data(init_data)
     result = await book_slot_endpoint(data, "doctor", repo, parsed_data)
 
+    await notify_booking(
+        init_data=init_data,
+        repo=repo,
+        result=result,
+        parsed_data=parsed_data,
+    )
+
+    return result
+
+
+async def log_notify_admins(
+    username: str, user_id: int, first_name: str, last_name: str
+):
+    for admin_id in config.tg_bot.admin_ids:
+        with suppress():
+            await bot.send_message(
+                chat_id=admin_id,
+                text=track_user_booked_text(
+                    username=username,
+                    user_id=user_id,
+                    first_name=first_name,
+                    last_name=last_name,
+                ),
+                parse_mode="HTML",
+            )
+
+
+async def notify_booking(
+    init_data: str,
+    repo: RequestsRepo,
+    result: dict,
+    parsed_data: dict = None,
+):
     if init_data:
         user_info = parsed_data.get("user")
         if user_info:
-            user_id = json.loads(user_info).get("id")
+            user_info = json.loads(user_info)
+            user_id = user_info.get("id")
+            username = user_info.get("username")
+            first_name = user_info.get("first_name")
+            last_name = user_info.get("last_name")
+            notification = await get_booking_notification_text(
+                repo, result["booking_id"]
+            )
+            await log_notify_admins(
+                username=username,
+                user_id=user_id,
+                first_name=first_name,
+                last_name=last_name,
+            )
             with suppress():
-                notification = await get_booking_notification_text(
-                    repo, result["booking_id"]
-                )
                 await bot.send_message(
                     chat_id=user_id,
                     text=notification,
                     parse_mode="HTML",
                 )
-
-    return result
 
 
 @diagnostics_router.post("/book_slot")
@@ -112,18 +154,11 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
         result["booking_id"], diagnostic_id=data["diagnostic_id"]
     )
 
-    if init_data:
-        user_info = parsed_data.get("user")
-        if user_info:
-            user_id = json.loads(user_info).get("id")
-            with suppress():
-                notification = await get_booking_notification_text(
-                    repo, result["booking_id"]
-                )
-                await bot.send_message(
-                    chat_id=user_id,
-                    text=notification,
-                    parse_mode="HTML",
-                )
+    await notify_booking(
+        init_data=init_data,
+        repo=repo,
+        result=result,
+        parsed_data=parsed_data,
+    )
 
     return result
