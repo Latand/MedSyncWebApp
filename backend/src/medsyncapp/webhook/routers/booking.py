@@ -81,6 +81,39 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
     parsed_data = parse_init_data(init_data)
     result = await book_slot_endpoint(data, "doctor", repo, parsed_data)
 
+    await notify_booking(
+        init_data=init_data,
+        repo=repo,
+        result=result,
+        parsed_data=parsed_data,
+    )
+
+    return result
+
+
+async def log_notify_admins(
+    username: str, user_id: int, first_name: str, last_name: str
+):
+    for admin_id in config.tg_bot.admin_ids:
+        with suppress():
+            await bot.send_message(
+                chat_id=admin_id,
+                text=track_user_booked_text(
+                    username=username,
+                    user_id=user_id,
+                    first_name=first_name,
+                    last_name=last_name,
+                ),
+                parse_mode="HTML",
+            )
+
+
+async def notify_booking(
+    init_data: str,
+    repo: RequestsRepo,
+    result: dict,
+    parsed_data: dict = None,
+):
     if init_data:
         user_info = parsed_data.get("user")
         if user_info:
@@ -90,28 +123,20 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
             first_name = user_info.get("first_name")
             last_name = user_info.get("last_name")
             notification = await get_booking_notification_text(
-                    repo, result["booking_id"]
-                )
+                repo, result["booking_id"]
+            )
+            await log_notify_admins(
+                username=username,
+                user_id=user_id,
+                first_name=first_name,
+                last_name=last_name,
+            )
             with suppress():
                 await bot.send_message(
                     chat_id=user_id,
                     text=notification,
                     parse_mode="HTML",
                 )
-            for admin_id in config.tg_bot.admin_ids:
-                with suppress():
-                    await bot.send_message(
-                    chat_id=admin_id,
-                    text=track_user_booked_text(
-                        username=username,
-                        user_id=user_id,
-                        first_name=first_name,
-                        last_name=last_name,
-                    ),
-                    parse_mode="HTML",
-                )
-
-    return result
 
 
 @diagnostics_router.post("/book_slot")
@@ -129,18 +154,11 @@ async def book_slot(request: Request, repo: RequestsRepo = Depends(get_repo)):
         result["booking_id"], diagnostic_id=data["diagnostic_id"]
     )
 
-    if init_data:
-        user_info = parsed_data.get("user")
-        if user_info:
-            user_id = json.loads(user_info).get("id")
-            with suppress():
-                notification = await get_booking_notification_text(
-                    repo, result["booking_id"]
-                )
-                await bot.send_message(
-                    chat_id=user_id,
-                    text=notification,
-                    parse_mode="HTML",
-                )
+    await notify_booking(
+        init_data=init_data,
+        repo=repo,
+        result=result,
+        parsed_data=parsed_data,
+    )
 
     return result
