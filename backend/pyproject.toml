@@ -36,6 +36,13 @@ web = [
     "python-dateutil",
 ]
 
+admin = [
+    "uvicorn~=0.23",
+    "fastapi~=0.102",
+    "python-dateutil",
+    "sqladmin[full]"
+]
+
 
 [project.urls]
 "Homepage" = "https://github.com/Latand/MedSyncWebApp/"

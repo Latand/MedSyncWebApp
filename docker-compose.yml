@@ -1,44 +1,44 @@
 version: "3"
 
 services:
-  app:
-    build:
-        context: ./frontend
-        dockerfile: Dockerfile
-    working_dir: "/home/node/app"
-    volumes:
-      - /var/app/medsync/:/home/node/app/dist
+#  app:
+#    build:
+#        context: ./frontend
+#        dockerfile: Dockerfile
+#    working_dir: "/home/node/app"
+#    volumes:
+#      - /var/app/medsync/:/home/node/app/dist
+#
+##     Uncomment this if you are running in development
+##      - ./frontend:/home/node/app
+#
+##     Uncomment this if you are running in development
+##    command: ["npm", "run", "dev", "--host"]
+#
+##     Comment this if you are running in production
+#    command: ["npm", "run", "build"]
+#
+#    stop_signal: SIGINT
 
-#     Uncomment this if you are running in development
-#      - ./frontend:/home/node/app
-
-#     Uncomment this if you are running in development
-#    command: ["npm", "run", "dev", "--host"]
-
-#     Comment this if you are running in production
-    command: ["npm", "run", "build"]
-
-    stop_signal: SIGINT
-
-  bot:
-    image: "medsyncapp_bot"
-    stop_signal: SIGINT
-    build:
-      context: ./backend
-      dockerfile: ./bot.Dockerfile
-    volumes:
-      - ./backend/src:/src/  # Volume for bot code
-      - /var/app/medsync:/src/public # Volume for static files, that are shared between bot and frontend
-    restart: always
-
-    env_file:
-      - ".env"
-
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
+#  bot:
+#    image: "medsyncapp_bot"
+#    stop_signal: SIGINT
+#    build:
+#      context: ./backend
+#      dockerfile: ./bot.Dockerfile
+#    volumes:
+#      - ./backend/src:/src/  # Volume for bot code
+#      - /var/app/medsync:/src/public # Volume for static files, that are shared between bot and frontend
+#    restart: always
+#
+#    env_file:
+#      - ".env"
+#
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "200k"
+#        max-file: "10"
 
   pg_database:
     image: postgres:13-alpine
@@ -75,6 +75,25 @@ services:
         max-size: "200k"
         max-file: "10"
 
+  admin:
+    image: "medsyncapp_admin"
+    stop_signal: SIGINT
+    build:
+      context: ./backend
+      dockerfile: ./admin.Dockerfile
+    ports:
+      - "3780:8001"
+    volumes:
+      - ./backend/src:/src
+    restart: always
+    env_file:
+      - ".env"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
 
   redis_cache:
     image: redis:6.2-alpine
@@ -85,16 +104,16 @@ services:
     volumes:
       - cache:/data
 
-  mkdocs:
-    build:
-      context: mkdocs
-      dockerfile: Dockerfile
-    container_name: "mkdocs_container"
-#    ports:
-#      - "3780:8000"
-    volumes:
-      - ./mkdocs:/usr/src/mkdocs
-      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
+#  mkdocs:
+#    build:
+#      context: mkdocs
+#      dockerfile: Dockerfile
+#    container_name: "mkdocs_container"
+##    ports:
+##      - "3780:8000"
+#    volumes:
+#      - ./mkdocs:/usr/src/mkdocs
+#      - /var/app/mkdocs/public_docs:/usr/src/mkdocs/public_docs
 
 #  ngrok:
 #    image: ngrok/ngrok:latest
