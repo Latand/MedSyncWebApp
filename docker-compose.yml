@@ -20,25 +20,25 @@ services:
 #
 #    stop_signal: SIGINT
 
-#  bot:
-#    image: "medsyncapp_bot"
-#    stop_signal: SIGINT
-#    build:
-#      context: ./backend
-#      dockerfile: ./bot.Dockerfile
-#    volumes:
-#      - ./backend/src:/src/  # Volume for bot code
-#      - /var/app/medsync:/src/public # Volume for static files, that are shared between bot and frontend
-#    restart: always
-#
-#    env_file:
-#      - ".env"
-#
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: "200k"
-#        max-file: "10"
+  bot:
+    image: "medsyncapp_bot"
+    stop_signal: SIGINT
+    build:
+      context: ./backend
+      dockerfile: ./bot.Dockerfile
+    volumes:
+      - ./backend/src:/src/
+      - /var/app/medsync:/src/public
+    restart: always
+
+    env_file:
+      - ".env"
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
 
   pg_database:
     image: postgres:13-alpine
@@ -84,7 +84,9 @@ services:
     ports:
       - "3780:8001"
     volumes:
-      - ./backend/src:/src
+        - ./backend/src:/src
+        - /var/app/medsync:/src/public
+
     restart: always
     env_file:
       - ".env"
