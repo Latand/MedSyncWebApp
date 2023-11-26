@@ -38,7 +38,7 @@ class UserAdmin(ModelView, model=User):
 
 
 class DoctorAdmin(ModelView, model=Specialist):
-    column_list = [Specialist.full_name, "specialty"]
+    column_list = [Specialist.specialist_id, Specialist.full_name, "specialty", "provided_services"]
 
     @staticmethod
     def _list_thumbnail(view, context):
@@ -47,7 +47,11 @@ class DoctorAdmin(ModelView, model=Specialist):
             '<img src="{}" alt="Photo of {}" style="width:50px; height:50px;">'.format(image_url, view.full_name))
 
     column_formatters = {
-        'file': _list_thumbnail
+        'file': _list_thumbnail,
+    }
+    column_labels = {
+        "full_name": "Full name",
+        "provided_services": "Provided services"
     }
 
 
