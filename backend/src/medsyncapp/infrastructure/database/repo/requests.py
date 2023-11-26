@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from medsyncapp.infrastructure.database.repo.bookings import BookingsRepo
-from medsyncapp.infrastructure.database.repo.diagnostics import DiagnosticRepo
-from medsyncapp.infrastructure.database.repo.doctors import DoctorRepo
+from medsyncapp.infrastructure.database.repo.services import ServiceRepo
+from medsyncapp.infrastructure.database.repo.specialists import SpecialistRepo
 from medsyncapp.infrastructure.database.repo.locations import LocationsRepo
 from medsyncapp.infrastructure.database.repo.results import ResultsRepo
 from medsyncapp.infrastructure.database.repo.slots import SlotRepo
@@ -26,12 +26,12 @@ class RequestsRepo:
         return UserRepo(self.session)
 
     @property
-    def doctors(self) -> DoctorRepo:
-        return DoctorRepo(self.session)
+    def doctors(self) -> SpecialistRepo:
+        return SpecialistRepo(self.session)
 
     @property
-    def diagnostics(self) -> DiagnosticRepo:
-        return DiagnosticRepo(self.session)
+    def diagnostics(self) -> ServiceRepo:
+        return ServiceRepo(self.session)
 
     @property
     def slots(self) -> SlotRepo:
