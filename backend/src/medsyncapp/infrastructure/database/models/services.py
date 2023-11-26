@@ -20,7 +20,6 @@ class Service(Base, TableNameMixin):
     price: Mapped[float] = mapped_column(DECIMAL(10, 2))
     photo_url: Mapped[str] = mapped_column(String(256))
     duration: Mapped[int] = mapped_column(Integer)
-
     specialists = relationship("Specialist", secondary="specialist_service_link", back_populates="provided_services")
     bookings = relationship('Booking', back_populates='service')
 
@@ -35,9 +34,9 @@ class ServiceLocation(Base):
     location_id: Mapped[int] = mapped_column(ForeignKey("locations.location_id"))
 
 
-class DiagnosticResult(Base, TimestampMixin):
-    __tablename__ = "diagnostic_results"
-    diagnostic_result_id: Mapped[int_pk]
-    booking_id = mapped_column(ForeignKey("bookings.booking_id"))
+class ServiceResult(Base, TimestampMixin):
+    __tablename__ = "service_results"
+    service_result_id: Mapped[int_pk]
+    service_id = mapped_column(ForeignKey("services.service_id"))
     file_path: Mapped[str] = mapped_column(String(256))
     file_id: Mapped[Optional[str]] = mapped_column(String(256))
