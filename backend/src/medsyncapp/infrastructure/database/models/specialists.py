@@ -12,6 +12,8 @@ class Specialty(Base, TableNameMixin):
     specialty_id: Mapped[int_pk]
     specialty_name: Mapped[str] = mapped_column(String(128))
 
+    specialists = relationship("Specialist", back_populates="specialty")
+
     def __repr__(self):
         return self.specialty_name
 
@@ -25,16 +27,12 @@ class Specialist(Base, TableNameMixin):
         FileType(storage=FileSystemStorage(path="/src/public/images/specialists/profiles")))
     experience: Mapped[Optional[str]] = mapped_column(TEXT)
     certificates: Mapped[Optional[str]] = mapped_column(TEXT)
-    services: Mapped[Optional[str]] = mapped_column(TEXT)
-
     provided_services = relationship("Service", secondary="specialist_service_link", back_populates="specialists")
     bookings = relationship('Booking', back_populates='specialist')
+    specialty = relationship("Specialty", back_populates="specialists")
 
     def __repr__(self):
         return str(f"{self.full_name}")
-
-
-
 
 
 class SpecialistRating(Base):
