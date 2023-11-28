@@ -4,35 +4,35 @@ from dateutil.parser import parse
 from sqlalchemy import select, insert, func
 
 from medsyncapp.infrastructure.database.models import (
-    Doctor,
+    Specialist,
     Booking,
-    DoctorRating,
+    SpecialistRating,
     Location,
 )
-from medsyncapp.infrastructure.database.models.doctors import Specialty
+from medsyncapp.infrastructure.database.models.specialists import Specialty
 from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
-class DoctorRepo(BaseRepo):
-    async def get_all_doctors(self) -> list[Doctor]:
+class SpecialistRepo(BaseRepo):
+    async def get_all_doctors(self) -> list[Specialist]:
         stmt = (
             select(
-                Doctor.doctor_id,
-                Doctor.location_id,
-                Doctor.full_name,
+                Specialist.specialist_id,
+                Specialist.location_id,
+                Specialist.full_name,
                 Specialty.specialty_name,
                 Specialty.specialty_id,
-                Doctor.price,
-                Doctor.photo_url,
+                Specialist.price,
+                Specialist.photo_url,
                 Location.name.label("location_name"),
                 Location.address.label("location_address"),
-                func.coalesce(func.avg(DoctorRating.rating), 0).label("avg_rating"),
-                func.coalesce(func.count(DoctorRating.rating_id), 0).label("reviews"),
+                func.coalesce(func.avg(SpecialistRating.rating), 0).label("avg_rating"),
+                func.coalesce(func.count(SpecialistRating.rating_id), 0).label("reviews"),
             )
-            .join(Location, Location.location_id == Doctor.location_id)
-            .join(Specialty, Specialty.specialty_id == Doctor.specialty_id)
-            .outerjoin(DoctorRating, DoctorRating.doctor_id == Doctor.doctor_id)
-            .group_by(Doctor.doctor_id, Location.location_id, Specialty.specialty_id)
+            .join(Location, Location.location_id == Specialist.location_id)
+            .join(Specialty, Specialty.specialty_id == Specialist.specialty_id)
+            .outerjoin(SpecialistRating, SpecialistRating.specialist_id == Specialist.specialist_id)
+            .group_by(Specialist.specialist_id, Location.location_id, Specialty.specialty_id)
         )
 
         result = await self.session.execute(stmt)
@@ -42,7 +42,7 @@ class DoctorRepo(BaseRepo):
     async def get_specialties(self) -> list[Specialty]:
         stmt = (
             select(Specialty.specialty_id, Specialty.specialty_name)
-            .join(Doctor)
+            .join(Specialist)
             .order_by(Specialty.specialty_name)
             .group_by(Specialty.specialty_id)
         )
@@ -60,7 +60,7 @@ class DoctorRepo(BaseRepo):
                 user_email=payload.get("user_email"),
                 user_phone_number=payload.get("user_phone"),
                 user_message=payload.get("user_message"),
-                doctor_id=payload.get("doctor_id"),
+                specialist_id=payload.get("doctor_id"),
                 location_id=payload.get("location_id"),
                 booking_time=parse(payload.get("booking_date_time")),
             )
@@ -70,29 +70,29 @@ class DoctorRepo(BaseRepo):
         await self.session.commit()
         return result
 
-    async def get_doctor(self, doctor_id: int) -> Doctor:
+    async def get_doctor(self, doctor_id: int) -> Specialist:
         stmt = (
             select(
-                Doctor.doctor_id,
-                Doctor.location_id,
-                Doctor.full_name,
+                Specialist.specialist_id,
+                Specialist.location_id,
+                Specialist.full_name,
                 Specialty.specialty_name,
                 Specialty.specialty_id,
-                Doctor.price,
-                Doctor.photo_url,
+                Specialist.price,
+                Specialist.photo_url,
                 Location.address.label("location_address"),
-                Doctor.experience,
-                Doctor.certificates,
+                Specialist.experience,
+                Specialist.certificates,
                 Location.name.label("location_name"),
-                func.coalesce(func.avg(DoctorRating.rating), 0).label("avg_rating"),
-                func.coalesce(func.count(DoctorRating.rating_id), 0).label("reviews"),
-                Doctor.services,
+                func.coalesce(func.avg(SpecialistRating.rating), 0).label("avg_rating"),
+                func.coalesce(func.count(SpecialistRating.rating_id), 0).label("reviews"),
+                Specialist.services, # TO DO
             )
-            .join(Location, Location.location_id == Doctor.location_id)
-            .outerjoin(DoctorRating, DoctorRating.doctor_id == Doctor.doctor_id)
-            .join(Specialty, Specialty.specialty_id == Doctor.specialty_id)
-            .where(Doctor.doctor_id == doctor_id)
-            .group_by(Doctor.doctor_id, Location.location_id, Specialty.specialty_id)
+            .join(Location, Location.location_id == Specialist.location_id)
+            .outerjoin(SpecialistRating, SpecialistRating.specialist_id == Specialist.specialist_id)
+            .join(Specialty, Specialty.specialty_id == Specialist.specialty_id)
+            .where(Specialist.doctor_id == doctor_id)
+            .group_by(Specialist.doctor_id, Location.location_id, Specialty.specialty_id)
         )
 
         result = await self.session.execute(stmt)
@@ -102,7 +102,7 @@ class DoctorRepo(BaseRepo):
         self, doctor_id: int, location_id: int, month_number: int
     ) -> list[Booking]:
         stmt = select(Booking.booking_time).where(
-            Booking.doctor_id == doctor_id,
+            Booking.specialist_id == doctor_id,
             Booking.booking_time >= datetime.date.today(),
             func.extract("month", Booking.booking_time) == month_number + 1,
             Booking.location_id == location_id,

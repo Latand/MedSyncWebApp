@@ -5,31 +5,31 @@ from sqlalchemy import func
 from sqlalchemy import select, insert
 
 from medsyncapp.infrastructure.database.models import (
-    Diagnostic,
+    Service,
     Booking,
-    DiagnosticLocation,
+    ServiceLocation,
     Location,
 )
 from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
-class DiagnosticRepo(BaseRepo):
+class ServiceRepo(BaseRepo):
     async def get_all_diagnostic_types(self):
         stmt = (
             select(
-                Diagnostic.diagnostic_id,
-                Diagnostic.type_name,
-                Diagnostic.description,
-                Diagnostic.price,
-                Diagnostic.photo_url,
-                func.count(DiagnosticLocation.diagnostic_id).label("clinics_count"),
+                Service.service_id,
+                Service.service_name,
+                Service.description,
+                Service.price,
+                Service.photo_url,
+                func.count(ServiceLocation.service_id).label("clinics_count"),
             )
             .join(
-                DiagnosticLocation,
-                Diagnostic.diagnostic_id == DiagnosticLocation.diagnostic_id,
+                ServiceLocation,
+                Service.service_id == ServiceLocation.service_id,
             )
-            .group_by(Diagnostic.diagnostic_id)
-            .order_by(Diagnostic.diagnostic_id)
+            .group_by(Service.service_id)
+            .order_by(Service.service_id)
         )
         result = await self.session.execute(stmt)
         return result.mappings().all()
@@ -38,10 +38,10 @@ class DiagnosticRepo(BaseRepo):
         stmt = (
             select(Location.location_id, Location.name, Location.address)
             .join(
-                DiagnosticLocation,
-                Location.location_id == DiagnosticLocation.location_id,
+                ServiceLocation,
+                Location.location_id == ServiceLocation.location_id,
             )
-            .where(DiagnosticLocation.diagnostic_id == diagnostic_id)
+            .where(ServiceLocation.service_id == diagnostic_id)
         )
         result = await self.session.execute(stmt)
         return result.mappings().all()
@@ -62,7 +62,7 @@ class DiagnosticRepo(BaseRepo):
                 user_email=payload.get("user_email"),
                 user_phone_number=payload.get("user_phone"),
                 user_message=payload.get("user_message"),
-                diagnostic_id=payload.get("diagnostic_id"),
+                service_id=payload.get("diagnostic_id"),
                 location_id=payload.get("location_id"),
                 booking_time=parse(payload.get("booking_date_time")),
             )
@@ -77,7 +77,7 @@ class DiagnosticRepo(BaseRepo):
         self, diagnostic_id: int, location_id: int, month_number: int
     ) -> list[Booking]:
         stmt = select(Booking.booking_time).where(
-            Booking.diagnostic_id == diagnostic_id,
+            Booking.service_id == diagnostic_id,
             Booking.booking_time >= datetime.date.today(),
             func.extract("month", Booking.booking_time) == month_number + 1,
             Booking.location_id == location_id,

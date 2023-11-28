@@ -2,16 +2,16 @@ from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
 from medsyncapp.infrastructure.database.models import Booking
-from medsyncapp.infrastructure.database.models.diagnostics import DiagnosticResult, Diagnostic
+from medsyncapp.infrastructure.database.models.services import ServiceResult, Service
 from medsyncapp.infrastructure.database.repo.base import BaseRepo
 
 
 class ResultsRepo(BaseRepo):
     async def get_results(self, user_id: int):
         query = (
-            select(DiagnosticResult, Booking, Diagnostic)
-            .join(Booking, Booking.booking_id == DiagnosticResult.booking_id)
-            .join(Diagnostic, Diagnostic.diagnostic_id == Booking.diagnostic_id)
+            select(ServiceResult, Booking, Service)
+            .join(Booking, Booking.booking_id == ServiceResult.booking_id)
+            .join(Service, Service.service_Id == Booking.service_id)
             .where(Booking.user_id == user_id)
             .order_by(Booking.booking_time.desc())
         )
@@ -20,18 +20,18 @@ class ResultsRepo(BaseRepo):
 
     async def get_result(self, result_id: str):
         query = (
-            select(DiagnosticResult, Booking, Diagnostic)
-            .join(Booking, Booking.booking_id == DiagnosticResult.booking_id)
-            .join(Diagnostic, Diagnostic.diagnostic_id == Booking.diagnostic_id)
-            .where(DiagnosticResult.diagnostic_result_id == result_id)
+            select(ServiceResult, Booking, Service)
+            .join(Booking, Booking.booking_id == ServiceResult.booking_id)
+            .join(Service, Service.service_id == Booking.service_id)
+            .where(ServiceResult.service_result_id == result_id)
         )
         result = await self.session.execute(query)
         return result.first()
 
     async def save_file_id(self, result_id: str, file_id: str):
         query = (
-            update(DiagnosticResult)
-            .where(DiagnosticResult.diagnostic_result_id == result_id)
+            update(ServiceResult)
+            .where(ServiceResult.service_result_id == result_id)
             .values(file_id=file_id)
         )
         await self.session.execute(query)
@@ -54,7 +54,7 @@ class ResultsRepo(BaseRepo):
         }
 
         await self.session.execute(
-            insert(DiagnosticResult).values(
+            insert(ServiceResult).values(
                 booking_id=booking_id,
                 file_path=default_paths_mapping[diagnostic_id],
             )
